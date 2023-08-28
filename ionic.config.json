@@ -1,0 +1,7 @@
+{
+  "name": "real-estate-care-project",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue-vite"
+}
