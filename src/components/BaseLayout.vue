@@ -97,7 +97,7 @@ ion-header {
 }
 
 ion-icon{
-  font-size: 24px
+  font-size: 25px
 }
 
 #headerToolbar{
