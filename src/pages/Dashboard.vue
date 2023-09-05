@@ -89,4 +89,12 @@ setup() {
   h3 {
     color: var(--accent-dark);
   }
+
+  ion-icon {
+    color: black;
+  }
+
+  .menuTitle{
+    text-align: center;
+  }
 </style>

@@ -22,12 +22,15 @@
         <ion-buttons id="footerButtons">
           <ion-button>
             <ion-icon :icon="build"></ion-icon>
+            <ion-label>Active task</ion-label>
           </ion-button>
           <ion-button>
             <ion-icon :icon="search"></ion-icon>
+            <ion-label>Search</ion-label>
           </ion-button>
           <ion-button>
             <ion-icon :icon="alertCircle"></ion-icon>
+            <ion-label>Information</ion-label>
           </ion-button>
         </ion-buttons>
       </ion-toolbar>
@@ -45,7 +48,8 @@ import {
   IonFooter,
   IonButton,
   IonButtons,
-  IonIcon
+  IonIcon,
+  IonLabel
 } from '@ionic/vue';
 
 import { defineComponent } from 'vue';
@@ -71,7 +75,8 @@ export default defineComponent({
     IonFooter,
     IonButton,
     IonButtons,
-    IonIcon
+    IonIcon,
+    IonLabel
   },
   setup() {
     return {
@@ -97,22 +102,25 @@ ion-header {
 }
 
 ion-icon{
-  font-size: 25px
+  font-size: 25px;
+  /* color: #fff; */
+}
+
+ion-button {
+  --color: white;
+  --flex-direction: column;
+  --justify-content: center;
 }
 
 #headerToolbar{
   display: flex;
   align-items: center;
+  background-color: var(--accent-dark);
 }
 
 img {
   max-inline-size: 80%;
   block-size: 100%;
-}
-
-#footerToolbar{
-  display: flex;
-  align-items: center;
 }
 
 #footerButtons{
