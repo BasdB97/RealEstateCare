@@ -31,6 +31,7 @@
       </div>
     </div>
   </base-layout>
+  <damage-reports></damage-reports>
 </template>
 
 <script>
