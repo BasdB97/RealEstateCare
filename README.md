@@ -1,29 +1,57 @@
-# realestatecare
+# Real Estate Care
 
-This template should help get you started developing with Vue 3 in Vite.
+Een Vue applicatie voor het maken van rapportages over onderhoudsbehoeften van vastgoed.
 
-## Recommended IDE Setup
+## 🚀 Installeer de applicatie
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+### Vereisten
 
-## Customize configuration
+-   Node.js (versie 16 of hoger)
+-   npm (komt met Node.js)
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+### Installatie
 
-## Project Setup
+1. Clone de repository:
 
-```sh
+```bash
+git clone https://github.com/BasdB97/RealEstateCare
+cd RealEstateCare
+```
+
+2. Installeer de dependencies:
+
+```bash
 npm install
 ```
 
-### Compile and Hot-Reload for Development
+### Ontwikkelen
 
-```sh
+Om de ontwikkelingsserver te starten:
+
+```bash
 npm run dev
 ```
 
-### Compile and Minify for Production
+De applicatie is beschikbaar op `http://localhost:5173`
 
-```sh
-npm run build
+## 🛠️ Technologieën
+
+-   Vue 3
+-   Vite
+
+## 📁 Project Structuur
+
 ```
+realestatecare/
+├── src/
+│   ├── assets/      # Static assets
+│   ├── components/  # Vue components
+│   ├── App.vue      # Root component
+│   └── main.js      # Application entry point
+├── public/          # Public static files
+└── package.json     # Project dependencies and scripts
+```
+
+## 🔧 Ontwikkeltools
+
+-   [VSCode](https://code.visualstudio.com/) - Aanbevolen IDE
