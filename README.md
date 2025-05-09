@@ -4,8 +4,6 @@ Een Vue applicatie voor het maken van rapportages over onderhoudsbehoeften van v
 
 ## Installeer de applicatie
 
-## Installatie
-
 1. Clone de repository:
 
 ```bash
