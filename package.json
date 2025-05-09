@@ -1,19 +1,31 @@
 {
-  "name": "realestatecare",
-  "version": "0.0.0",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
-  },
-  "dependencies": {
-    "vue": "^3.5.13"
-  },
-  "devDependencies": {
-    "@vitejs/plugin-vue": "^5.2.3",
-    "vite": "^6.2.4",
-    "vite-plugin-vue-devtools": "^7.7.2"
-  }
+	"name": "realestatecare",
+	"version": "0.0.0",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"dev": "vite",
+		"build": "vite build",
+		"preview": "vite preview",
+		"ionic:build": "npm run build",
+		"ionic:serve": "vite dev --host"
+	},
+	"dependencies": {
+		"@capacitor/app": "7.0.1",
+		"@capacitor/cli": "6.2.1",
+		"@capacitor/core": "7.2.0",
+		"@capacitor/haptics": "7.0.1",
+		"@capacitor/keyboard": "7.0.1",
+		"@capacitor/status-bar": "7.0.1",
+		"@ionic/core": "^8.5.7",
+		"@ionic/vue": "^8.5.7",
+		"@ionic/vue-router": "^8.5.7",
+		"vue": "^3.0.6",
+		"vue-router": "^3.0.6"
+	},
+	"devDependencies": {
+		"@vitejs/plugin-vue": "^5.2.3",
+		"vite": "^6.2.4",
+		"vite-plugin-vue-devtools": "^7.7.2"
+	}
 }
