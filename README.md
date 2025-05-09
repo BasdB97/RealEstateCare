@@ -2,14 +2,9 @@
 
 Een Vue applicatie voor het maken van rapportages over onderhoudsbehoeften van vastgoed.
 
-## 🚀 Installeer de applicatie
+## Installeer de applicatie
 
-### Vereisten
-
--   Node.js (versie 16 of hoger)
--   npm (komt met Node.js)
-
-### Installatie
+## Installatie
 
 1. Clone de repository:
 
@@ -33,25 +28,3 @@ npm run dev
 ```
 
 De applicatie is beschikbaar op `http://localhost:5173`
-
-## 🛠️ Technologieën
-
--   Vue 3
--   Vite
-
-## 📁 Project Structuur
-
-```
-realestatecare/
-├── src/
-│   ├── assets/      # Static assets
-│   ├── components/  # Vue components
-│   ├── App.vue      # Root component
-│   └── main.js      # Application entry point
-├── public/          # Public static files
-└── package.json     # Project dependencies and scripts
-```
-
-## 🔧 Ontwikkeltools
-
--   [VSCode](https://code.visualstudio.com/) - Aanbevolen IDE
