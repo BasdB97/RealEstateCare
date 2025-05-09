@@ -1,6 +1,13 @@
 @import './base.css';
 @import "tailwindcss";
 
+:root {
+  --rec-blue: #00aaa2;
+  --rec-light: #32434d;
+  --rec-dark: #161d21;
+  --rec-white: #f7f7f7;
+}
+
 #app {
   height: 100vh;
   margin: 0 auto;

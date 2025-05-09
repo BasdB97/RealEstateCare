@@ -1,5 +1,5 @@
 <template>
-	<header>
+	<header class="bg-[#00aaa2]">
 		<img src="../assets/logo.svg" class="logo" alt="logo" height="150px" />
 	</header>
 </template>
