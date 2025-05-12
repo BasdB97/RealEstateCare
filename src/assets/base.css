@@ -62,7 +62,6 @@ body {
   min-height: 100vh;
   color: var(--vt-c-white);
   background: #09171F;
-  background: linear-gradient(90deg,rgba(9, 23, 31, 1) 0%, rgba(35, 47, 54, 1) 100%);
   transition:
     color 0.5s,
     background-color 0.5s;
@@ -84,4 +83,8 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+#iconbar-triangle {
+  rotate: 180deg;
 }

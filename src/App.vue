@@ -1,13 +1,13 @@
 <script setup>
-import HelloWorld from "./components/HelloWorld.vue";
 import Header from "./components/Header.vue";
 import Footer from "./components/Footer.vue";
+import Dashboard from "./components/Dashboard.vue";
 </script>
 
 <template>
 	<Header />
-	<div class="wrapper">
-		<HelloWorld msg="RealEstateCare applicatie" />
+	<div>
+		<Dashboard />
 	</div>
 	<Footer />
 </template>
