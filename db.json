@@ -1,64 +1,262 @@
 {
-	"users": [
+	"addresses": [
 		{
 			"id": 1,
-			"name": "John Doe",
-			"email": "john@example.com",
-			"age": 28,
-			"role": "admin"
+			"street": "Hoofdstraat",
+			"number": "123",
+			"postalCode": "1234 AB",
+			"city": "Amsterdam",
+			"country": "Nederland",
+			"report": [
+				{
+					"damage_reports": {
+						"id": 100,
+						"location": "voordeur",
+						"new": true,
+						"damageType": "slijtage",
+						"date": "2025-05-13",
+						"urgentActionRequired": true,
+						"description": "Schroef van hendel aandraaien."
+					},
+					"overdue_maintenance": {
+						"id": 101,
+						"location": "Woonkamer",
+						"maintenanceType": "elektra",
+						"urgentActionRequired": true,
+						"costIndication": "0-500"
+					},
+					"technicalInstallations": {
+						"location": "Verlichting slaapkamer",
+						"installationType": "elektra",
+						"reportedMalfunction": "Knipperende bedlampjes",
+						"testProcedure": "",
+						"approved": true,
+						"comments": "Lamp vervangen."
+					},
+					"modifications": {
+						"location": "Oprit",
+						"excecutedBy": "aannemer",
+						"modificationDescription": "Laadpaal geinstalleerd",
+						"actionRequired": "laten keuren",
+						"comments": "Laadpaal geinstalleerd. Wachten op inschrijving bij de gemeente."
+					}
+				}
+			]
 		},
 		{
 			"id": 2,
-			"name": "Jane Smith",
-			"email": "jane@example.com",
-			"age": 32,
-			"role": "user"
+			"street": "Kerkstraat",
+			"number": "45",
+			"postalCode": "2345 CD",
+			"city": "Rotterdam",
+			"country": "Nederland",
+			"report": [
+				{
+					"damage_reports": {
+						"id": 102,
+						"location": "Badkamer",
+						"new": true,
+						"damageType": "calamiteit",
+						"date": "2024-03-20",
+						"urgentActionRequired": true,
+						"description": "Lekkage onder wastafel, mogelijk door losse afvoer."
+					},
+					"overdue_maintenance": {
+						"id": 103,
+						"location": "Keuken",
+						"maintenanceType": "leidingwerk",
+						"urgentActionRequired": true,
+						"costIndication": "500-1500"
+					},
+					"technicalInstallations": {
+						"location": "CV-ketel",
+						"installationType": "verwarming",
+						"reportedMalfunction": "Onregelmatige verwarming",
+						"testProcedure": "Druk en temperatuur meten",
+						"approved": false,
+						"comments": "Onderhoud vereist"
+					},
+					"modifications": {
+						"location": "Keuken",
+						"excecutedBy": "aannemer",
+						"modificationDescription": "Nieuwe keuken geplaatst",
+						"actionRequired": "laten aanpassen en keuren",
+						"comments": "Wachten op keuring"
+					}
+				}
+			]
 		},
 		{
 			"id": 3,
-			"name": "Bob Johnson",
-			"email": "bob@example.com",
-			"age": 45,
-			"role": "user"
-		}
-	],
-	"products": [
-		{
-			"id": 1,
-			"name": "Laptop",
-			"price": 999.99,
-			"category": "electronics",
-			"inStock": true
+			"street": "Parkweg",
+			"number": "78",
+			"postalCode": "3456 EF",
+			"city": "Utrecht",
+			"country": "Nederland",
+			"report": [
+				{
+					"damage_reports": {
+						"id": 104,
+						"location": "Dak",
+						"new": false,
+						"damageType": "calamiteit",
+						"date": "2024-03-15",
+						"urgentActionRequired": true,
+						"description": "Lekkage bij dakkapel na hevige regenval."
+					},
+					"overdue_maintenance": {
+						"id": 105,
+						"location": "Buitenmuur",
+						"maintenanceType": "schilderwerk",
+						"urgentActionRequired": false,
+						"costIndication": "1500+"
+					},
+					"technicalInstallations": {
+						"location": "Alarm systeem",
+						"installationType": "beveiliging",
+						"reportedMalfunction": "Vals alarm",
+						"testProcedure": "Sensoren testen",
+						"approved": true,
+						"comments": "Batterijen vervangen"
+					},
+					"modifications": {
+						"location": "Slaapkamer",
+						"excecutedBy": "aannemer",
+						"modificationDescription": "Nieuwe dakkapel",
+						"actionRequired": "laten keuren",
+						"comments": "In overleg met buren"
+					}
+				}
+			]
 		},
 		{
-			"id": 2,
-			"name": "Smartphone",
-			"price": 699.99,
-			"category": "electronics",
-			"inStock": true
+			"id": 4,
+			"street": "Stationsplein",
+			"number": "1",
+			"postalCode": "4567 GH",
+			"city": "Den Haag",
+			"country": "Nederland",
+			"report": [
+				{
+					"damage_reports": {
+						"id": 106,
+						"location": "Woonkamer",
+						"new": true,
+						"damageType": "slijtage",
+						"date": "2024-03-18",
+						"urgentActionRequired": true,
+						"description": "Schimmelvorming in hoek bij raam."
+					},
+					"overdue_maintenance": {
+						"id": 107,
+						"location": "Balkon",
+						"maintenanceType": "houtrot",
+						"urgentActionRequired": true,
+						"costIndication": "1500+"
+					},
+					"technicalInstallations": {
+						"location": "Lift",
+						"installationType": "elektra",
+						"reportedMalfunction": "Onregelmatige beweging",
+						"testProcedure": "Jaarlijkse keuring",
+						"approved": false,
+						"comments": "Onderhoudsbeurt nodig"
+					},
+					"modifications": {
+						"location": "Balkon",
+						"excecutedBy": "aannemer",
+						"modificationDescription": "Balkonrenovatie",
+						"actionRequired": "laten keuren",
+						"comments": "Wachten op bouwtekeningen"
+					}
+				}
+			]
 		},
 		{
-			"id": 3,
-			"name": "Headphones",
-			"price": 149.99,
-			"category": "accessories",
-			"inStock": false
-		}
-	],
-	"orders": [
-		{
-			"id": 1,
-			"userId": 2,
-			"products": [1, 3],
-			"total": 1149.98,
-			"date": "2023-05-15"
+			"id": 5,
+			"street": "Molenstraat",
+			"number": "15",
+			"postalCode": "5678 IJ",
+			"city": "Groningen",
+			"country": "Nederland",
+			"report": [
+				{
+					"damage_reports": {
+						"id": 108,
+						"location": "Kelder",
+						"new": true,
+						"damageType": "calamiteit",
+						"date": "2024-03-22",
+						"urgentActionRequired": true,
+						"description": "Wateroverlast in kelder na hevige regenval."
+					},
+					"overdue_maintenance": {
+						"id": 109,
+						"location": "Tuin",
+						"maintenanceType": "schilderwerk",
+						"urgentActionRequired": false,
+						"costIndication": "1500+"
+					},
+					"technicalInstallations": {
+						"location": "Zonnepanelen",
+						"installationType": "elektra",
+						"reportedMalfunction": "Lage opbrengst",
+						"testProcedure": "Efficiëntie meten",
+						"approved": true,
+						"comments": "Reiniging nodig"
+					},
+					"modifications": {
+						"location": "Dak",
+						"excecutedBy": "aannemer",
+						"modificationDescription": "Zonnepanelen installatie",
+						"actionRequired": "laten keuren",
+						"comments": "Wachten op aansluiting"
+					}
+				}
+			]
 		},
 		{
-			"id": 2,
-			"userId": 1,
-			"products": [2],
-			"total": 699.99,
-			"date": "2023-05-16"
+			"id": 6,
+			"street": "Dorpstraat",
+			"number": "30",
+			"postalCode": "6789 KL",
+			"city": "Eindhoven",
+			"country": "Nederland",
+			"report": [
+				{
+					"damage_reports": {
+						"id": 110,
+						"location": "Garage",
+						"new": true,
+						"damageType": "slijtage",
+						"date": "2024-03-25",
+						"urgentActionRequired": true,
+						"description": "Garagedeur sluit niet goed."
+					},
+					"overdue_maintenance": {
+						"id": 111,
+						"location": "Tuin",
+						"maintenanceType": "houtrot",
+						"urgentActionRequired": false,
+						"costIndication": "500-1500"
+					},
+					"technicalInstallations": {
+						"location": "Domotica",
+						"installationType": "elektra",
+						"reportedMalfunction": "Verbinding verbroken",
+						"testProcedure": "Netwerk testen",
+						"approved": false,
+						"comments": "Router resetten"
+					},
+					"modifications": {
+						"location": "Woonkamer",
+						"excecutedBy": "huurder",
+						"modificationDescription": "Domotica installatie",
+						"actionRequired": "laten aanpassen en keuren",
+						"comments": "Wachten op nieuwe router"
+					}
+				}
+			]
 		}
 	]
 }
