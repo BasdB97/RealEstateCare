@@ -2,7 +2,7 @@
 
 Een Vue applicatie voor het maken van rapportages over onderhoudsbehoeften van vastgoed.
 
-## 🚀 Installeer de applicatie
+## Installeer de applicatie
 
 1. Clone de repository:
 

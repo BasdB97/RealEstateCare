@@ -3,7 +3,8 @@
 		id="dashboard"
 		class="mx-auto p-4 flex justify-center items-center text-[#1d292f]">
 		<div class="grid grid-cols-2 gap-6">
-			<div class="flex flex-col items-center justify-center p-4">
+			<div
+				class="flex flex-col items-center justify-center py-4 px-2 shadow-lg rounded-lg">
 				<ion-icon
 					:icon="bookmarkOutline"
 					class="text-6xl sm:text-7xl md:text-9xl font-bold" />
@@ -11,7 +12,8 @@
 					>Scheduled</span
 				>
 			</div>
-			<div class="flex flex-col items-center justify-center p-3">
+			<div
+				class="flex flex-col items-center justify-center py-4 px-2 shadow-lg rounded-lg">
 				<ion-icon
 					:icon="checkmarkCircle"
 					class="text-6xl sm:text-7xl md:text-9xl font-bold" />
@@ -19,7 +21,8 @@
 					>Completed</span
 				>
 			</div>
-			<div class="flex flex-col items-center justify-center p-3">
+			<div
+				class="flex flex-col items-center justify-center py-4 px-2 shadow-lg rounded-lg">
 				<ion-icon
 					:icon="apps"
 					class="text-6xl sm:text-7xl md:text-9xl font-bold" />
@@ -27,7 +30,8 @@
 					>Knowledge Base</span
 				>
 			</div>
-			<div class="flex flex-col items-center justify-center p-3">
+			<div
+				class="flex flex-col items-center justify-center py-4 px-2 shadow-lg rounded-lg">
 				<ion-icon
 					:icon="settings"
 					class="text-6xl sm:text-7xl md:text-9xl font-bold" />

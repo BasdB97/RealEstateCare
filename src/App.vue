@@ -6,9 +6,7 @@ import Dashboard from "./components/Dashboard.vue";
 
 <template>
 	<Header />
-	<div>
-		<Dashboard />
-	</div>
+	<Dashboard />
 	<Footer />
 </template>
 
