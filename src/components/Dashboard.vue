@@ -29,19 +29,4 @@
 
 <script setup>
 import { bookmarkOutline, checkmarkCircle, apps, settings } from "ionicons/icons";
-import { ref, onMounted } from "vue";
-
-// const properties = ref([]);
-
-// onMounted(async () => {
-// 	try {
-// 		const response = await fetch(
-// 			"https://my-json-server.typicode.com/BasdB97/RealEstateCare/addresses"
-// 		);
-// 		const data = await response.json();
-// 		properties.value = data;
-// 	} catch (error) {
-// 		console.error("Error loading properties:", error);
-// 	}
-// });
 </script>
