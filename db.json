@@ -1,5 +1,5 @@
 {
-	"addresses": [
+	"properties": [
 		{
 			"id": 1,
 			"street": "Hoofdstraat",
@@ -26,6 +26,7 @@
 						"costIndication": "0-500"
 					},
 					"technicalInstallations": {
+						"id": 102,
 						"location": "Verlichting slaapkamer",
 						"installationType": "elektra",
 						"reportedMalfunction": "Knipperende bedlampjes",
@@ -34,6 +35,7 @@
 						"comments": "Lamp vervangen."
 					},
 					"modifications": {
+						"id": 103,
 						"location": "Oprit",
 						"excecutedBy": "aannemer",
 						"modificationDescription": "Laadpaal geinstalleerd",
@@ -53,7 +55,7 @@
 			"report": [
 				{
 					"damage_reports": {
-						"id": 102,
+						"id": 104,
 						"location": "Badkamer",
 						"new": true,
 						"damageType": "calamiteit",
@@ -62,13 +64,14 @@
 						"description": "Lekkage onder wastafel, mogelijk door losse afvoer."
 					},
 					"overdue_maintenance": {
-						"id": 103,
+						"id": 105,
 						"location": "Keuken",
 						"maintenanceType": "leidingwerk",
 						"urgentActionRequired": true,
 						"costIndication": "500-1500"
 					},
 					"technicalInstallations": {
+						"id": 106,
 						"location": "CV-ketel",
 						"installationType": "verwarming",
 						"reportedMalfunction": "Onregelmatige verwarming",
@@ -77,6 +80,7 @@
 						"comments": "Onderhoud vereist"
 					},
 					"modifications": {
+						"id": 107,
 						"location": "Keuken",
 						"excecutedBy": "aannemer",
 						"modificationDescription": "Nieuwe keuken geplaatst",
@@ -96,7 +100,7 @@
 			"report": [
 				{
 					"damage_reports": {
-						"id": 104,
+						"id": 108,
 						"location": "Dak",
 						"new": false,
 						"damageType": "calamiteit",
@@ -105,13 +109,14 @@
 						"description": "Lekkage bij dakkapel na hevige regenval."
 					},
 					"overdue_maintenance": {
-						"id": 105,
+						"id": 109,
 						"location": "Buitenmuur",
 						"maintenanceType": "schilderwerk",
 						"urgentActionRequired": false,
 						"costIndication": "1500+"
 					},
 					"technicalInstallations": {
+						"id": 110,
 						"location": "Alarm systeem",
 						"installationType": "beveiliging",
 						"reportedMalfunction": "Vals alarm",
@@ -120,6 +125,7 @@
 						"comments": "Batterijen vervangen"
 					},
 					"modifications": {
+						"id": 111,
 						"location": "Slaapkamer",
 						"excecutedBy": "aannemer",
 						"modificationDescription": "Nieuwe dakkapel",
@@ -139,7 +145,7 @@
 			"report": [
 				{
 					"damage_reports": {
-						"id": 106,
+						"id": 112,
 						"location": "Woonkamer",
 						"new": true,
 						"damageType": "slijtage",
@@ -148,13 +154,14 @@
 						"description": "Schimmelvorming in hoek bij raam."
 					},
 					"overdue_maintenance": {
-						"id": 107,
+						"id": 113,
 						"location": "Balkon",
 						"maintenanceType": "houtrot",
 						"urgentActionRequired": true,
 						"costIndication": "1500+"
 					},
 					"technicalInstallations": {
+						"id": 114,
 						"location": "Lift",
 						"installationType": "elektra",
 						"reportedMalfunction": "Onregelmatige beweging",
@@ -163,6 +170,7 @@
 						"comments": "Onderhoudsbeurt nodig"
 					},
 					"modifications": {
+						"id": 115,
 						"location": "Balkon",
 						"excecutedBy": "aannemer",
 						"modificationDescription": "Balkonrenovatie",
@@ -182,7 +190,7 @@
 			"report": [
 				{
 					"damage_reports": {
-						"id": 108,
+						"id": 116,
 						"location": "Kelder",
 						"new": true,
 						"damageType": "calamiteit",
@@ -191,13 +199,14 @@
 						"description": "Wateroverlast in kelder na hevige regenval."
 					},
 					"overdue_maintenance": {
-						"id": 109,
+						"id": 117,
 						"location": "Tuin",
 						"maintenanceType": "schilderwerk",
 						"urgentActionRequired": false,
 						"costIndication": "1500+"
 					},
 					"technicalInstallations": {
+						"id": 118,
 						"location": "Zonnepanelen",
 						"installationType": "elektra",
 						"reportedMalfunction": "Lage opbrengst",
@@ -206,6 +215,7 @@
 						"comments": "Reiniging nodig"
 					},
 					"modifications": {
+						"id": 119,
 						"location": "Dak",
 						"excecutedBy": "aannemer",
 						"modificationDescription": "Zonnepanelen installatie",
@@ -225,7 +235,7 @@
 			"report": [
 				{
 					"damage_reports": {
-						"id": 110,
+						"id": 120,
 						"location": "Garage",
 						"new": true,
 						"damageType": "slijtage",
@@ -234,13 +244,14 @@
 						"description": "Garagedeur sluit niet goed."
 					},
 					"overdue_maintenance": {
-						"id": 111,
+						"id": 121,
 						"location": "Tuin",
 						"maintenanceType": "houtrot",
 						"urgentActionRequired": false,
 						"costIndication": "500-1500"
 					},
 					"technicalInstallations": {
+						"id": 122,
 						"location": "Domotica",
 						"installationType": "elektra",
 						"reportedMalfunction": "Verbinding verbroken",
@@ -249,6 +260,7 @@
 						"comments": "Router resetten"
 					},
 					"modifications": {
+						"id": 123,
 						"location": "Woonkamer",
 						"excecutedBy": "huurder",
 						"modificationDescription": "Domotica installatie",

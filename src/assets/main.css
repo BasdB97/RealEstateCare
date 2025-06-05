@@ -9,7 +9,7 @@
 }
 
 #app {
-  height: 100vh;
+  min-height: 100vh;
   margin: 0 auto;
   font-weight: normal;
   background: var(--rec-white);
