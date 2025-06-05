@@ -14,3 +14,7 @@
   font-weight: normal;
   background: var(--rec-white);
 }
+
+#iconbar-triangle {
+  rotate: 180deg;
+}

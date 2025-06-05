@@ -1,6 +1,6 @@
 <template>
 	<footer
-		class="bg-[#00aaa2] w-full flex items-center justify-evenly absolute bottom-0 py-2">
+		class="bg-[#00aaa2] w-full flex items-center justify-evenly fixed bottom-0 py-2">
 		<div class="flex flex-col items-center">
 			<ion-icon
 				:icon="build"
