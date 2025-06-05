@@ -37,7 +37,7 @@
 					"modifications": {
 						"id": 103,
 						"location": "Oprit",
-						"excecutedBy": "aannemer",
+						"executedBy": "aannemer",
 						"modificationDescription": "Laadpaal geinstalleerd",
 						"actionRequired": "laten keuren",
 						"comments": "Laadpaal geinstalleerd. Wachten op inschrijving bij de gemeente."
@@ -82,7 +82,7 @@
 					"modifications": {
 						"id": 107,
 						"location": "Keuken",
-						"excecutedBy": "aannemer",
+						"executedBy": "aannemer",
 						"modificationDescription": "Nieuwe keuken geplaatst",
 						"actionRequired": "laten aanpassen en keuren",
 						"comments": "Wachten op keuring"
@@ -127,7 +127,7 @@
 					"modifications": {
 						"id": 111,
 						"location": "Slaapkamer",
-						"excecutedBy": "aannemer",
+						"executedBy": "aannemer",
 						"modificationDescription": "Nieuwe dakkapel",
 						"actionRequired": "laten keuren",
 						"comments": "In overleg met buren"
@@ -172,7 +172,7 @@
 					"modifications": {
 						"id": 115,
 						"location": "Balkon",
-						"excecutedBy": "aannemer",
+						"executedBy": "aannemer",
 						"modificationDescription": "Balkonrenovatie",
 						"actionRequired": "laten keuren",
 						"comments": "Wachten op bouwtekeningen"
@@ -217,7 +217,7 @@
 					"modifications": {
 						"id": 119,
 						"location": "Dak",
-						"excecutedBy": "aannemer",
+						"executedBy": "aannemer",
 						"modificationDescription": "Zonnepanelen installatie",
 						"actionRequired": "laten keuren",
 						"comments": "Wachten op aansluiting"
@@ -262,7 +262,7 @@
 					"modifications": {
 						"id": 123,
 						"location": "Woonkamer",
-						"excecutedBy": "huurder",
+						"executedBy": "huurder",
 						"modificationDescription": "Domotica installatie",
 						"actionRequired": "laten aanpassen en keuren",
 						"comments": "Wachten op nieuwe router"

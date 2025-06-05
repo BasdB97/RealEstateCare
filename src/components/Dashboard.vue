@@ -125,7 +125,7 @@
 							</p>
 							<p>
 								<strong>Executed by:</strong>
-								{{ report.modifications.excecutedBy }}
+								{{ report.modifications.executedBy }}
 							</p>
 							<p>
 								<strong>Description:</strong>
@@ -149,19 +149,28 @@
 
 <script setup>
 import { bookmarkOutline, checkmarkCircle, apps, settings } from "ionicons/icons";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { apiService } from "../services/apiService";
 
 const addresses = ref([]);
 const loading = ref(false);
 const error = ref(null);
 
+const sortedAddresses = computed(() => {
+	return addresses.value.map((address) => ({
+		...address,
+		report: [...address.report].sort(
+			(a, b) => new Date(a.damage_reports.date) - new Date(b.damage_reports.date)
+		),
+	}));
+});
+
 const fetchData = async () => {
 	loading.value = true;
 	try {
 		addresses.value = await apiService.getAddresses();
-	} catch (error) {
-		error.value = error.message;
+	} catch (err) {
+		error.value = err.message;
 	} finally {
 		loading.value = false;
 	}
