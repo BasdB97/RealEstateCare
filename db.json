@@ -38,7 +38,7 @@
 					},
 					"modification": {
 						"location": "Oprit",
-						"excecutedBy": "aannemer",
+						"executedBy": "aannemer",
 						"modificationDescription": "Laadpaal geinstalleerd",
 						"actionRequired": "laten keuren",
 						"comments": "Laadpaal geinstalleerd. Wachten op inschrijving bij de gemeente.",
@@ -118,7 +118,7 @@
 					},
 					"modification": {
 						"location": "Woonkamer",
-						"excecutedBy": "huurder",
+						"executedBy": "huurder",
 						"modificationDescription": "Wandverlichting geïnstalleerd",
 						"actionRequired": "inspecteren",
 						"comments": "Controle op veiligheid vereist.",
@@ -181,7 +181,7 @@
 					"technicalInstallation": null,
 					"modification": {
 						"location": "Tuin",
-						"excecutedBy": "huurder",
+						"executedBy": "huurder",
 						"modificationDescription": "Tuinhuisje geplaatst",
 						"actionRequired": "inspecteren",
 						"comments": "Controle op constructieveiligheid nodig.",
