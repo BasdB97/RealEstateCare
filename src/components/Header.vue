@@ -1,13 +1,3 @@
-<script setup>
-import {
-	square,
-	ellipse,
-	triangle,
-	notifications,
-	settings,
-} from "ionicons/icons";
-</script>
-
 <template>
 	<header class="bg-[#161d21] mx-auto">
 		<div>
@@ -32,3 +22,6 @@ import {
 		</div>
 	</header>
 </template>
+<script setup>
+import { square, ellipse, triangle, notifications, settings } from "ionicons/icons";
+</script>

@@ -1,15 +1,25 @@
 import axios from "axios";
 
-const API_BASE_URL = "https://my-json-server.typicode.com/BasdB97/RealEstateCare";
+const apiClient = axios.create({
+	baseURL: "https://my-json-server.typicode.com/BasdB97/RealEstateCare",
+	timeout: 10000,
+	headers: {
+		"Content-Type": "application/json",
+	},
+});
 
 export const apiService = {
 	async getReports() {
 		try {
-			console.log(`Fetching ${API_BASE_URL}/reports`);
-			const response = await axios.get(`${API_BASE_URL}/reports`);
+			console.log(`Fetching ${apiClient.defaults.baseURL}/reports`);
+			const response = await apiClient.get("/reports");
 			return response.data;
 		} catch (error) {
-			console.error(`Error fetching reports:`, error);
+			console.error("Error fetching reports:", {
+				message: error.message,
+				status: error.response?.status,
+				data: error.response?.data,
+			});
 			throw new Error(`Failed to fetch reports: ${error.message}`);
 		}
 	},
