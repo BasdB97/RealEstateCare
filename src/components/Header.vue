@@ -12,7 +12,7 @@
 				<img
 					class="logo"
 					src="@/assets/logo.svg"
-					alt="logo"
+					alt="Real Estate Care logo"
 					style="filter: invert(100%); width: 250px" />
 			</div>
 			<div class="flex items-center gap-4">
