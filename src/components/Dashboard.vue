@@ -47,6 +47,6 @@
 </template>
 
 <script setup>
+import { IonIcon } from "@ionic/vue";
 import { bookmarkOutline, checkmarkCircle, apps, settings } from "ionicons/icons";
-
 </script>

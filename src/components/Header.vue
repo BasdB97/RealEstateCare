@@ -9,15 +9,19 @@
 		</div>
 		<div class="flex justify-between items-center p-4">
 			<div class="flex items-center">
-				<img
-					class="logo"
-					src="@/assets/logo.svg"
-					alt="Real Estate Care logo"
-					style="filter: invert(100%); width: 250px" />
+				<router-link to="/">
+					<img
+						class="logo"
+						src="@/assets/logo.svg"
+						alt="Real Estate Care logo"
+						style="filter: invert(100%); width: 250px" />
+				</router-link>
 			</div>
 			<div class="flex items-center gap-4">
-				<ion-icon :icon="notifications" class="text-white text-2xl" />
-				<ion-icon :icon="settings" class="text-white text-2xl" />
+				<ion-icon :icon="notifications" class="text-white text-4xl" />
+				<router-link to="/settings">
+					<ion-icon :icon="settings" class="text-white text-4xl" />
+				</router-link>
 			</div>
 		</div>
 	</header>
