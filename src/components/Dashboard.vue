@@ -48,4 +48,5 @@
 
 <script setup>
 import { bookmarkOutline, checkmarkCircle, apps, settings } from "ionicons/icons";
+
 </script>
