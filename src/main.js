@@ -1,4 +1,5 @@
 import "@ionic/core/css/ionic.bundle.css";
+
 import "@/assets/base.css";
 import "@/assets/main.css";
 
@@ -13,4 +14,4 @@ const app = createApp(App).use(IonicVue);
 // Registreer IonIcon globaal voor alle componenten
 app.component("ion-icon", IonIcon);
 
-app.use(router).mount("#app");
+app.use(IonIcon).use(router).mount("#app");
