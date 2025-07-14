@@ -1,4 +1,4 @@
-import "@ionic/core/css/ionic.bundle.css";
+import "@ionic/vue/css/ionic.bundle.css";
 
 import "@/assets/base.css";
 import "@/assets/main.css";
