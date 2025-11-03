@@ -1,0 +1,7 @@
+{
+  "name": "realestatecare-final-nov",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue-vite"
+}
