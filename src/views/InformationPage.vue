@@ -2,20 +2,24 @@
 	<ion-page>
 		<ion-header :translucent="true">
 			<ion-toolbar>
-				<ion-title>Dashboard</ion-title>
+				<ion-title>Information</ion-title>
 			</ion-toolbar>
 		</ion-header>
 
 		<ion-content :fullscreen="true">
 			<ion-header collapse="condense">
 				<ion-toolbar>
-					<ion-title size="large">Dashboard</ion-title>
+					<ion-title size="large">Information</ion-title>
 				</ion-toolbar>
 			</ion-header>
 
 			<div class="p-4">
-				<h1 class="text-2xl font-bold mb-4">Welcome to Real Estate Care</h1>
-				<p>Hier komt het dashboard met een overzicht van alle rapportages en statistieken.</p>
+				<h2 class="text-xl font-bold mb-4">Real Estate Care</h2>
+				<p class="mb-2"><strong>Version:</strong> 1.0.0</p>
+				<p class="mb-2"><strong>Build:</strong> 2025.11.03</p>
+				<p class="mt-4">
+					Deze app helpt inspecteurs bij het uitvoeren van inspecties en het maken van rapportages.
+				</p>
 			</div>
 		</ion-content>
 	</ion-page>

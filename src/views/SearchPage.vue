@@ -2,20 +2,19 @@
 	<ion-page>
 		<ion-header :translucent="true">
 			<ion-toolbar>
-				<ion-title>Dashboard</ion-title>
+				<ion-title>Search</ion-title>
 			</ion-toolbar>
 		</ion-header>
 
 		<ion-content :fullscreen="true">
 			<ion-header collapse="condense">
 				<ion-toolbar>
-					<ion-title size="large">Dashboard</ion-title>
+					<ion-title size="large">Search</ion-title>
 				</ion-toolbar>
 			</ion-header>
 
 			<div class="p-4">
-				<h1 class="text-2xl font-bold mb-4">Welcome to Real Estate Care</h1>
-				<p>Hier komt het dashboard met een overzicht van alle rapportages en statistieken.</p>
+				<p>Hier komt de zoekfunctionaliteit.</p>
 			</div>
 		</ion-content>
 	</ion-page>
