@@ -1,28 +1,26 @@
 <template>
-	<ion-page>
-		<ion-header :translucent="true">
-			<ion-toolbar>
-				<ion-title>Dashboard</ion-title>
-			</ion-toolbar>
-		</ion-header>
-
-		<ion-content :fullscreen="true">
-			<ion-header collapse="condense">
-				<ion-toolbar>
-					<ion-title size="large">Dashboard</ion-title>
-				</ion-toolbar>
-			</ion-header>
-
-			<div class="p-4">
-				<h1 class="text-2xl font-bold mb-4">Welcome to Real Estate Care</h1>
-				<p>Hier komt het dashboard met een overzicht van alle rapportages en statistieken.</p>
-			</div>
-		</ion-content>
-	</ion-page>
+	<BaseLayout>
+		<div class="home-container">
+			<section class="menu-container">
+				<router-link to="/assigned-reports" class="menu-item">
+					<ion-icon :icon="bookmarkOutline" class="menu-icon" />
+					<span class="menu-title">Toegewezen</span>
+				</router-link>
+				<router-link to="/completed-reports" class="menu-item">
+					<ion-icon :icon="checkmarkCircle" class="menu-icon" />
+					<span class="menu-title">Uitgevoerd</span>
+				</router-link>
+				<router-link to="/knowledge-base" class="menu-item">
+					<ion-icon :icon="apps" class="menu-icon" />
+					<span class="menu-title">Kennisbank</span>
+				</router-link>
+				<router-link to="/settings" class="menu-item">
+					<ion-icon :icon="settings" class="menu-icon" />
+					<span class="menu-title">Instellingen</span>
+				</router-link>
+			</section>
+		</div>
+	</BaseLayout>
 </template>
 
-<script setup>
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from "@ionic/vue";
-</script>
-
-<style scoped></style>
+<script setup></script>

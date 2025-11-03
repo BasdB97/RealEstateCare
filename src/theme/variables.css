@@ -1,2 +1,21 @@
 /* For information on how to create your own theme, please see:
 http://ionicframework.com/docs/theming/ */
+
+:root {
+	--ion-background-color: #eaeaea;
+	--ion-background-color-rgb: 22, 29, 33;
+	
+	--ion-toolbar-background: #161d21;
+	--ion-toolbar-background-rgb: 22, 29, 33;
+}
+
+/* Dark mode (fallback als systeem dark mode actief is) */
+@media (prefers-color-scheme: dark) {
+	:root {
+		--ion-background-color: #161d21;
+		--ion-background-color-rgb: 22, 29, 33;
+		
+		--ion-toolbar-background: #161d21;
+		--ion-toolbar-background-rgb: 22, 29, 33;
+	}
+}
