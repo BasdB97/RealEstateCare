@@ -12,6 +12,7 @@ export const useReportsStore = defineStore("reports", {
 		assignedReports: (s) => (s.reports ?? []).filter((r) => !r.completed),
 		completedReports: (state) => (state.reports ?? []).filter((r) => r.completed),
 		getReportById: (state) => (id) => (state.reports ?? []).find((r) => r.id === id),
+    
 	},
 
 	actions: {

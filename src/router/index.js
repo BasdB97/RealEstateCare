@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from "@ionic/vue-router";
-import HomePage from "../views/HomePage.vue";
 
 const routes = [
 	{ path: "/", component: () => import("@/views/HomePage.vue") },
@@ -9,11 +8,12 @@ const routes = [
 	{ path: "/settings", component: () => import("@/views/SettingsPage.vue") },
 	{ path: "/search", component: () => import("@/views/SearchPage.vue") },
 	{ path: "/information", component: () => import("@/views/InformationPage.vue") },
-	// {
-	// 	path: "/edit-report/:id",
-	// 	name: "Edit Report",
-	// 	component: () => import("@/views/EditReport.vue"),
-	// },
+	{
+		path: "/reports/:id/edit",
+		name: "edit-report",
+		component: () => import("@/views/EditReport.vue"),
+		props: (route) => ({ id: Number(route.params.id) }),
+	},
 ];
 
 const router = createRouter({
