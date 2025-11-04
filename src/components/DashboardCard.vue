@@ -15,7 +15,7 @@ import { IonIcon } from "@ionic/vue";
 defineProps({
 	to: { type: String, required: true },
 	label: { type: String, required: true },
-	icon: { type: Object, required: true },
+	icon: { type: String, required: true },
 });
 </script>
 

@@ -3,6 +3,7 @@ import App from "./App.vue";
 import router from "./router";
 import { IonicVue } from "@ionic/vue";
 import BaseLayout from "./components/BaseLayout.vue";
+import { createPinia } from "pinia";
 
 // Ionic core + basis
 import "@ionic/vue/css/core.css";
@@ -23,7 +24,7 @@ import "./theme/variables.css";
 // Tailwind
 import "./index.css";
 
-const app = createApp(App).use(IonicVue).use(router);
+const app = createApp(App).use(IonicVue).use(router).use(createPinia());
 
 app.component("BaseLayout", BaseLayout);
 
