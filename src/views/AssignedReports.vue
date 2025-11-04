@@ -1,15 +1,11 @@
 <template>
 	<BaseLayout>
-		<ion-content class="[--background:theme(colors.slate.50)]">
-			<div class="p-4">
-				<p>Hier komen de toegewezen rapportages voor de inspecteur.</p>
-			</div>
-		</ion-content>
+		<div class="p-4">
+			<p>Hier komen de toegewezen rapportages voor de inspecteur.</p>
+		</div>
 	</BaseLayout>
 </template>
 
-<script setup>
-import { IonContent } from "@ionic/vue";
-</script>
+<script setup></script>
 
 <style scoped></style>

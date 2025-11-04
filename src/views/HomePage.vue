@@ -1,18 +1,16 @@
 <template>
 	<BaseLayout>
-		<ion-content class="[--background:theme(colors.slate.50)]">
-			<section class="h-full grid grid-cols-2 gap-6 p-4 place-items-stretch">
-				<RouterLink
-					v-for="item in items"
-					:key="item.to"
-					:to="item.to"
-					class="menu-card"
-					aria-label="menu item">
-					<ion-icon :icon="item.icon" class="menu-icon" />
-					<span class="menu-title">{{ item.label }}</span>
-				</RouterLink>
-			</section>
-		</ion-content>
+		<section class="h-full grid grid-cols-2 gap-6 p-4 place-items-stretch">
+			<RouterLink
+				v-for="item in items"
+				:key="item.to"
+				:to="item.to"
+				class="menu-card"
+				aria-label="menu item">
+				<ion-icon :icon="item.icon" class="menu-icon" />
+				<span class="menu-title">{{ item.label }}</span>
+			</RouterLink>
+		</section>
 	</BaseLayout>
 </template>
 
