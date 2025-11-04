@@ -1,11 +1,11 @@
 <template>
-	<ion-page>
+	<IonPage>
 		<AppHeader />
 		<ion-content>
 			<slot />
 		</ion-content>
 		<AppFooter />
-	</ion-page>
+	</IonPage>
 </template>
 
 <script setup>
