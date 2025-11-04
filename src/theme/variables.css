@@ -1,9 +1,4 @@
 :root {
   color-scheme: light;
-  --ion-background-color: #eaeaea;           /* light content */
-}
-@media (prefers-color-scheme: dark) {
-  :root {
-    --ion-background-color: #111827;         /* dark content */
-  }
+  --ion-background-color: #f1f1f1;           /* light content */
 }

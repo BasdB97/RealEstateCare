@@ -1,18 +1,6 @@
 <template>
-	<ion-page>
-		<ion-header :translucent="true">
-			<ion-toolbar>
-				<ion-title>Information</ion-title>
-			</ion-toolbar>
-		</ion-header>
-
-		<ion-content :fullscreen="true">
-			<ion-header collapse="condense">
-				<ion-toolbar>
-					<ion-title size="large">Information</ion-title>
-				</ion-toolbar>
-			</ion-header>
-
+	<BaseLayout>
+		<ion-content class="[--background:theme(colors.slate.50)]">
 			<div class="p-4">
 				<h2 class="text-xl font-bold mb-4">Real Estate Care</h2>
 				<p class="mb-2"><strong>Version:</strong> 1.0.0</p>
@@ -22,7 +10,7 @@
 				</p>
 			</div>
 		</ion-content>
-	</ion-page>
+	</BaseLayout>
 </template>
 
 <script setup>

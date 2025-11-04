@@ -1,23 +1,11 @@
 <template>
-	<ion-page>
-		<ion-header :translucent="true">
-			<ion-toolbar>
-				<ion-title>Settings</ion-title>
-			</ion-toolbar>
-		</ion-header>
-
-		<ion-content :fullscreen="true">
-			<ion-header collapse="condense">
-				<ion-toolbar>
-					<ion-title size="large">Settings</ion-title>
-				</ion-toolbar>
-			</ion-header>
-
+	<BaseLayout>
+		<ion-content class="[--background:theme(colors.slate.50)]">
 			<div class="p-4">
 				<p>Hier komen de instellingen.</p>
 			</div>
 		</ion-content>
-	</ion-page>
+	</BaseLayout>
 </template>
 
 <script setup>
