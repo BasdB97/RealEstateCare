@@ -1,6 +1,6 @@
 <template>
 	<footer>
-		<div class="footer-container">
+		<div class="bg-[#00aaa2] flex justify-evenly items-center p-2">
 			<router-link to="/" class="footer-link">
 				<ion-icon :icon="home"></ion-icon>
 				<span>Home</span>
