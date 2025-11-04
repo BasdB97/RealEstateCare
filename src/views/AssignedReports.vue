@@ -4,9 +4,12 @@
 			<IonSpinner v-if="loading" name="circles" id="loading-spinner" />
 			<div v-else-if="error" class="text-red-600">{{ error }}</div>
 			<ul v-else class="space-y-3">
-				<li v-for="r in assignedReports" :key="r.id" class="p-4 rounded-lg ring-1 ring-slate-200">
-					<p class="font-semibold">{{ r.location }}</p>
-					<p class="text-sm text-slate-600">Datum: {{ r.reportDate }}</p>
+				<li
+					v-for="r in assignedReports || []"
+					:key="r?.id"
+					class="p-4 rounded-lg ring-1 ring-slate-200">
+					<p class="font-semibold">{{ r?.location }}</p>
+					<p class="text-sm text-slate-600">Datum: {{ r?.reportDate }}</p>
 				</li>
 			</ul>
 		</div>

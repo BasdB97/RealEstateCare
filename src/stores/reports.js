@@ -9,9 +9,9 @@ export const useReportsStore = defineStore("reports", {
 	}),
 
 	getters: {
-		assignedReports: (state) => state.reports.filter((r) => !r.completed),
-		completedReports: (state) => state.reports.filter((r) => r.completed),
-		getReportById: (state) => (id) => state.reports.find((r) => r.id === id),
+		assignedReports: (s) => (s.reports ?? []).filter((r) => !r.completed),
+		completedReports: (state) => (state.reports ?? []).filter((r) => r.completed),
+		getReportById: (state) => (id) => (state.reports ?? []).find((r) => r.id === id),
 	},
 
 	actions: {
@@ -22,13 +22,10 @@ export const useReportsStore = defineStore("reports", {
 
 			try {
 				const baseUrl = import.meta.env.VITE_JSONBIN_BASE;
-				console.log("Base URL:", baseUrl);
 				const binId = import.meta.env.VITE_JSONBIN_BIN_ID;
-				console.log("Bin ID:", binId);
-				console.log("Master key:", import.meta.env.VITE_JSONBIN_X_MASTER_KEY_B64);
-				console.log("URL:", `${baseUrl}/${binId}`);
 				const response = await api.get(`${baseUrl}/${binId}`);
-				this.reports = Array.isArray(response.data.record) ? response.data.record.reports : [];
+				console.log("Response:", response);
+				this.reports = Array.isArray(response.data.record) ? response.data.record : [];
 				console.log("Reports:", this.reports);
 			} catch (err) {
 				console.error("Error fetching reports:", err);
