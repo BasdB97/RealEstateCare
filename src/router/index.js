@@ -2,45 +2,13 @@ import { createRouter, createWebHistory } from "@ionic/vue-router";
 import HomePage from "../views/HomePage.vue";
 
 const routes = [
-	{
-		path: "/",
-		redirect: "/home",
-	},
-	{
-		path: "/home",
-		name: "Home",
-		component: HomePage,
-	},
-	{
-		path: "/assigned-reports",
-		name: "Assigned Reports",
-		component: () => import("@/views/AssignedReports.vue"),
-	},
-	{
-		path: "/completed-reports",
-		name: "Completed Reports",
-		component: () => import("@/views/CompletedReports.vue"),
-	},
-	{
-		path: "/knowledge-base",
-		name: "Knowledge Base",
-		component: () => import("@/views/KnowledgeBase.vue"),
-	},
-	{
-		path: "/settings",
-		name: "Settings",
-		component: () => import("@/views/SettingsPage.vue"),
-	},
-	{
-		path: "/search",
-		name: "Search",
-		component: () => import("@/views/SearchPage.vue"),
-	},
-	{
-		path: "/information",
-		name: "Information",
-		component: () => import("@/views/InformationPage.vue"),
-	},
+	{ path: "/", component: () => import("@/views/HomePage.vue") },
+	{ path: "/assigned-reports", component: () => import("@/views/AssignedReports.vue") },
+	{ path: "/completed-reports", component: () => import("@/views/CompletedReports.vue") },
+	{ path: "/knowledge-base", component: () => import("@/views/KnowledgeBase.vue") },
+	{ path: "/settings", component: () => import("@/views/SettingsPage.vue") },
+	{ path: "/search", component: () => import("@/views/SearchPage.vue") },
+	{ path: "/information", component: () => import("@/views/InformationPage.vue") },
 	// {
 	// 	path: "/edit-report/:id",
 	// 	name: "Edit Report",
