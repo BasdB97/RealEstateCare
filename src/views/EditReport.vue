@@ -12,7 +12,11 @@
 				</IonCardHeader>
 
 				<IonAccordionGroup v-if="report.inspections.length > 0">
-					<IonAccordion v-for="(inspection, index) in report.inspections" :key="index" class="mb-4">
+					<IonAccordion
+						v-for="inspection in report.inspections"
+						:key="`${inspection.type}-${inspection.id}`"
+						:value="`${inspection.type}-${inspection.id}`"
+						class="mb-4">
 						<IonItem slot="header">
 							<IonLabel>{{ getInspectionLabel(inspection) }}</IonLabel>
 							<IonBadge v-if="hasUrgentAction(inspection)" color="danger" class="py-1"
@@ -21,7 +25,10 @@
 						</IonItem>
 						<!-- TODO: Add component for each inspection type -->
 						<div slot="content">
-							<DamageReport v-if="inspection.type === 'damage'" :inspection="inspection" />
+							<DamageReport
+								v-if="inspection.type === 'damage'"
+								:inspection="inspection"
+								@update="(payload) => saveInspection(report.id, payload)" />
 							<OverdueMaintenanceReport
 								v-if="inspection.type === 'overdueMaintenance'"></OverdueMaintenanceReport>
 							<TechnicalInstallationReport
@@ -31,6 +38,20 @@
 					</IonAccordion>
 				</IonAccordionGroup>
 			</IonCard>
+			<IonToast
+				:is-open="toastOpen"
+				message="Inspectie opgeslagen"
+				duration="1500"
+				position="bottom"
+				@didDismiss="toastOpen = false" />
+			<div class="flex flex-col gap-3 mt-6 p-4">
+				<IonButton expand="block" color="medium" class="rounded-lg font-semibold">
+					Rapport opslaan, niet afronden
+				</IonButton>
+				<IonButton expand="block" color="success" class="rounded-lg font-semibold">
+					Rapport opslaan en afronden
+				</IonButton>
+			</div>
 		</div>
 	</BaseLayout>
 </template>
@@ -41,10 +62,11 @@ import OverdueMaintenanceReport from "@/components/reports/OverdueMaintenanceRep
 import TechnicalInstallationReport from "@/components/reports/TechnicalInstallationReport.vue";
 import ModificationReport from "@/components/reports/ModificationReport.vue";
 
-import { computed, onMounted } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
+import { storeToRefs } from "pinia";
 import {
-	IonList,
+	IonButton,
 	IonItem,
 	IonLabel,
 	IonBadge,
@@ -52,6 +74,7 @@ import {
 	IonCard,
 	IonCardHeader,
 	IonCardTitle,
+	IonToast,
 	IonAccordionGroup,
 	IonAccordion,
 } from "@ionic/vue";
@@ -61,8 +84,15 @@ import { getInspectionLabel, hasUrgentAction } from "@/utils/reportHelpers";
 const route = useRoute();
 const router = useRouter();
 const id = Number(route.params.id);
-
 const store = useReportsStore();
+const toastOpen = ref(false);
+
+const { loading, error } = storeToRefs(store);
+
+async function saveInspection(reportId, updated) {
+	await store.updateInspection(reportId, updated);
+	toastOpen.value = true;
+}
 
 onMounted(async () => {
 	if (!store.reports?.length) {

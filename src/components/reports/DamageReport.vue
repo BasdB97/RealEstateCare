@@ -1,18 +1,18 @@
 <template>
 	<IonList class="p-4">
-		<IonItem class="flex justify-between items-center">
+		<IonItem>
 			<IonLabel>Locatie</IonLabel>
-			<IonInput v-model="inspection.location" class="text-right w-1/2" />
+			<IonInput slot="end" v-model="form.location" class="text-right w-1/2" />
 		</IonItem>
 
-		<IonItem class="flex justify-between items-center">
+		<IonItem>
 			<IonLabel>Nieuwe schade?</IonLabel>
-			<IonCheckbox v-model="inspection.newDamage" slot="end" :value="inspection.newDamage" />
+			<IonCheckbox slot="end" v-model="form.newDamage" />
 		</IonItem>
 
-		<IonItem class="flex justify-between items-center">
+		<IonItem>
 			<IonSelect
-				v-model="inspection.damageType"
+				v-model="form.damageType"
 				label="Soort schade"
 				labelPlacement="fixed"
 				interface="action-sheet"
@@ -26,25 +26,29 @@
 			</IonSelect>
 		</IonItem>
 
-		<IonItem class="flex justify-between items-center">
+		<IonItem>
 			<IonLabel>Datum</IonLabel>
-			<IonInput slot="end" type="date" v-model="inspection.date" />
+			<IonDatetimeButton :datetime="`datetime-${form.id}`" slot="end" />
+			<IonModal :keep-contents-mounted="true">
+				<IonDatetime
+					v-model="form.date"
+					:id="`datetime-${form.id}`"
+					presentation="date"
+					show-adjacent-days="true"
+					:show-default-buttons="true"
+					done-text="Opslaan"
+					cancel-text="Annuleren" />
+			</IonModal>
 		</IonItem>
 
-		<IonItem class="flex justify-between items-center">
+		<IonItem>
 			<IonLabel>Acute actie vereist?</IonLabel>
-			<IonCheckbox
-				v-model="inspection.urgentActionRequired"
-				slot="end"
-				:value="inspection.urgentActionRequired" />
+			<IonCheckbox slot="end" v-model="form.urgentActionRequired" />
 		</IonItem>
 
-		<IonItem lines="none" class="flex justify-between items-center">
+		<IonItem lines="none">
 			<IonLabel position="stacked">Omschrijving</IonLabel>
-			<IonTextarea
-				v-model="inspection.damageDescription"
-				auto-grow
-				placeholder="Beschrijf de schade..." />
+			<IonTextarea v-model="form.damageDescription" auto-grow placeholder="Beschrijf schade..." />
 		</IonItem>
 
 		<div class="mt-4">
@@ -57,6 +61,11 @@
 					alt="Inspectiefoto"
 					class="w-32 h-32 object-cover rounded-lg shadow" />
 			</div>
+		</div>
+		<div class="mt-4 flex items-center justify-end gap-3">
+			<IonBadge v-if="isDirty" color="warning">Niet opgeslagen</IonBadge>
+			<IonBadge v-else color="success">Opgeslagen</IonBadge>
+			<IonButton size="small" :disabled="!isDirty" @click="save">Inspectie opslaan</IonButton>
 		</div>
 	</IonList>
 </template>
@@ -71,12 +80,50 @@ import {
 	IonSelect,
 	IonSelectOption,
 	IonTextarea,
+	IonButton,
+	IonDatetime,
+	IonDatetimeButton,
+	IonModal,
+	IonBadge,
 } from "@ionic/vue";
+import { reactive, watch, toRaw, ref } from "vue";
 
-defineProps({
+const props = defineProps({
 	inspection: {
 		type: Object,
 		required: true, // verwacht het damage-inspection object
 	},
 });
+
+const emit = defineEmits(["update"]);
+const isDirty = ref(false);
+
+const form = reactive({
+	...props.inspection,
+});
+
+const baseline = ref(JSON.stringify(form));
+
+watch(
+	() => props.inspection,
+	(v) => {
+		Object.assign(form, v);
+		baseline.value = JSON.stringify(v);
+		isDirty.value = false;
+	},
+	{ deep: true }
+);
+
+watch(
+	form,
+	() => {
+		isDirty.value = JSON.stringify(toRaw(form)) !== baseline.value;
+	},
+	{ deep: true }
+);
+function save() {
+	emit("update", { ...toRaw(form) });
+	baseline.value = JSON.stringify({ ...toRaw(form) });
+	isDirty.value = false;
+}
 </script>
