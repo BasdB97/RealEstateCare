@@ -3,13 +3,12 @@
 		<IonSpinner v-if="loading" name="circles" id="loading-spinner" />
 		<div v-else-if="error" class="text-red-600">{{ error }}</div>
 		<div v-else>
-			<IonCard class="p-4" v-if="report">
+			<IonCard class="" v-if="report">
 				<IonCardHeader>
-					<IonCardTitle class="text-2xl font-bold text-primarybg"
+					<IonCardTitle class="text-2xl font-bold text-primarybg border-b border-primarybg"
 						>{{ report.location.split(", ")[0] }},
-						{{ report.location.split(", ")[2] }}</IonCardTitle
-					>
-					<IonCardSubtitle class="text-slate-600">Datum: {{ report.reportDate }}</IonCardSubtitle>
+						{{ report.location.split(", ")[2] }}
+					</IonCardTitle>
 				</IonCardHeader>
 
 				<IonAccordionGroup v-if="report.inspections.length > 0">
@@ -22,16 +21,12 @@
 						</IonItem>
 						<!-- TODO: Add component for each inspection type -->
 						<div slot="content">
-							<div v-if="inspection.type === 'damage'">Schade opnemen component</div>
-							<div v-if="inspection.type === 'overdueMaintenance'">
-								Achterstallig onderhoud opnemen component
-							</div>
-							<div v-if="inspection.type === 'technicalInstallation'">
-								Technische installaties inspecteren component
-							</div>
-							<div v-if="inspection.type === 'modification'">
-								Modificaties inventariseren component
-							</div>
+							<DamageReport v-if="inspection.type === 'damage'" :inspection="inspection" />
+							<OverdueMaintenanceReport
+								v-if="inspection.type === 'overdueMaintenance'"></OverdueMaintenanceReport>
+							<TechnicalInstallationReport
+								v-if="inspection.type === 'technicalInstallation'"></TechnicalInstallationReport>
+							<ModificationReport v-if="inspection.type === 'modification'"></ModificationReport>
 						</div>
 					</IonAccordion>
 				</IonAccordionGroup>
@@ -41,6 +36,11 @@
 </template>
 
 <script setup>
+import DamageReport from "@/components/reports/DamageReport.vue";
+import OverdueMaintenanceReport from "@/components/reports/OverdueMaintenanceReport.vue";
+import TechnicalInstallationReport from "@/components/reports/TechnicalInstallationReport.vue";
+import ModificationReport from "@/components/reports/ModificationReport.vue";
+
 import { computed, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import {
@@ -52,7 +52,6 @@ import {
 	IonCard,
 	IonCardHeader,
 	IonCardTitle,
-	IonCardSubtitle,
 	IonAccordionGroup,
 	IonAccordion,
 } from "@ionic/vue";
