@@ -45,7 +45,11 @@
 				position="bottom"
 				@didDismiss="toastOpen = false" />
 			<div class="flex flex-col gap-3 mt-6 p-4">
-				<IonButton expand="block" color="medium" @click="updateReport(report.id)">
+				<IonButton
+					expand="block"
+					color="medium"
+					class="rounded-lg font-semibold"
+					@click="saveDraft">
 					Rapport opslaan, niet afronden
 				</IonButton>
 
@@ -93,6 +97,11 @@ const { loading, error } = storeToRefs(store);
 
 async function saveLocalChanges(reportId, updated) {
 	store.updateInspectionLocal(reportId, updated);
+	toastOpen.value = true;
+}
+
+async function saveDraft() {
+	store.persistReportDraft(report.value.id);
 	toastOpen.value = true;
 }
 

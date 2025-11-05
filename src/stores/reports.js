@@ -97,5 +97,26 @@ export const useReportsStore = defineStore("reports", {
 			this.dirtyReports = {};
 			this._saveLocalCache();
 		},
+
+		async persistReportDraft(reportId) {
+			const idx = this.reports.findIndex((r) => r.id === reportId);
+			if (idx === -1) throw new Error(`Report ${reportId} niet gevonden`);
+
+			// Zorg dat completed NIET verandert (forceer false voor draft-save)
+			const draftReport = { ...this.reports[idx], completed: false };
+
+			// Schrijf terug in state zodat UI klopt en cache consistent is
+			this.reports = this.reports.map((r) => (r.id === reportId ? draftReport : r));
+			this._saveLocalCache();
+
+			// Persist hele collectie (JSONBin bewaart 1 bin met alle rapporten)
+			const baseUrl = import.meta.env.VITE_JSONBIN_BASE;
+			const binId = import.meta.env.VITE_JSONBIN_BIN_ID;
+			await api.put(`${baseUrl}/${binId}`, this.reports);
+
+			// Markeer als gesynct
+			delete this.dirtyReports[reportId];
+			this._saveLocalCache();
+		},
 	},
 });
