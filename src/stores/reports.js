@@ -118,5 +118,31 @@ export const useReportsStore = defineStore("reports", {
 			delete this.dirtyReports[reportId];
 			this._saveLocalCache();
 		},
+
+		async persistReportComplete(reportId) {
+			const idx = this.reports.findIndex((r) => r.id === reportId);
+			if (idx === -1) throw new Error(`Report ${reportId} niet gevonden`);
+
+			const original = this.reports[idx];
+			const completedReport = { ...original, completed: true };
+
+			// Optimistic update + cache
+			this.reports = this.reports.map((r) => (r.id === reportId ? completedReport : r));
+			this._saveLocalCache();
+
+			try {
+				const baseUrl = import.meta.env.VITE_JSONBIN_BASE;
+				const binId = import.meta.env.VITE_JSONBIN_BIN_ID;
+				await api.put(`${baseUrl}/${binId}`, this.reports);
+				delete this.dirtyReports[reportId];
+				this._saveLocalCache();
+			} catch (e) {
+				// rollback als sync faalt
+				this.reports = this.reports.map((r) => (r.id === reportId ? original : r));
+				this._saveLocalCache();
+				this.error = "Opslaan & afronden mislukt (offline?)";
+				throw e;
+			}
+		},
 	},
 });

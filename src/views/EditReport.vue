@@ -40,7 +40,7 @@
 			</IonCard>
 			<IonToast
 				:is-open="toastOpen"
-				message="Inspectie opgeslagen"
+				:message="toastMessage"
 				duration="1500"
 				position="bottom"
 				@didDismiss="toastOpen = false" />
@@ -53,7 +53,11 @@
 					Rapport opslaan, niet afronden
 				</IonButton>
 
-				<IonButton expand="block" color="success" @click="completeReport(report.id)">
+				<IonButton
+					expand="block"
+					color="success"
+					class="rounded-lg font-semibold"
+					@click="completeReport">
 					Rapport opslaan en afronden
 				</IonButton>
 			</div>
@@ -92,17 +96,26 @@ const router = useRouter();
 const id = Number(route.params.id);
 const store = useReportsStore();
 const toastOpen = ref(false);
-
+const toastMessage = ref("");
 const { loading, error } = storeToRefs(store);
 
 async function saveLocalChanges(reportId, updated) {
-	store.updateInspectionLocal(reportId, updated);
+	await store.updateInspectionLocal(reportId, updated);
+	toastMessage.value = "Inspectie opgeslagen";
 	toastOpen.value = true;
 }
 
 async function saveDraft() {
-	store.persistReportDraft(report.value.id);
+	await store.persistReportDraft(report.value.id);
+	toastMessage.value = "Rapport opgeslagen, nog niet afronden";
 	toastOpen.value = true;
+}
+
+async function completeReport() {
+	await store.persistReportComplete(report.value.id);
+	toastMessage.value = "Rapport opgeslagen en afgerond";
+	toastOpen.value = true;
+	setTimeout(() => router.push("/"), 1500);
 }
 
 onMounted(async () => {
