@@ -28,7 +28,7 @@
 							<DamageReport
 								v-if="inspection.type === 'damage'"
 								:inspection="inspection"
-								@update="(payload) => saveInspection(report.id, payload)" />
+								@saveLocalChanges="(payload) => saveLocalChanges(report.id, payload)" />
 							<OverdueMaintenanceReport
 								v-if="inspection.type === 'overdueMaintenance'"></OverdueMaintenanceReport>
 							<TechnicalInstallationReport
@@ -45,10 +45,11 @@
 				position="bottom"
 				@didDismiss="toastOpen = false" />
 			<div class="flex flex-col gap-3 mt-6 p-4">
-				<IonButton expand="block" color="medium" class="rounded-lg font-semibold">
+				<IonButton expand="block" color="medium" @click="updateReport(report.id)">
 					Rapport opslaan, niet afronden
 				</IonButton>
-				<IonButton expand="block" color="success" class="rounded-lg font-semibold">
+
+				<IonButton expand="block" color="success" @click="completeReport(report.id)">
 					Rapport opslaan en afronden
 				</IonButton>
 			</div>
@@ -90,8 +91,8 @@ const toastOpen = ref(false);
 
 const { loading, error } = storeToRefs(store);
 
-async function saveInspection(reportId, updated) {
-	await store.updateInspection(reportId, updated);
+async function saveLocalChanges(reportId, updated) {
+	store.updateInspectionLocal(reportId, updated);
 	toastOpen.value = true;
 }
 

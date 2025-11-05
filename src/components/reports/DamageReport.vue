@@ -65,7 +65,9 @@
 		<div class="mt-4 flex items-center justify-end gap-3">
 			<IonBadge v-if="isDirty" color="warning">Niet opgeslagen</IonBadge>
 			<IonBadge v-else color="success">Opgeslagen</IonBadge>
-			<IonButton size="small" :disabled="!isDirty" @click="save">Inspectie opslaan</IonButton>
+			<IonButton size="small" :disabled="!isDirty" @click="saveLocalChanges"
+				>Inspectie opslaan</IonButton
+			>
 		</div>
 	</IonList>
 </template>
@@ -137,10 +139,10 @@ watch(
 );
 
 // save: stuurt form data naar parent en update baseline
-function save() {
-	emit("update", { ...toRaw(form) }); // Emit update event met form data
+function saveLocalChanges() {
+	console.log("saveLocalChanges", { ...toRaw(form) });
+	emit("saveLocalChanges", { ...toRaw(form) }); // Emit update event met form data
 	baseline.value = JSON.stringify({ ...toRaw(form) }); // Update baseline
 	isDirty.value = false; // Reset dirty flag
-  
 }
 </script>
