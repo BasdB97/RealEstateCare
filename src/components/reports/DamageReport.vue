@@ -71,6 +71,7 @@
 </template>
 
 <script setup>
+// Ionic UI componenten importeren
 import {
 	IonList,
 	IonItem,
@@ -86,8 +87,10 @@ import {
 	IonModal,
 	IonBadge,
 } from "@ionic/vue";
+// Vue composition API functies importeren
 import { reactive, watch, toRaw, ref } from "vue";
 
+// Props definitie - ontvangt inspection object van parent component
 const props = defineProps({
 	inspection: {
 		type: Object,
@@ -95,35 +98,49 @@ const props = defineProps({
 	},
 });
 
+// Emit definitie - stuurt updates terug naar parent component
 const emit = defineEmits(["update"]);
+
+// isDirty: houdt bij of het formulier is gewijzigd sinds laatste opslag
 const isDirty = ref(false);
 
+// form: reactive kopie van inspection data voor two-way binding
 const form = reactive({
 	...props.inspection,
 });
 
+// baseline: JSON string van laatste opgeslagen staat voor vergelijking
 const baseline = ref(JSON.stringify(form));
 
+// Watcher: observeert veranderingen in props.inspection
+// Triggered wanneer parent component nieuwe data doorgeeft
 watch(
 	() => props.inspection,
 	(v) => {
-		Object.assign(form, v);
-		baseline.value = JSON.stringify(v);
-		isDirty.value = false;
+		Object.assign(form, v); // Update form met nieuwe data
+		baseline.value = JSON.stringify(v); // Sla nieuwe baseline op
+		isDirty.value = false; // Reset dirty flag (geen wijzigingen)
+		console.log("form changed:", v); // Debug log
 	},
-	{ deep: true }
+	{ deep: true } // Observeer ook nested properties
 );
 
+// Watcher: detecteert wijzigingen in het formulier
+// Vergelijkt huidige form-staat met baseline voor dirty tracking
 watch(
 	form,
 	() => {
+		// Zet isDirty op true als form verschilt van baseline
 		isDirty.value = JSON.stringify(toRaw(form)) !== baseline.value;
 	},
-	{ deep: true }
+	{ deep: true } // Observeer alle form fields
 );
+
+// save: stuurt form data naar parent en update baseline
 function save() {
-	emit("update", { ...toRaw(form) });
-	baseline.value = JSON.stringify({ ...toRaw(form) });
-	isDirty.value = false;
+	emit("update", { ...toRaw(form) }); // Emit update event met form data
+	baseline.value = JSON.stringify({ ...toRaw(form) }); // Update baseline
+	isDirty.value = false; // Reset dirty flag
+  
 }
 </script>

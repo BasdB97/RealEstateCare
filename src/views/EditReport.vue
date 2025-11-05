@@ -64,7 +64,10 @@ import ModificationReport from "@/components/reports/ModificationReport.vue";
 
 import { computed, onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
+import { useReportsStore } from "@/stores/reports";
+import { getInspectionLabel, hasUrgentAction } from "@/utils/reportHelpers";
 import { storeToRefs } from "pinia";
+
 import {
 	IonButton,
 	IonItem,
@@ -78,8 +81,6 @@ import {
 	IonAccordionGroup,
 	IonAccordion,
 } from "@ionic/vue";
-import { useReportsStore } from "@/stores/reports";
-import { getInspectionLabel, hasUrgentAction } from "@/utils/reportHelpers";
 
 const route = useRoute();
 const router = useRouter();
