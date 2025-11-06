@@ -106,16 +106,28 @@ async function saveLocalChanges(reportId, updated) {
 }
 
 async function saveDraft() {
-	await store.persistReportWithStatus(report.value.id, false);
-	toastMessage.value = "Rapport opgeslagen, nog niet afronden";
-	toastOpen.value = true;
+	try {
+		await store.persistReportWithStatus(report.value.id, false);
+		toastMessage.value = "Rapport opgeslagen, nog niet afgerond";
+		toastOpen.value = true;
+	} catch (error) {
+		toastMessage.value = "Fout bij opslaan: " + (error.message || "Probeer opnieuw");
+		toastOpen.value = true;
+	}
 }
 
 async function completeReport() {
-	await store.persistReportWithStatus(report.value.id, true);
-	toastMessage.value = "Rapport opgeslagen en afgerond";
-	toastOpen.value = true;
-	setTimeout(() => router.push("/"), 1500);
+	try {
+		await store.persistReportWithStatus(report.value.id, true);
+		toastMessage.value = "Rapport opgeslagen en afgerond";
+		toastOpen.value = true;
+		// Wacht kort zodat gebruiker de toast ziet, dan redirect
+		setTimeout(() => router.push("/assigned-reports"), 1500);
+	} catch (error) {
+		toastMessage.value = "Fout bij opslaan: " + (error.message || "Probeer opnieuw");
+		toastOpen.value = true;
+		// Geen redirect bij error
+	}
 }
 
 onMounted(async () => {
