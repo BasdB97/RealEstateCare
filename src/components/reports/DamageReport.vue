@@ -101,7 +101,7 @@ const props = defineProps({
 });
 
 // Emit definitie - stuurt updates terug naar parent component
-const emit = defineEmits(["update"]);
+const emit = defineEmits(["update", "saveLocalChanges"]);
 
 // isDirty: houdt bij of het formulier is gewijzigd sinds laatste opslag
 const isDirty = ref(false);
