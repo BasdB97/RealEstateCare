@@ -110,6 +110,7 @@ async function saveDraft() {
 		await store.persistReportWithStatus(report.value.id, false);
 		toastMessage.value = "Rapport opgeslagen, nog niet afgerond";
 		toastOpen.value = true;
+		setTimeout(() => router.push("/assigned-reports"), 1500);
 	} catch (error) {
 		toastMessage.value = "Fout bij opslaan: " + (error.message || "Probeer opnieuw");
 		toastOpen.value = true;
