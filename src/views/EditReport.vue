@@ -100,19 +100,19 @@ const toastMessage = ref("");
 const { loading, error } = storeToRefs(store);
 
 async function saveLocalChanges(reportId, updated) {
-	await store.updateInspectionLocal(reportId, updated);
+	store.updateInspectionLocal(reportId, updated);
 	toastMessage.value = "Inspectie opgeslagen";
 	toastOpen.value = true;
 }
 
 async function saveDraft() {
-	await store.persistReportDraft(report.value.id);
+	await store.persistReportWithStatus(report.value.id, false);
 	toastMessage.value = "Rapport opgeslagen, nog niet afronden";
 	toastOpen.value = true;
 }
 
 async function completeReport() {
-	await store.persistReportComplete(report.value.id);
+	await store.persistReportWithStatus(report.value.id, true);
 	toastMessage.value = "Rapport opgeslagen en afgerond";
 	toastOpen.value = true;
 	setTimeout(() => router.push("/"), 1500);

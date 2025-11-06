@@ -25,6 +25,7 @@ export const useReportsStore = defineStore("reports", {
 	},
 
 	actions: {
+		//
 		_saveLocalCache() {
 			localStorage.setItem("reports-cache", JSON.stringify(this.reports));
 			localStorage.setItem("reports-dirty", JSON.stringify(this.dirtyReports));
@@ -52,101 +53,59 @@ export const useReportsStore = defineStore("reports", {
 				console.log("Reports:", this.reports);
 			} catch (err) {
 				console.error("Error fetching reports:", err);
-				this.error = "Er is een fout opgetreden bij het ophalen van de rapportages.";
+				(this.error = "Er is een fout opgetreden bij het ophalen van de rapportages."), err;
 			} finally {
 				this.loading = false;
 				console.log("Loading:", this.loading);
 			}
 		},
 
+		// Store inspection in local cache
 		updateInspectionLocal(reportId, updated) {
-			if (updated?.id == null || !updated?.type) throw new Error("ID of type ontbreekt");
+			// Validate input
+			if (!updated?.id || !updated?.type) throw new Error("ID of type ontbreekt"); //
+			// Get report by id from store and check if it exists
 			const report = this.getReportById(reportId);
 			if (!report) throw new Error(`Report ${reportId} niet gevonden`);
 
+			// if inspection id and type match, update the inspection, otherwise keep the original inspection
 			report.inspections = report.inspections.map((i) =>
 				i.id === updated.id && i.type === updated.type
 					? { ...i, ...updated, date: normalizeDate(updated.date) }
 					: i
 			);
 
-			this.dirtyReports[reportId] = true; // markeer lokaal gewijzigd
-			this._saveLocalCache(); // cache naar localStorage
-		},
-
-		async persistReport(reportId) {
-			const report = this.getReportById(reportId);
-			if (!report) throw new Error(`Report ${reportId} niet gevonden`);
-
-			// hier schrijf je 1 rapport weg; JSONBin heeft meestal 1 hele collectie nodig,
-			// dus stuur desnoods this.reports als record.
-			const baseUrl = import.meta.env.VITE_JSONBIN_BASE;
-			const binId = import.meta.env.VITE_JSONBIN_BIN_ID;
-
-			await api.put(`${baseUrl}/${binId}`, { reports: this.reports });
-
-			delete this.dirtyReports[reportId];
+			// Mark as local changed
+			this.dirtyReports[reportId] = true;
+			// Save cache to localStorage
 			this._saveLocalCache();
 		},
 
-		async persistAllDirty() {
-			// eventueel per report wegschrijven; voor JSONBin vaak 1 call genoeg:
-			const baseUrl = import.meta.env.VITE_JSONBIN_BASE;
-			const binId = import.meta.env.VITE_JSONBIN_BIN_ID;
-
-			await api.put(`${baseUrl}/${binId}`, { reports: this.reports });
-
-			this.dirtyReports = {};
-			this._saveLocalCache();
-		},
-
-		async persistReportDraft(reportId) {
-			const idx = this.reports.findIndex((r) => r.id === reportId);
-			if (idx === -1) throw new Error(`Report ${reportId} niet gevonden`);
-
-			// Zorg dat completed NIET verandert (forceer false voor draft-save)
-			const draftReport = { ...this.reports[idx], completed: false };
-			console.log("draftReport", draftReport);
-
-			// Schrijf terug in state zodat UI klopt en cache consistent is
-			this.reports = this.reports.map((r) => (r.id === reportId ? draftReport : r));
-			console.log("this.reports", this.reports);
-			this._saveLocalCache();
-			// Stop executing code here
-
-			// Persist hele collectie (JSONBin bewaart 1 bin met alle rapporten)
-			const baseUrl = import.meta.env.VITE_JSONBIN_BASE;
-			const binId = import.meta.env.VITE_JSONBIN_BIN_ID;
-			await api.put(`${baseUrl}/${binId}`, { reports: this.reports });
-
-			// Markeer als gesynct
-			delete this.dirtyReports[reportId];
-			this._saveLocalCache();
-		},
-
-		async persistReportComplete(reportId) {
+		// Send report to server (either completed or not)
+		async persistReportWithStatus(reportId, completed) {
 			const idx = this.reports.findIndex((r) => r.id === reportId);
 			if (idx === -1) throw new Error(`Report ${reportId} niet gevonden`);
 
 			const original = this.reports[idx];
-			const completedReport = { ...original, completed: true };
+			const next = { ...original, completed };
 
-			// Optimistic update + cache
-			this.reports = this.reports.map((r) => (r.id === reportId ? completedReport : r));
+			// optimistic update + cache
+			this.reports = this.reports.map((r) => (r.id === reportId ? next : r));
 			this._saveLocalCache();
 
 			try {
 				const baseUrl = import.meta.env.VITE_JSONBIN_BASE;
 				const binId = import.meta.env.VITE_JSONBIN_BIN_ID;
-				await api.put(`${baseUrl}/${binId}`, { reports: this.reports });
+				const response = await api.put(`${baseUrl}/${binId}`, { reports: this.reports });
 				delete this.dirtyReports[reportId];
 				this._saveLocalCache();
-			} catch (e) {
-				// rollback als sync faalt
+				return response;
+			} catch (err) {
+				// rollback
 				this.reports = this.reports.map((r) => (r.id === reportId ? original : r));
 				this._saveLocalCache();
-				this.error = "Opslaan & afronden mislukt (offline?)";
-				throw e;
+				this.error = completed ? "Opslaan & afronden mislukt" : "Opslaan mislukt";
+				throw err;
 			}
 		},
 	},
