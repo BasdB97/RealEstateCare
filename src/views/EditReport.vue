@@ -30,7 +30,9 @@
 								:inspection="inspection"
 								@saveLocalChanges="(payload) => saveLocalChanges(report.id, payload)" />
 							<OverdueMaintenanceReport
-								v-if="inspection.type === 'overdueMaintenance'"></OverdueMaintenanceReport>
+								v-if="inspection.type === 'overdueMaintenance'"
+								:inspection="inspection"
+								@saveLocalChanges="(payload) => saveLocalChanges(report.id, payload)" />
 							<TechnicalInstallationReport
 								v-if="inspection.type === 'technicalInstallation'"></TechnicalInstallationReport>
 							<ModificationReport v-if="inspection.type === 'modification'"></ModificationReport>

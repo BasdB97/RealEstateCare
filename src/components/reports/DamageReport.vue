@@ -73,6 +73,9 @@
 </template>
 
 <script setup>
+// Vue composition API functies importeren
+import { reactive, watch, toRaw, ref } from "vue";
+
 // Ionic UI componenten importeren
 import {
 	IonList,
@@ -89,8 +92,6 @@ import {
 	IonModal,
 	IonBadge,
 } from "@ionic/vue";
-// Vue composition API functies importeren
-import { reactive, watch, toRaw, ref } from "vue";
 
 // Props definitie - ontvangt inspection object van parent component
 const props = defineProps({
