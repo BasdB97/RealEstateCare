@@ -46,7 +46,9 @@ export const useReportsStore = defineStore("reports", {
 				const binId = import.meta.env.VITE_JSONBIN_BIN_ID;
 				const response = await api.get(`${baseUrl}/${binId}`);
 				console.log("Response:", response);
-				this.reports = Array.isArray(response.data.record) ? response.data.record : [];
+				this.reports = Array.isArray(response.data.record.reports)
+					? response.data.record.reports
+					: [];
 				console.log("Reports:", this.reports);
 			} catch (err) {
 				console.error("Error fetching reports:", err);
@@ -81,7 +83,7 @@ export const useReportsStore = defineStore("reports", {
 			const baseUrl = import.meta.env.VITE_JSONBIN_BASE;
 			const binId = import.meta.env.VITE_JSONBIN_BIN_ID;
 
-			await api.put(`${baseUrl}/${binId}`, this.reports);
+			await api.put(`${baseUrl}/${binId}`, { reports: this.reports });
 
 			delete this.dirtyReports[reportId];
 			this._saveLocalCache();
@@ -92,7 +94,7 @@ export const useReportsStore = defineStore("reports", {
 			const baseUrl = import.meta.env.VITE_JSONBIN_BASE;
 			const binId = import.meta.env.VITE_JSONBIN_BIN_ID;
 
-			await api.put(`${baseUrl}/${binId}`, this.reports);
+			await api.put(`${baseUrl}/${binId}`, { reports: this.reports });
 
 			this.dirtyReports = {};
 			this._saveLocalCache();
@@ -104,15 +106,18 @@ export const useReportsStore = defineStore("reports", {
 
 			// Zorg dat completed NIET verandert (forceer false voor draft-save)
 			const draftReport = { ...this.reports[idx], completed: false };
+			console.log("draftReport", draftReport);
 
 			// Schrijf terug in state zodat UI klopt en cache consistent is
 			this.reports = this.reports.map((r) => (r.id === reportId ? draftReport : r));
+			console.log("this.reports", this.reports);
 			this._saveLocalCache();
+			// Stop executing code here
 
 			// Persist hele collectie (JSONBin bewaart 1 bin met alle rapporten)
 			const baseUrl = import.meta.env.VITE_JSONBIN_BASE;
 			const binId = import.meta.env.VITE_JSONBIN_BIN_ID;
-			await api.put(`${baseUrl}/${binId}`, this.reports);
+			await api.put(`${baseUrl}/${binId}`, { reports: this.reports });
 
 			// Markeer als gesynct
 			delete this.dirtyReports[reportId];
@@ -133,7 +138,7 @@ export const useReportsStore = defineStore("reports", {
 			try {
 				const baseUrl = import.meta.env.VITE_JSONBIN_BASE;
 				const binId = import.meta.env.VITE_JSONBIN_BIN_ID;
-				await api.put(`${baseUrl}/${binId}`, this.reports);
+				await api.put(`${baseUrl}/${binId}`, { reports: this.reports });
 				delete this.dirtyReports[reportId];
 				this._saveLocalCache();
 			} catch (e) {
