@@ -76,9 +76,7 @@ const { assignedReports, loading, error } = storeToRefs(store);
 const openReport = (id) => router.push({ name: "edit-report", params: { id } });
 
 onMounted(async () => {
-	if (!store.reports.length) {
-		await store.fetchReports();
-	}
+	await store.fetchReports();
 });
 </script>
 

@@ -16,6 +16,7 @@ export const useReportsStore = defineStore("reports", {
 		loading: false,
 		error: null,
 		dirtyReports: {},
+		lastFetch: null,
 	}),
 
 	getters: {
@@ -36,27 +37,64 @@ export const useReportsStore = defineStore("reports", {
 			if (cache) this.reports = JSON.parse(cache);
 			if (dirty) this.dirtyReports = JSON.parse(dirty);
 		},
-		async fetchReports() {
+		async fetchReports(force = false) {
+			// Prevent duplicate requests if already loading
+			if (this.loading) {
+				console.log("Already fetching reports, skipping...");
+				return;
+			}
+
+			// Use cache if available and not forcing refresh (within 5 minutes)
+			const cacheAge = this.lastFetch ? Date.now() - this.lastFetch : Infinity;
+			if (!force && this.reports.length > 0 && cacheAge < 5 * 60 * 1000) {
+				console.log("Using cached reports (age: " + Math.round(cacheAge / 1000) + "s)");
+				return;
+			}
+
 			this.loading = true;
 			this.error = null;
-			console.log("Fetching reports...");
+			console.log("Fetching reports from API...");
 
 			try {
+				// Load cache first for instant display
 				this.hydrateFromCache();
+
 				const baseUrl = import.meta.env.VITE_JSONBIN_BASE;
 				const binId = import.meta.env.VITE_JSONBIN_BIN_ID;
+
+				console.log("Making API request to:", `${baseUrl}/${binId}`);
+				console.log("Environment vars check:", {
+					hasBaseUrl: !!baseUrl,
+					hasBinId: !!binId,
+					baseUrl,
+					binId,
+				});
+
 				const response = await api.get(`${baseUrl}/${binId}`);
-				console.log("Response:", response);
+				console.log("Response received:", response.status);
+
 				this.reports = Array.isArray(response.data.record.reports)
 					? response.data.record.reports
 					: [];
-				console.log("Reports:", this.reports);
+				this.lastFetch = Date.now();
+				this._saveLocalCache();
+				console.log("Reports loaded:", this.reports.length);
 			} catch (err) {
 				console.error("Error fetching reports:", err);
-				(this.error = "Er is een fout opgetreden bij het ophalen van de rapportages."), err;
+				console.error("Error details:", {
+					message: err.message,
+					code: err.code,
+					status: err.response?.status,
+					statusText: err.response?.statusText,
+				});
+				this.error = "Er is een fout opgetreden bij het ophalen van de rapportages.";
+				// Keep cached data if available
+				if (this.reports.length === 0) {
+					this.hydrateFromCache();
+				}
 			} finally {
 				this.loading = false;
-				console.log("Loading:", this.loading);
+				console.log("Fetch complete, loading:", this.loading);
 			}
 		},
 
