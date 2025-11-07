@@ -82,16 +82,12 @@ const props = defineProps({
 		required: true,
 	},
 });
-
 const emit = defineEmits(["saveLocalChanges"]);
-
 const isDirty = ref(false);
-
 // form: reactive kopie van inspection data voor two-way binding
 const form = reactive({
 	...props.inspection,
 });
-
 const baseline = ref(JSON.stringify(form));
 
 watch(

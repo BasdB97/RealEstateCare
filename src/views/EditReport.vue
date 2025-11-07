@@ -11,7 +11,7 @@
 					</IonCardTitle>
 				</IonCardHeader>
 
-				<IonAccordionGroup v-if="report.inspections.length > 0">
+				<IonAccordionGroup v-if="report.inspections.length > 0" v-model="openAccordion">
 					<IonAccordion
 						v-for="inspection in report.inspections"
 						:key="`${inspection.type}-${inspection.id}`"
@@ -37,7 +37,10 @@
 								v-if="inspection.type === 'technicalInstallation'"
 								:inspection="inspection"
 								@saveLocalChanges="(payload) => saveLocalChanges(report.id, payload)" />
-							<ModificationReport v-if="inspection.type === 'modification'"></ModificationReport>
+							<ModificationReport
+								v-if="inspection.type === 'modification'"
+								:inspection="inspection"
+								@saveLocalChanges="(payload) => saveLocalChanges(report.id, payload)" />
 						</div>
 					</IonAccordion>
 				</IonAccordionGroup>
@@ -102,11 +105,13 @@ const store = useReportsStore();
 const toastOpen = ref(false);
 const toastMessage = ref("");
 const { loading, error } = storeToRefs(store);
+const openAccordion = ref(null);
 
 async function saveLocalChanges(reportId, updated) {
 	store.updateInspectionLocal(reportId, updated);
 	toastMessage.value = "Inspectie opgeslagen";
 	toastOpen.value = true;
+	openAccordion.value = null;
 }
 
 async function saveDraft() {

@@ -29,8 +29,8 @@
 		</IonItem>
 
 		<IonItem v-if="form.testProcedure">
-			<IonLabel>Testprocedure</IonLabel>
-			<div class="flex flex-col gap-2">
+			<IonLabel position="stacked">Testprocedure</IonLabel>
+			<div class="flex gap-2">
 				<IonButton :href="pdfUrl" target="_blank" rel="noopener"
 					>Open {{ form.testProcedure }}</IonButton
 				>
