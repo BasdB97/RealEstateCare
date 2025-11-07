@@ -57,7 +57,7 @@
 					color="medium"
 					class="rounded-lg font-semibold"
 					@click="saveDraft">
-					Rapport opslaan, niet afronden
+					Rapport opslaan
 				</IonButton>
 
 				<IonButton

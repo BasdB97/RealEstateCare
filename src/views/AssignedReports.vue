@@ -4,7 +4,7 @@
 			<IonSpinner v-if="loading" name="circles" id="loading-spinner" />
 			<div v-else-if="error" class="text-red-600">{{ error }}</div>
 			<div v-else>
-				<IonAccordionGroup expand="inset" class="m-0 p-2">
+				<IonAccordionGroup expand="inset" class="m-0 p-2" v-if="assignedReports.length > 0">
 					<IonAccordion v-for="r in assignedReports || []" :key="r?.id">
 						<IonItem slot="header">
 							<IonLabel>
@@ -46,6 +46,9 @@
 						</div>
 					</IonAccordion>
 				</IonAccordionGroup>
+				<div v-else>
+					<p class="text-center text-slate-500">Geen uit te voeren inspecties gevonden</p>
+				</div>
 			</div>
 		</div>
 	</BaseLayout>
