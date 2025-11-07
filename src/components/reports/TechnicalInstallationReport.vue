@@ -1,9 +1,140 @@
 <template>
-	<div>
-		<h1>Technische installaties inspecteren</h1>
-	</div>
+	<IonList class="p-4">
+		<IonItem>
+			<IonLabel>Locatie</IonLabel>
+			<IonInput slot="end" v-model="form.location" class="text-right w-1/2" />
+		</IonItem>
+
+		<IonItem class="items-start">
+			<IonLabel>Soort installatie</IonLabel>
+			<IonSelect
+				slot="end"
+				v-model="form.technicalInstallationType"
+				interface="action-sheet"
+				placeholder="Selecteer soort installatie">
+				<IonSelectOption v-for="type in technicalInstallationTypes" :key="type" :value="type">
+					{{ type }}
+				</IonSelectOption>
+			</IonSelect>
+		</IonItem>
+
+		<IonItem>
+			<IonLabel>Gemelde storingen</IonLabel>
+			<IonTextarea
+				slot="end"
+				lines="3"
+				cols="20"
+				v-model="form.reportedProblems"
+				placeholder="Beschrijf gemelde storingen..." />
+		</IonItem>
+
+		<IonItem v-if="form.testProcedure">
+			<IonLabel>Testprocedure</IonLabel>
+			<div class="flex flex-col gap-2">
+				<IonButton :href="pdfUrl" target="_blank" rel="noopener"
+					>Open {{ form.testProcedure }}</IonButton
+				>
+				<IonButton :href="pdfUrl" download>Download {{ form.testProcedure }}</IonButton>
+			</div>
+		</IonItem>
+		<IonItem v-else class="text-red-500">
+			<IonLabel>Geen testprocedure beschikbaar</IonLabel>
+		</IonItem>
+
+		<IonItem>
+			<IonLabel>Goedgekeurd?</IonLabel>
+			<IonCheckbox slot="end" v-model="form.approved" />
+		</IonItem>
+
+		<IonItem lines="none">
+			<IonLabel position="stacked">Opmerkingen</IonLabel>
+			<IonTextarea v-model="form.remarks" auto-grow placeholder="Beschrijf opmerking..." />
+		</IonItem>
+
+		<div class="mt-4">
+			<IonLabel class="block mb-2 font-medium">Foto’s</IonLabel>
+			<div class="flex gap-4 flex-wrap">
+				<img
+					v-for="n in [1, 2, 3, 4]"
+					:key="n"
+					:src="`/photos/${n}.jpg`"
+					alt="Inspectiefoto"
+					class="w-32 h-32 object-cover rounded-lg shadow" />
+			</div>
+		</div>
+
+		<div class="mt-4 flex items-center justify-end gap-3">
+			<IonBadge v-if="isDirty" color="warning" class="p-2">Niet opgeslagen</IonBadge>
+			<IonBadge v-else color="success" class="p-2">Opgeslagen</IonBadge>
+			<IonButton size="small" :disabled="!isDirty" @click="saveLocalChanges">
+				Inspectie opslaan
+			</IonButton>
+		</div>
+	</IonList>
 </template>
 
-<script setup></script>
+<script setup>
+import { reactive, watch, toRaw, ref } from "vue";
+
+import {
+	IonList,
+	IonItem,
+	IonLabel,
+	IonInput,
+	IonSelect,
+	IonSelectOption,
+	IonTextarea,
+	IonButton,
+	IonCheckbox,
+	IonBadge,
+} from "@ionic/vue";
+
+const props = defineProps({
+	inspection: {
+		type: Object,
+		required: true,
+	},
+});
+const emit = defineEmits(["saveLocalChanges"]);
+const isDirty = ref(false);
+const form = reactive({
+	...props.inspection,
+});
+const baseline = ref(JSON.stringify(form));
+const pdfUrl = "/public/docs/testprocedure.pdf";
+
+watch(
+	() => props.inspection,
+	(v) => {
+		Object.assign(form, v);
+		baseline.value = JSON.stringify(v);
+		isDirty.value = false;
+		console.log("form changed:", v);
+	},
+	{ deep: true }
+);
+watch(
+	form,
+	() => {
+		isDirty.value = JSON.stringify(toRaw(form)) !== baseline.value;
+	},
+	{ deep: true }
+);
+
+function saveLocalChanges() {
+	console.log("saveLocalChanges", { ...toRaw(form) });
+	emit("saveLocalChanges", { ...toRaw(form) });
+	baseline.value = JSON.stringify({ ...toRaw(form) });
+	isDirty.value = false;
+}
+
+const technicalInstallationTypes = [
+	"Koeling",
+	"Verwarming",
+	"Luchtverversing",
+	"Elektra",
+	"Beveiliging",
+];
+</script>
 
 <style scoped></style>

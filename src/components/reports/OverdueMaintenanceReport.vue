@@ -5,6 +5,7 @@
 			<IonInput slot="end" v-model="form.location" class="text-right w-1/2" />
 		</IonItem>
 
+		<!-- TODO: add v-for to the IonSelectOptions and update script with options -->
 		<IonItem class="items-start">
 			<IonLabel>Soort onderhoud</IonLabel>
 			<IonSelect

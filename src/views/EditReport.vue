@@ -34,7 +34,9 @@
 								:inspection="inspection"
 								@saveLocalChanges="(payload) => saveLocalChanges(report.id, payload)" />
 							<TechnicalInstallationReport
-								v-if="inspection.type === 'technicalInstallation'"></TechnicalInstallationReport>
+								v-if="inspection.type === 'technicalInstallation'"
+								:inspection="inspection"
+								@saveLocalChanges="(payload) => saveLocalChanges(report.id, payload)" />
 							<ModificationReport v-if="inspection.type === 'modification'"></ModificationReport>
 						</div>
 					</IonAccordion>
