@@ -39,6 +39,7 @@ export const useReportsStore = defineStore("reports", {
 			this.reports = seed.reports;
 			this._saveLocalCache();
 		},
+
 		//
 		_saveLocalCache() {
 			localStorage.setItem("reports-cache", JSON.stringify(this.reports));

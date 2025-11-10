@@ -1,5 +1,5 @@
 <template>
-	<IonList class="p-4">
+	<IonList class="p-4" :class="{ 'pointer-events-none opacity-100': isCompleted }">
 		<IonItem v-if="form.existingDocs">
 			<IonLabel position="stacked">
 				Bestaande situatie of reeds gedocumenteerde modificaties
@@ -17,7 +17,11 @@
 
 		<IonItem>
 			<IonLabel>Locatie aangetroffen modificatie</IonLabel>
-			<IonInput slot="end" v-model="form.location" class="text-right w-1/2" />
+			<IonInput
+				slot="end"
+				v-model="form.location"
+				class="text-right w-1/2"
+				:readonly="isCompleted" />
 		</IonItem>
 
 		<IonItem class="items-start">
@@ -40,7 +44,8 @@
 				lines="3"
 				cols="20"
 				v-model="form.modificationDescription"
-				placeholder="Beschrijf de aangetroffen modificatie..." />
+				placeholder="Beschrijf de aangetroffen modificatie..."
+				:readonly="isCompleted" />
 		</IonItem>
 
 		<IonItem class="items-start">
@@ -64,12 +69,13 @@
 				lines="3"
 				cols="20"
 				v-model="form.remarks"
-				placeholder="Beschrijf opmerking..." />
+				placeholder="Beschrijf opmerking..."
+				:readonly="isCompleted" />
 		</IonItem>
 
 		<div class="mt-4">
 			<IonLabel class="block mb-2 font-medium">Foto’s</IonLabel>
-			<div class="flex gap-4 flex-wrap">
+			<div class="flex gap-4 flex-wrap justify-center">
 				<img
 					v-for="n in [1, 2, 3, 4]"
 					:key="n"
@@ -79,7 +85,7 @@
 			</div>
 		</div>
 
-		<div class="mt-4 flex items-center justify-end gap-3">
+		<div class="mt-4 flex items-center justify-end gap-3" v-if="!isCompleted">
 			<IonBadge v-if="isDirty" color="warning" class="p-2">Niet opgeslagen</IonBadge>
 			<IonBadge v-else color="success" class="p-2">Opgeslagen</IonBadge>
 			<IonButton size="small" :disabled="!isDirty" @click="saveLocalChanges">
@@ -108,6 +114,10 @@ const props = defineProps({
 		type: Object,
 		required: true,
 	},
+	isCompleted: {
+		type: Boolean,
+		required: true,
+	},
 });
 const emit = defineEmits(["saveLocalChanges"]);
 const isDirty = ref(false);
@@ -129,10 +139,14 @@ watch(
 	{ deep: true }
 );
 
+let t;
 watch(
 	form,
 	() => {
-		isDirty.value = JSON.stringify(toRaw(form)) !== baseline.value;
+		clearTimeout(t);
+		t = setTimeout(() => {
+			isDirty.value = JSON.stringify(toRaw(form)) !== baseline.value;
+		}, 150); // debounce
 	},
 	{ deep: true }
 );

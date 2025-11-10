@@ -1,13 +1,17 @@
 <template>
-	<IonList class="p-4">
+	<IonList class="p-4" :class="{ 'pointer-events-none opacity-100': isCompleted }">
 		<IonItem>
 			<IonLabel>Locatie</IonLabel>
-			<IonInput slot="end" v-model="form.location" class="text-right w-1/2" />
+			<IonInput
+				slot="end"
+				v-model="form.location"
+				class="text-right w-1/2"
+				:readonly="isCompleted" />
 		</IonItem>
 
 		<IonItem>
 			<IonLabel>Nieuwe schade?</IonLabel>
-			<IonCheckbox slot="end" v-model="form.newDamage" />
+			<IonCheckbox slot="end" v-model="form.newDamage" :disabled="isCompleted" />
 		</IonItem>
 
 		<IonItem>
@@ -28,32 +32,29 @@
 
 		<IonItem>
 			<IonLabel>Datum</IonLabel>
-			<IonDatetimeButton :datetime="`datetime-${form.id}`" slot="end" />
-			<IonModal :keep-contents-mounted="true">
-				<IonDatetime
-					v-model="form.date"
-					:id="`datetime-${form.id}`"
-					presentation="date"
-					show-adjacent-days="true"
-					:show-default-buttons="true"
-					done-text="Opslaan"
-					cancel-text="Annuleren" />
+			<IonDatetimeButton :datetime="`dt-${form.id ?? 'x'}`" slot="end" :readonly="isCompleted" />
+			<IonModal v-if="!isCompleted" :keep-contents-mounted="true">
+				<IonDatetime v-model="form.date" :id="`dt-${form.id ?? 'x'}`" presentation="date" />
 			</IonModal>
 		</IonItem>
 
 		<IonItem>
 			<IonLabel>Acute actie vereist?</IonLabel>
-			<IonCheckbox slot="end" v-model="form.urgentActionRequired" />
+			<IonCheckbox slot="end" v-model="form.urgentActionRequired" :disabled="isCompleted" />
 		</IonItem>
 
 		<IonItem lines="none">
 			<IonLabel position="stacked">Omschrijving</IonLabel>
-			<IonTextarea v-model="form.damageDescription" auto-grow placeholder="Beschrijf schade..." />
+			<IonTextarea
+				v-model="form.damageDescription"
+				auto-grow
+				placeholder="Beschrijf schade..."
+				:readonly="isCompleted" />
 		</IonItem>
 
 		<div class="mt-4">
 			<IonLabel class="block mb-2 font-medium">Foto’s</IonLabel>
-			<div class="flex gap-4 flex-wrap">
+			<div class="flex gap-4 flex-wrap justify-center">
 				<img
 					v-for="n in [1, 2, 3, 4]"
 					:key="n"
@@ -62,7 +63,7 @@
 					class="w-32 h-32 object-cover rounded-lg shadow" />
 			</div>
 		</div>
-		<div class="mt-4 flex items-center justify-end gap-3">
+		<div class="mt-4 flex items-center justify-end gap-3" v-if="!isCompleted">
 			<IonBadge v-if="isDirty" color="warning" class="p-2">Niet opgeslagen</IonBadge>
 			<IonBadge v-else color="success" class="p-2">Opgeslagen</IonBadge>
 			<IonButton size="small" :disabled="!isDirty" @click="saveLocalChanges">
@@ -99,10 +100,14 @@ const props = defineProps({
 		type: Object,
 		required: true, // verwacht het damage-inspection object
 	},
+	isCompleted: {
+		type: Boolean,
+		required: true,
+	},
 });
 
 // Emit definitie - stuurt updates terug naar parent component
-const emit = defineEmits(["update"]);
+const emit = defineEmits(["saveLocalChanges"]);
 
 // isDirty: houdt bij of het formulier is gewijzigd sinds laatste opslag
 const isDirty = ref(false);
@@ -130,20 +135,22 @@ watch(
 
 // Watcher: detecteert wijzigingen in het formulier
 // Vergelijkt huidige form-staat met baseline voor dirty tracking
+let t;
 watch(
 	form,
 	() => {
-		// Zet isDirty op true als form verschilt van baseline
-		isDirty.value = JSON.stringify(toRaw(form)) !== baseline.value;
+		clearTimeout(t);
+		t = setTimeout(() => {
+			isDirty.value = JSON.stringify(toRaw(form)) !== baseline.value;
+		}, 150); // debounce
 	},
-	{ deep: true } // Observeer alle form fields
+	{ deep: true }
 );
 
-// save: stuurt form data naar parent en update baseline
 function saveLocalChanges() {
 	console.log("saveLocalChanges", { ...toRaw(form) });
-	emit("saveLocalChanges", { ...toRaw(form) }); // Emit update event met form data
-	baseline.value = JSON.stringify({ ...toRaw(form) }); // Update baseline
-	isDirty.value = false; // Reset dirty flag
+	emit("saveLocalChanges", { ...toRaw(form) });
+	baseline.value = JSON.stringify({ ...toRaw(form) });
+	isDirty.value = false;
 }
 </script>

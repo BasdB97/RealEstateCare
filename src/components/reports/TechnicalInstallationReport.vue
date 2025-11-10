@@ -1,5 +1,5 @@
 <template>
-	<IonList class="p-4">
+	<IonList class="p-4" :class="{ 'pointer-events-none opacity-100': isCompleted }">
 		<IonItem>
 			<IonLabel>Locatie</IonLabel>
 			<IonInput slot="end" v-model="form.location" class="text-right w-1/2" />
@@ -25,15 +25,16 @@
 				lines="3"
 				cols="20"
 				v-model="form.reportedProblems"
-				placeholder="Beschrijf gemelde storingen..." />
+				placeholder="Beschrijf gemelde storingen..."
+				:readonly="isCompleted" />
 		</IonItem>
 
 		<IonItem v-if="form.testProcedure">
 			<IonLabel position="stacked">Testprocedure</IonLabel>
 			<div class="flex gap-2">
-				<IonButton :href="pdfUrl" target="_blank" rel="noopener"
-					>Open {{ form.testProcedure }}</IonButton
-				>
+				<IonButton :href="pdfUrl" target="_blank" rel="noopener">
+					Open {{ form.testProcedure }}
+				</IonButton>
 				<IonButton :href="pdfUrl" download>Download {{ form.testProcedure }}</IonButton>
 			</div>
 		</IonItem>
@@ -43,17 +44,21 @@
 
 		<IonItem>
 			<IonLabel>Goedgekeurd?</IonLabel>
-			<IonCheckbox slot="end" v-model="form.approved" />
+			<IonCheckbox slot="end" v-model="form.approved" :disabled="isCompleted" />
 		</IonItem>
 
 		<IonItem lines="none">
 			<IonLabel position="stacked">Opmerkingen</IonLabel>
-			<IonTextarea v-model="form.remarks" auto-grow placeholder="Beschrijf opmerking..." />
+			<IonTextarea
+				v-model="form.remarks"
+				:readonly="isCompleted"
+				auto-grow
+				placeholder="Beschrijf opmerking..." />
 		</IonItem>
 
 		<div class="mt-4">
 			<IonLabel class="block mb-2 font-medium">Foto’s</IonLabel>
-			<div class="flex gap-4 flex-wrap">
+			<div class="flex gap-4 flex-wrap justify-center">
 				<img
 					v-for="n in [1, 2, 3, 4]"
 					:key="n"
@@ -63,7 +68,7 @@
 			</div>
 		</div>
 
-		<div class="mt-4 flex items-center justify-end gap-3">
+		<div class="mt-4 flex items-center justify-end gap-3" v-if="!isCompleted">
 			<IonBadge v-if="isDirty" color="warning" class="p-2">Niet opgeslagen</IonBadge>
 			<IonBadge v-else color="success" class="p-2">Opgeslagen</IonBadge>
 			<IonButton size="small" :disabled="!isDirty" @click="saveLocalChanges">
@@ -94,6 +99,10 @@ const props = defineProps({
 		type: Object,
 		required: true,
 	},
+	isCompleted: {
+		type: Boolean,
+		required: true,
+	},
 });
 const emit = defineEmits(["saveLocalChanges"]);
 const isDirty = ref(false);
@@ -113,10 +122,15 @@ watch(
 	},
 	{ deep: true }
 );
+
+let t;
 watch(
 	form,
 	() => {
-		isDirty.value = JSON.stringify(toRaw(form)) !== baseline.value;
+		clearTimeout(t);
+		t = setTimeout(() => {
+			isDirty.value = JSON.stringify(toRaw(form)) !== baseline.value;
+		}, 150); // debounce
 	},
 	{ deep: true }
 );

@@ -5,17 +5,30 @@
 		<div v-else>
 			<IonCard class="" v-if="report">
 				<IonCardHeader>
-					<IonCardTitle class="text-2xl font-bold text-primarybg border-b border-primarybg"
-						>{{ report.location.split(", ")[0] }},
-						{{ report.location.split(", ")[2] }}
+					<IonCardSubtitle v-if="isCompleted" class="text-slate-500">
+						Dit rapport is afgerond en kan niet meer worden bewerkt.
+					</IonCardSubtitle>
+					<IonCardTitle class="text-2xl font-bold text-primarybg border-b border-primarybg">
+						{{ (report.location || "").split(", ")[0] || report.location }},
+						<template v-if="(report.location || '').split(', ')[2]">
+							{{ report.location.split(", ")[2] }}
+						</template>
 					</IonCardTitle>
 				</IonCardHeader>
 
-				<IonAccordionGroup v-if="report.inspections.length > 0" v-model="openAccordion">
+				<IonAccordionGroup v-if="report.inspections.length > 0" v-model="openAccordion" class="p-2">
 					<IonAccordion
-						v-for="inspection in report.inspections"
-						:key="`${inspection.type}-${inspection.id}`"
-						:value="`${inspection.type}-${inspection.id}`"
+						v-for="(inspection, index) in report.inspections"
+						:key="
+							inspection.id != null
+								? `${inspection.type}-${inspection.id}`
+								: `${inspection.type}-${index}`
+						"
+						:value="
+							inspection.id != null
+								? `${inspection.type}-${inspection.id}`
+								: `${inspection.type}-${index}`
+						"
 						class="mb-4">
 						<IonItem slot="header">
 							<IonLabel>{{ getInspectionLabel(inspection) }}</IonLabel>
@@ -23,25 +36,15 @@
 								>Urgent!</IonBadge
 							>
 						</IonItem>
-						<!-- TODO: Add component for each inspection type -->
+
 						<div slot="content">
-							<DamageReport
-								v-if="inspection.type === 'damage'"
+							<component
+								:is="typeMap[inspection.type]"
 								:inspection="inspection"
-								@saveLocalChanges="(payload) => saveLocalChanges(report.id, payload)" />
-							<OverdueMaintenanceReport
-								v-if="inspection.type === 'overdueMaintenance'"
-								:inspection="inspection"
-								@saveLocalChanges="(payload) => saveLocalChanges(report.id, payload)" />
-							<TechnicalInstallationReport
-								v-if="inspection.type === 'technicalInstallation'"
-								:inspection="inspection"
-								@saveLocalChanges="(payload) => saveLocalChanges(report.id, payload)" />
-							<ModificationReport
-								v-if="inspection.type === 'modification'"
-								:inspection="inspection"
-								@saveLocalChanges="(payload) => saveLocalChanges(report.id, payload)" />
+								:isCompleted="isCompleted"
+								@saveLocalChanges="(p) => saveLocalChanges(report.id, p)" />
 						</div>
+            
 					</IonAccordion>
 				</IonAccordionGroup>
 			</IonCard>
@@ -51,7 +54,7 @@
 				duration="1500"
 				position="bottom"
 				@didDismiss="toastOpen = false" />
-			<div class="flex flex-col gap-3 mt-6 p-4">
+			<div class="flex flex-col gap-3 mt-6 p-4" v-if="!isCompleted">
 				<IonButton
 					expand="block"
 					color="medium"
@@ -93,10 +96,18 @@ import {
 	IonCard,
 	IonCardHeader,
 	IonCardTitle,
+	IonCardSubtitle,
 	IonToast,
 	IonAccordionGroup,
 	IonAccordion,
 } from "@ionic/vue";
+
+const typeMap = {
+	damage: DamageReport,
+	overdueMaintenance: OverdueMaintenanceReport,
+	technicalInstallation: TechnicalInstallationReport,
+	modification: ModificationReport,
+};
 
 const route = useRoute();
 const router = useRouter();
@@ -106,37 +117,35 @@ const toastOpen = ref(false);
 const toastMessage = ref("");
 const { loading, error } = storeToRefs(store);
 const openAccordion = ref(null);
+const isCompleted = computed(() => !!report.value?.completed);
+
+function toast(message) {
+	toastMessage.value = message;
+	toastOpen.value = true;
+}
 
 async function saveLocalChanges(reportId, updated) {
 	store.updateInspectionLocal(reportId, updated);
-	toastMessage.value = "Inspectie opgeslagen";
-	toastOpen.value = true;
+	toast("Inspectie opgeslagen");
 	openAccordion.value = null;
 }
 
 async function saveDraft() {
 	try {
 		await store.persistReportWithStatus(report.value.id, false);
-		toastMessage.value = "Rapport opgeslagen, nog niet afgerond";
-		toastOpen.value = true;
-		setTimeout(() => router.push("/assigned-reports"), 1500);
+		toast("Rapport opgeslagen, nog niet afgerond");
 	} catch (error) {
-		toastMessage.value = "Fout bij opslaan: " + (error.message || "Probeer opnieuw");
-		toastOpen.value = true;
+		toast("Fout bij opslaan: " + (error.message || "Probeer opnieuw"));
 	}
 }
 
 async function completeReport() {
 	try {
 		await store.persistReportWithStatus(report.value.id, true);
-		toastMessage.value = "Rapport opgeslagen en afgerond";
-		toastOpen.value = true;
-		// Wacht kort zodat gebruiker de toast ziet, dan redirect
-		setTimeout(() => router.push("/assigned-reports"), 1500);
+		toast("Rapport opgeslagen en afgerond");
+		router.push("/assigned-reports");
 	} catch (error) {
-		toastMessage.value = "Fout bij opslaan: " + (error.message || "Probeer opnieuw");
-		toastOpen.value = true;
-		// Geen redirect bij error
+		toast("Fout bij opslaan: " + (error.message || "Probeer opnieuw"));
 	}
 }
 
@@ -145,7 +154,7 @@ onMounted(async () => {
 		await store.fetchReports();
 	}
 	if (!store.getReportById(id)) {
-		router.replace({ name: "assignedReports" }); // fallback als id niet bestaat
+		router.replace({ name: "assignedReports" });
 	}
 });
 
