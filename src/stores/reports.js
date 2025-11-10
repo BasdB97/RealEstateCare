@@ -26,6 +26,19 @@ export const useReportsStore = defineStore("reports", {
 	},
 
 	actions: {
+		async resetFromDbJson() {
+			const response = await fetch("/db.json");
+			if (!response.ok) throw new Error("db.json niet gevonden");
+			const seed = await response.json();
+			console.log("Seed data loaded:", seed);
+
+			const baseUrl = import.meta.env.VITE_JSONBIN_BASE;
+			const binId = import.meta.env.VITE_JSONBIN_BIN_ID;
+			await api.put(`${baseUrl}/${binId}`, seed);
+
+			this.reports = seed.reports;
+			this._saveLocalCache();
+		},
 		//
 		_saveLocalCache() {
 			localStorage.setItem("reports-cache", JSON.stringify(this.reports));

@@ -4,6 +4,10 @@
 			<router-link to="/">
 				<img src="/src/assets/images/logo.svg" alt="RealEstateCare Logo" class="invert h-14 p-2" />
 			</router-link>
+			<IonButton @click="onReset" :disabled="busy">
+				<IonIcon :icon="refresh" class="mr-2" />
+				Reset database
+			</IonButton>
 			<div class="flex items-center">
 				<ion-icon :icon="notifications" class="header-icon"></ion-icon>
 			</div>
@@ -12,8 +16,22 @@
 </template>
 
 <script setup>
-import { IonIcon } from "@ionic/vue";
-import { notifications } from "ionicons/icons";
+import { IonIcon, IonButton } from "@ionic/vue";
+import { notifications, refresh } from "ionicons/icons";
+import { ref } from "vue";
+import { useReportsStore } from "@/stores/reports";
+
+const busy = ref(false);
+const store = useReportsStore();
+
+async function onReset() {
+	try {
+		busy.value = true;
+		await store.resetFromDbJson();
+	} finally {
+		busy.value = false;
+	}
+}
 </script>
 
 <style scoped>
