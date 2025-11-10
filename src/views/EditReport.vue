@@ -40,11 +40,11 @@
 						<div slot="content">
 							<component
 								:is="typeMap[inspection.type]"
+								:ref="(el) => setInspectionRef(el, inspection)"
 								:inspection="inspection"
 								:isCompleted="isCompleted"
 								@saveLocalChanges="(p) => saveLocalChanges(report.id, p)" />
 						</div>
-            
 					</IonAccordion>
 				</IonAccordionGroup>
 			</IonCard>
@@ -118,6 +118,20 @@ const toastMessage = ref("");
 const { loading, error } = storeToRefs(store);
 const openAccordion = ref(null);
 const isCompleted = computed(() => !!report.value?.completed);
+const inspectionRefs = ref({});
+
+function setInspectionRef(el, inspection) {
+	const key =
+		inspection.id != null
+			? `${inspection.type}-${inspection.id}`
+			: `${inspection.type}-${report.value.inspections.indexOf(inspection)}`;
+
+	if (el) {
+		inspectionRefs.value[key] = el;
+	} else {
+		delete inspectionRefs.value[key];
+	}
+}
 
 function toast(message) {
 	toastMessage.value = message;
@@ -131,6 +145,13 @@ async function saveLocalChanges(reportId, updated) {
 }
 
 async function saveDraft() {
+	// First, trigger save on all child components to ensure no data loss
+	// (don't check isDirty due to 150ms debounce race condition)
+	for (const componentRef of Object.values(inspectionRefs.value)) {
+		if (componentRef && componentRef.saveLocalChanges) {
+			componentRef.saveLocalChanges();
+		}
+	}
 	try {
 		await store.persistReportWithStatus(report.value.id, false);
 		toast("Rapport opgeslagen, nog niet afgerond");
@@ -140,6 +161,13 @@ async function saveDraft() {
 }
 
 async function completeReport() {
+	// First, trigger save on all child components to ensure no data loss
+	// (don't check isDirty due to 150ms debounce race condition)
+	for (const componentRef of Object.values(inspectionRefs.value)) {
+		if (componentRef && componentRef.saveLocalChanges) {
+			componentRef.saveLocalChanges();
+		}
+	}
 	try {
 		await store.persistReportWithStatus(report.value.id, true);
 		toast("Rapport opgeslagen en afgerond");

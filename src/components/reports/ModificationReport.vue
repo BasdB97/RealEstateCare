@@ -157,6 +157,10 @@ function saveLocalChanges() {
 	baseline.value = JSON.stringify({ ...toRaw(form) });
 	isDirty.value = false;
 }
+defineExpose({
+	saveLocalChanges,
+	isDirty,
+});
 </script>
 
 <style scoped></style>
