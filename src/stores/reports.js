@@ -27,6 +27,8 @@ export const useReportsStore = defineStore("reports", {
 
 	actions: {
 		async resetFromDbJson() {
+			localStorage.clear();
+			console.log("Local storage cleared");
 			const response = await fetch("/db.json");
 			if (!response.ok) throw new Error("db.json niet gevonden");
 			const seed = await response.json();
