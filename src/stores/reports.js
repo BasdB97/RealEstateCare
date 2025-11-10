@@ -17,12 +17,21 @@ export const useReportsStore = defineStore("reports", {
 		error: null,
 		dirtyReports: {},
 		lastFetch: null,
+		knowledgeBase: [],
 	}),
 
 	getters: {
 		assignedReports: (s) => (s.reports ?? []).filter((r) => !r.completed),
 		completedReports: (state) => (state.reports ?? []).filter((r) => r.completed),
 		getReportById: (state) => (id) => (state.reports ?? []).find((r) => r.id === id),
+		byCategory: (s) => (c) => s.knowledgeBase.filter((i) => i.category === c),
+		search: (s) => (q) =>
+			s.knowledgeBase.filter((i) =>
+				[i.title, i.description, ...(i.tags || [])]
+					.join(" ")
+					.toLowerCase()
+					.includes(q.toLowerCase())
+			),
 	},
 
 	actions: {
@@ -160,6 +169,23 @@ export const useReportsStore = defineStore("reports", {
 				this._saveLocalCache();
 				this.error = completed ? "Opslaan & afronden mislukt" : "Opslaan mislukt";
 				throw err;
+			}
+		},
+
+		async fetchKnowledgeBase() {
+			this.loading = true;
+			this.error = null;
+			try {
+				const baseUrl = import.meta.env.VITE_JSONBIN_BASE;
+				const binId = import.meta.env.VITE_JSONBIN_BIN_ID;
+				const response = await api.get(`${baseUrl}/${binId}`);
+				console.log("Knowledge base response:", response);
+				this.knowledgeBase = response.data.record.knowledgeBase || [];
+				console.log("Knowledge base loaded:", this.knowledgeBase);
+			} catch (e) {
+				this.error = "Kon kennisbank niet laden";
+			} finally {
+				this.loading = false;
 			}
 		},
 	},
