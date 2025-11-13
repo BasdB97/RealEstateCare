@@ -1,50 +1,31 @@
 <template>
 	<footer>
-		<div class="bg-[#00aaa2] flex justify-evenly items-center p-2">
-			<router-link to="/" class="footer-link">
-				<ion-icon :icon="home"></ion-icon>
+		<div class="flex justify-evenly items-center py-2 bg-[#00aaa2] dark:bg-teal-800 text-white">
+			<router-link
+				to="/"
+				class="flex flex-col items-center no-underline gap-0.5 text-white text-[14px] sm:text-base md:text-xl leading-[1.43] sm:leading-6 md:leading-[1.4] transition-colors duration-200 active:text-gray-300 active:scale-105">
+				<ion-icon :icon="home" class="text-2xl md:text-3xl"></ion-icon>
 				<span>Home</span>
 			</router-link>
-			<router-link to="/search" class="footer-link">
-				<ion-icon :icon="search"></ion-icon>
+
+			<router-link
+				to="/search"
+				class="flex flex-col items-center no-underline gap-0.5 text-white text-[14px] sm:text-base md:text-xl leading-[1.43] sm:leading-6 md:leading-[1.4] transition-colors duration-200 active:text-gray-300 active:scale-105">
+				<ion-icon :icon="search" class="text-2xl md:text-3xl"></ion-icon>
 				<span>Zoeken</span>
 			</router-link>
-			<router-link to="/information" class="footer-link">
-				<ion-icon :icon="informationCircle"></ion-icon>
+
+			<router-link
+				to="/information"
+				class="flex flex-col items-center no-underline gap-0.5 text-white text-[14px] sm:text-base md:text-xl leading-[1.43] sm:leading-6 md:leading-[1.4] transition-colors duration-200 active:text-gray-300 active:scale-105">
+				<ion-icon :icon="informationCircle" class="text-2xl md:text-3xl"></ion-icon>
 				<span>Informatie</span>
 			</router-link>
 		</div>
 	</footer>
 </template>
+
 <script setup>
 import { IonIcon } from "@ionic/vue";
 import { home, search, informationCircle } from "ionicons/icons";
 </script>
-
-<style scoped>
-.footer-link {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	text-decoration: none;
-	color: white;
-	font-size: 14px;
-	line-height: 1.4286;
-	@media (width >= 640px) {
-		font-size: 16px;
-		line-height: 1.5;
-	}
-	@media (width >= 768px) {
-		font-size: 20px;
-		line-height: 1.4;
-	}
-}
-.footer-link:active {
-	color: #d1d5db;
-	transition-property: color, background-color, border-color, outline-color, text-decoration-color,
-		fill, stroke;
-	transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-	transition-duration: 200ms;
-	scale: 1.05;
-}
-</style>

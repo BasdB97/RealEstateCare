@@ -4,6 +4,9 @@
 			<router-link to="/">
 				<img src="/src/assets/images/logo.svg" alt="RealEstateCare Logo" class="invert h-14 p-2" />
 			</router-link>
+			<IonButton @click="toggleDark()">
+				<IonIcon :icon="isDark ? moon : sunny" />
+			</IonButton>
 			<IonButton @click="onReset" :disabled="busy">
 				<IonIcon :icon="refresh" class="mr-2" />
 				Reset database
@@ -17,12 +20,16 @@
 
 <script setup>
 import { IonIcon, IonButton } from "@ionic/vue";
-import { notifications, refresh } from "ionicons/icons";
+import { notifications, refresh, moon, sunny } from "ionicons/icons";
+import { useDark, useToggle } from "@vueuse/core";
 import { ref } from "vue";
 import { useReportsStore } from "@/stores/reports";
 
 const busy = ref(false);
 const store = useReportsStore();
+
+const isDark = useDark();
+const toggleDark = useToggle(isDark);
 
 async function onReset() {
 	try {

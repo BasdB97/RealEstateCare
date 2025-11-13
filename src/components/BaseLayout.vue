@@ -1,9 +1,9 @@
 <template>
 	<IonPage>
 		<AppHeader />
-		<ion-content>
+		<IonContent>
 			<slot />
-		</ion-content>
+		</IonContent>
 		<AppFooter />
 	</IonPage>
 </template>
