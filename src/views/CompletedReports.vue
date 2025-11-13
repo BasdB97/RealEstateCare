@@ -2,18 +2,22 @@
 <template>
 	<BaseLayout title="Uitgevoerde rapporten">
 		<IonSpinner v-if="loading" name="circles" />
-		<div v-else-if="error" class="text-red-600">{{ error }}</div>
+		<div v-else-if="error" class="text-red-600 dark:text-red-400">{{ error }}</div>
 
-		<div v-else class="m-2 p-2 border-2 border-primarybg rounded-lg shadow-md space-y-2">
-			<p v-if="completed.length === 0" class="text-slate-500">Nog geen uitgevoerde rapporten.</p>
+		<div
+			v-else
+			class="m-2 p-2 border-2 border-primarybg dark:border-slate-600 rounded-lg shadow-md space-y-2">
+			<p v-if="completed.length === 0" class="text-slate-500 dark:text-slate-400">
+				Nog geen uitgevoerde rapporten.
+			</p>
 
-			<IonList v-else class="divide-y divide-slate-200">
+			<IonList v-else class="divide-y divide-slate-200 dark:divide-slate-600">
 				<IonItem v-for="r in completed" :key="r.id" button @click="openReport(r.id)">
 					<IonLabel>
-						<h2 class="font-semibold">
+						<h2 class="font-semibold dark:text-slate-100">
 							{{ r.location.split(", ")[0] }}, {{ r.location.split(", ")[2] }}
 						</h2>
-						<p class="text-sm text-slate-500">Datum: {{ r.reportDate }}</p>
+						<p class="text-sm text-slate-500 dark:text-slate-400">Datum: {{ r.reportDate }}</p>
 					</IonLabel>
 					<IonBadge color="success">Afgerond</IonBadge>
 				</IonItem>

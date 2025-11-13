@@ -1,4 +1,48 @@
+/* Ionic Variables and Theming
+ * ---------------------------------------------------------------
+ * Any overrides to theme variables should be placed in this file.
+ * For more information, please see:
+ * http://ionicframework.com/docs/theming/
+ */
+
+/* Light mode defaults */
 :root {
-  color-scheme: light;
-  --ion-background-color: #f1f1f1;           /* light content */
+  --ion-background-color: #f9f9f9;
+  --ion-item-background: #ffffff;
+  --ion-item-border-color: var(--ion-background-color-step-200);
+}
+
+/* Dark mode overrides */
+html.dark {
+  --ion-background-color: #1e293b;
+  --ion-item-background: #334155;
+  --ion-toolbar-background: #1e293b;
+  --ion-card-background: #334155;
+}
+
+/* Platform specific light mode */
+:root.ios {
+  --ion-background-color: #f2f2f6;
+  --ion-toolbar-background: var(--ion-background-color);
+  --ion-item-background: #fff;
+}
+
+:root.md {
+  --ion-background-color: #f9f9f9;
+  --ion-toolbar-background: var(--ion-background-color);
+  --ion-item-background: #fff;
+}
+
+/* Platform specific dark mode */
+html.dark.ios,
+html.dark.md {
+  --ion-background-color: #1e293b;
+  --ion-item-background: #334155;
+  --ion-toolbar-background: #1e293b;
+}
+
+/* Ionic's own dark palette fallback */
+.ion-palette-dark {
+  --ion-background-color: #1e293b;
+  --ion-item-background: #334155;
 }

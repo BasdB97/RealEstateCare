@@ -1,13 +1,13 @@
 <template>
 	<BaseLayout>
-		<section class="h-full grid grid-cols-2 gap-6 p-4 place-items-stretch">
+		<div class="h-full grid grid-cols-2 gap-6 p-4 place-items-stretch">
 			<DashboardCard
 				v-for="item in items"
 				:key="item.to"
 				:to="item.to"
 				:label="item.label"
 				:icon="item.icon" />
-		</section>
+		</div>
 	</BaseLayout>
 </template>
 

@@ -44,14 +44,14 @@
 		</IonItem>
 
 		<div class="mt-4">
-			<IonLabel class="block mb-2 font-medium">Foto’s</IonLabel>
+			<IonLabel class="block mb-2 font-medium dark:text-slate-200">Foto's</IonLabel>
 			<div class="flex gap-4 flex-wrap justify-center">
 				<img
 					v-for="n in [1, 2, 3, 4]"
 					:key="n"
 					:src="`/photos/${n}.jpg`"
 					alt="Inspectiefoto"
-					class="w-32 h-32 object-cover rounded-lg shadow" />
+					class="w-32 h-32 object-cover rounded-lg shadow dark:shadow-slate-900" />
 			</div>
 		</div>
 

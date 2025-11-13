@@ -1,14 +1,15 @@
 <template>
 	<BaseLayout :title="report ? report.location : 'Rapport'">
 		<IonSpinner v-if="loading" name="circles" id="loading-spinner" />
-		<div v-else-if="error" class="text-red-600">{{ error }}</div>
+		<div v-else-if="error" class="text-red-600 dark:text-red-400">{{ error }}</div>
 		<div v-else>
 			<IonCard class="" v-if="report">
 				<IonCardHeader>
-					<IonCardSubtitle v-if="isCompleted" class="text-slate-500">
+					<IonCardSubtitle v-if="isCompleted" class="text-slate-500 dark:text-slate-400">
 						Dit rapport is afgerond en kan niet meer worden bewerkt.
 					</IonCardSubtitle>
-					<IonCardTitle class="text-2xl font-bold text-primarybg border-b border-primarybg">
+					<IonCardTitle
+						class="text-2xl font-bold text-primarybg dark:text-slate-100 border-b border-primarybg dark:border-slate-400">
 						{{ (report.location || "").split(", ")[0] || report.location }},
 						<template v-if="(report.location || '').split(', ')[2]">
 							{{ report.location.split(", ")[2] }}
