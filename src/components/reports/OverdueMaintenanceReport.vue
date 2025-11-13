@@ -1,19 +1,14 @@
 <template>
-	<IonList class="p-4" :class="{ 'pointer-events-none opacity-100': isCompleted }">
+	<IonList :class="{ 'pointer-events-none opacity-100': isCompleted }">
 		<IonItem>
-			<IonLabel>Locatie</IonLabel>
-			<IonInput
-				slot="end"
-				v-model="form.location"
-				class="text-right w-1/2"
-				:readonly="isCompleted" />
+			<IonLabel position="stacked">Locatie</IonLabel>
+			<IonInput v-model="form.location" class="w-full" :readonly="isCompleted" />
 		</IonItem>
 
 		<!-- TODO: add v-for to the IonSelectOptions and update script with options -->
 		<IonItem class="items-start">
-			<IonLabel>Soort onderhoud</IonLabel>
+			<IonLabel position="stacked">Soort onderhoud</IonLabel>
 			<IonSelect
-				slot="end"
 				v-model="form.overdueMaintenanceType"
 				interface="action-sheet"
 				placeholder="Selecteer soort onderhoud">
@@ -31,11 +26,11 @@
 		</IonItem>
 
 		<IonItem class="items-start">
-			<IonLabel>Kostenindicatie</IonLabel>
+			<IonLabel position="stacked">Kostenindicatie</IonLabel>
 			<IonSelect
 				v-model="form.costEstimate"
 				interface="action-sheet"
-				slot="end"
+				class="w-full"
 				placeholder="Selecteer kostenindicatie">
 				<IonSelectOption value="500-1500">€0 - €500</IonSelectOption>
 				<IonSelectOption value="1500-3000">€500 - €1500</IonSelectOption>
@@ -43,8 +38,8 @@
 			</IonSelect>
 		</IonItem>
 
-		<div class="mt-4">
-			<IonLabel class="block mb-2 font-medium dark:text-slate-200">Foto's</IonLabel>
+		<div class="ml-4">
+			<IonLabel class="mb-2 font-medium dark:text-slate-200">Foto's</IonLabel>
 			<div class="flex gap-4 flex-wrap justify-center">
 				<img
 					v-for="n in [1, 2, 3, 4]"

@@ -1,14 +1,13 @@
 <template>
-	<IonList class="p-4" :class="{ 'pointer-events-none opacity-100': isCompleted }">
+	<IonList :class="{ 'pointer-events-none opacity-100': isCompleted }">
 		<IonItem>
-			<IonLabel>Locatie</IonLabel>
-			<IonInput slot="end" v-model="form.location" class="text-right w-1/2" />
+			<IonLabel position="stacked">Locatie</IonLabel>
+			<IonInput v-model="form.location" class="w-full" />
 		</IonItem>
 
 		<IonItem class="items-start">
-			<IonLabel>Soort installatie</IonLabel>
+			<IonLabel position="stacked">Soort installatie</IonLabel>
 			<IonSelect
-				slot="end"
 				v-model="form.technicalInstallationType"
 				interface="action-sheet"
 				placeholder="Selecteer soort installatie">
@@ -19,9 +18,9 @@
 		</IonItem>
 
 		<IonItem>
-			<IonLabel>Gemelde storingen</IonLabel>
+			<IonLabel position="stacked">Gemelde storingen</IonLabel>
 			<IonTextarea
-				slot="end"
+				class="w-full"
 				lines="3"
 				cols="20"
 				v-model="form.reportedProblems"
@@ -30,12 +29,12 @@
 		</IonItem>
 
 		<IonItem v-if="form.testProcedure">
-			<IonLabel position="stacked">Testprocedure</IonLabel>
+			<div class="text-lg font-medium mb-4">
+				<IonLabel position="stacked">Testprocedure:</IonLabel>
+			</div>
 			<div class="flex gap-2">
-				<IonButton :href="pdfUrl" target="_blank" rel="noopener">
-					Open {{ form.testProcedure }}
-				</IonButton>
-				<IonButton :href="pdfUrl" download>Download {{ form.testProcedure }}</IonButton>
+				<IonButton :href="pdfUrl" target="_blank" rel="noopener"> Open PDF </IonButton>
+				<IonButton :href="pdfUrl" download>Download PDF</IonButton>
 			</div>
 		</IonItem>
 		<IonItem v-else class="text-red-500 dark:text-red-400">
@@ -50,14 +49,15 @@
 		<IonItem lines="none">
 			<IonLabel position="stacked">Opmerkingen</IonLabel>
 			<IonTextarea
+				class="w-full"
 				v-model="form.remarks"
 				:readonly="isCompleted"
 				auto-grow
 				placeholder="Beschrijf opmerking..." />
 		</IonItem>
 
-		<div class="mt-4">
-			<IonLabel class="block mb-2 font-medium dark:text-slate-200">Foto's</IonLabel>
+		<div class="ml-4">
+			<IonLabel class="mb-2 font-medium dark:text-slate-200">Foto's</IonLabel>
 			<div class="flex gap-4 flex-wrap justify-center">
 				<img
 					v-for="n in [1, 2, 3, 4]"

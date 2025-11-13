@@ -1,14 +1,15 @@
 <template>
-	<IonList class="p-4" :class="{ 'pointer-events-none opacity-100': isCompleted }">
-		<IonItem v-if="form.existingDocs">
-			<IonLabel position="stacked">
-				Bestaande situatie of reeds gedocumenteerde modificaties
-			</IonLabel>
+	<IonList :class="{ 'pointer-events-none opacity-100': isCompleted }">
+		<IonItem v-if="form.existingDocs" lines="fill">
+			<div class="text-lg font-medium mb-4">
+				<IonLabel position="stacked">
+					Bestaande situatie of reeds gedocumenteerde modificaties:
+					<span class="font-bold">{{ form.existingDocs }}</span>
+				</IonLabel>
+			</div>
 			<div class="flex gap-2">
-				<IonButton :href="pdfUrl" target="_blank" rel="noopener">
-					Open {{ form.existingDocs }}
-				</IonButton>
-				<IonButton :href="pdfUrl" download>Download {{ form.existingDocs }}</IonButton>
+				<IonButton :href="pdfUrl" target="_blank" rel="noopener"> Open PDF </IonButton>
+				<IonButton :href="pdfUrl" download>Download PDF</IonButton>
 			</div>
 		</IonItem>
 		<IonItem v-else class="text-red-500 dark:text-red-400">
@@ -16,18 +17,13 @@
 		</IonItem>
 
 		<IonItem>
-			<IonLabel>Locatie aangetroffen modificatie</IonLabel>
-			<IonInput
-				slot="end"
-				v-model="form.location"
-				class="text-right w-1/2"
-				:readonly="isCompleted" />
+			<IonLabel position="stacked">Locatie aangetroffen modificatie:</IonLabel>
+			<IonInput v-model="form.location" class="w-full" :readonly="isCompleted" />
 		</IonItem>
 
 		<IonItem class="items-start">
-			<IonLabel>Uitgevoerd door</IonLabel>
+			<IonLabel position="stacked">Uitgevoerd door:</IonLabel>
 			<IonSelect
-				slot="end"
 				v-model="form.executedBy"
 				interface="action-sheet"
 				placeholder="Selecteer uitvoerder">
@@ -38,20 +34,19 @@
 		</IonItem>
 
 		<IonItem>
-			<IonLabel>Beschrijving modificatie</IonLabel>
+			<IonLabel position="stacked">Beschrijving modificatie:</IonLabel>
 			<IonTextarea
-				slot="end"
 				lines="3"
 				cols="20"
+				class="w-full"
 				v-model="form.modificationDescription"
 				placeholder="Beschrijf de aangetroffen modificatie..."
 				:readonly="isCompleted" />
 		</IonItem>
 
 		<IonItem class="items-start">
-			<IonLabel>Te ondernemen actie</IonLabel>
+			<IonLabel position="stacked">Te ondernemen actie:</IonLabel>
 			<IonSelect
-				slot="end"
 				v-model="form.actionRequired"
 				interface="action-sheet"
 				placeholder="Selecteer te ondernemen actie">
@@ -63,9 +58,9 @@
 		</IonItem>
 
 		<IonItem>
-			<IonLabel>Opmerkingen</IonLabel>
+			<IonLabel position="stacked">Opmerkingen:</IonLabel>
 			<IonTextarea
-				slot="end"
+				class="w-full"
 				lines="3"
 				cols="20"
 				v-model="form.remarks"
@@ -73,8 +68,8 @@
 				:readonly="isCompleted" />
 		</IonItem>
 
-		<div class="mt-4">
-			<IonLabel class="block mb-2 font-medium dark:text-slate-200">Foto's</IonLabel>
+		<div class="ml-4">
+			<IonLabel class="mb-2 font-medium dark:text-slate-200">Foto's</IonLabel>
 			<div class="flex gap-4 flex-wrap justify-center">
 				<img
 					v-for="n in [1, 2, 3, 4]"

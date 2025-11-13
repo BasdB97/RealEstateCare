@@ -1,12 +1,8 @@
 <template>
-	<IonList class="p-4" :class="{ 'pointer-events-none opacity-100': isCompleted }">
+	<IonList :class="{ 'pointer-events-none opacity-100': isCompleted }">
 		<IonItem>
-			<IonLabel>Locatie</IonLabel>
-			<IonInput
-				slot="end"
-				v-model="form.location"
-				class="text-right w-1/2"
-				:readonly="isCompleted" />
+			<IonLabel position="stacked">Locatie</IonLabel>
+			<IonInput v-model="form.location" class="w-full" :readonly="isCompleted" />
 		</IonItem>
 
 		<IonItem>
@@ -16,6 +12,7 @@
 
 		<IonItem>
 			<IonSelect
+				position="stacked"
 				v-model="form.damageType"
 				label="Soort schade"
 				labelPlacement="fixed"
@@ -33,8 +30,14 @@
 		<IonItem>
 			<IonLabel>Datum</IonLabel>
 			<IonDatetimeButton :datetime="`dt-${form.id ?? 'x'}`" slot="end" :readonly="isCompleted" />
-			<IonModal v-if="!isCompleted" :keep-contents-mounted="true">
-				<IonDatetime v-model="form.date" :id="`dt-${form.id ?? 'x'}`" presentation="date" />
+			<IonModal v-if="!isCompleted" :keep-contents-mounted="true" close-on-click-backdrop="true">
+				<IonDatetime
+					v-model="form.date"
+					:id="`dt-${form.id ?? 'x'}`"
+					presentation="date"
+					:show-default-buttons="true"
+					done-text="Opslaan"
+					cancel-text="Annuleren" />
 			</IonModal>
 		</IonItem>
 
@@ -52,8 +55,8 @@
 				:readonly="isCompleted" />
 		</IonItem>
 
-		<div class="mt-4">
-			<IonLabel class="block mb-2 font-medium dark:text-slate-200">Foto's</IonLabel>
+		<div class="ml-4">
+			<IonLabel class="mb-2 font-medium dark:text-slate-200">Foto's</IonLabel>
 			<div class="flex gap-4 flex-wrap justify-center">
 				<img
 					v-for="n in [1, 2, 3, 4]"
