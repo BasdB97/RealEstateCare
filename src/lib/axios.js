@@ -1,27 +1,12 @@
 import axios from "axios";
 
 const api = axios.create({
-	baseURL: import.meta.env.VITE_JSONBIN_BASE,
+	baseURL: "https://api.jsonbin.io/v3/b",
 	timeout: 15000, // 15 seconds
 	headers: {
+		"X-Master-Key": "$2a$10$NUaYzbl3tlDKZ7Iw2oYwY.JcWt88FEwuEwvHS9D838F2Dcw6lk3J.",
 		"Content-Type": "application/json",
 	},
-});
-
-api.interceptors.request.use((config) => {
-	const isLocalDev = config.baseURL?.includes("localhost");
-
-	if (!isLocalDev) {
-		// Only add API key for JSONBin.io, not for local json-server
-		const encoded = import.meta.env.VITE_JSONBIN_X_MASTER_KEY_B64;
-		if (encoded) {
-			const key = atob(encoded);
-			config.headers["X-Master-Key"] = key;
-		}
-		config.headers["X-Bin-Meta"] = false;
-	}
-
-	return config;
 });
 
 api.interceptors.response.use(

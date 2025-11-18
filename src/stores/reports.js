@@ -43,9 +43,8 @@ export const useReportsStore = defineStore("reports", {
 			const seed = await response.json();
 			console.log("Seed data loaded:", seed);
 
-			const baseUrl = import.meta.env.VITE_JSONBIN_BASE;
-			const binId = import.meta.env.VITE_JSONBIN_BIN_ID;
-			await api.put(`${baseUrl}/${binId}`, seed);
+			const url = "https://api.jsonbin.io/v3/b/6891b4e2f7e7a370d1f429da";
+			await api.put(url, seed);
 
 			this.reports = seed.reports;
 			this._saveLocalCache();
@@ -84,18 +83,11 @@ export const useReportsStore = defineStore("reports", {
 				// Load cache first for instant display
 				this.hydrateFromCache();
 
-				const baseUrl = import.meta.env.VITE_JSONBIN_BASE;
-				const binId = import.meta.env.VITE_JSONBIN_BIN_ID;
+				const url = "https://api.jsonbin.io/v3/b/6891b4e2f7e7a370d1f429da";
 
-				console.log("Making API request to:", `${baseUrl}/${binId}`);
-				console.log("Environment vars check:", {
-					hasBaseUrl: !!baseUrl,
-					hasBinId: !!binId,
-					baseUrl,
-					binId,
-				});
+				console.log("Making API request to:", url);
 
-				const response = await api.get(`${baseUrl}/${binId}`);
+				const response = await api.get(url);
 				console.log("Response received:", response.status);
 
 				this.reports = Array.isArray(response.data.record.reports)
@@ -157,9 +149,8 @@ export const useReportsStore = defineStore("reports", {
 			this._saveLocalCache();
 
 			try {
-				const baseUrl = import.meta.env.VITE_JSONBIN_BASE;
-				const binId = import.meta.env.VITE_JSONBIN_BIN_ID;
-				const response = await api.put(`${baseUrl}/${binId}`, { reports: this.reports });
+				const url = "https://api.jsonbin.io/v3/b/6891b4e2f7e7a370d1f429da";
+				const response = await api.put(url, { reports: this.reports });
 				delete this.dirtyReports[reportId];
 				this._saveLocalCache();
 				return response;
@@ -176,9 +167,8 @@ export const useReportsStore = defineStore("reports", {
 			this.loading = true;
 			this.error = null;
 			try {
-				const baseUrl = import.meta.env.VITE_JSONBIN_BASE;
-				const binId = import.meta.env.VITE_JSONBIN_BIN_ID;
-				const response = await api.get(`${baseUrl}/${binId}`);
+				const url = "https://api.jsonbin.io/v3/b/6891b4e2f7e7a370d1f429da";
+				const response = await api.get(url);
 				console.log("Knowledge base response:", response);
 				this.knowledgeBase = response.data.record.knowledgeBase || [];
 				console.log("Knowledge base loaded:", this.knowledgeBase);
