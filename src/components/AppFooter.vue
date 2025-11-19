@@ -1,26 +1,26 @@
 <template>
 	<footer>
 		<div class="flex justify-evenly items-center py-2 bg-[#00aaa2] dark:bg-teal-800 text-white">
-			<router-link
+			<RouterLink
 				to="/"
 				class="flex flex-col items-center no-underline gap-0.5 text-white text-[14px] sm:text-base md:text-xl leading-[1.43] sm:leading-6 md:leading-[1.4] transition-colors duration-200 active:text-gray-300 active:scale-105">
-				<ion-icon :icon="home" class="text-2xl md:text-3xl"></ion-icon>
+				<IonIcon :icon="home" class="text-2xl md:text-3xl"></IonIcon>
 				<span>Home</span>
-			</router-link>
+			</RouterLink>
 
-			<router-link
+			<RouterLink
 				to="/search"
 				class="flex flex-col items-center no-underline gap-0.5 text-white text-[14px] sm:text-base md:text-xl leading-[1.43] sm:leading-6 md:leading-[1.4] transition-colors duration-200 active:text-gray-300 active:scale-105">
-				<ion-icon :icon="search" class="text-2xl md:text-3xl"></ion-icon>
+				<IonIcon :icon="search" class="text-2xl md:text-3xl"></IonIcon>
 				<span>Zoeken</span>
-			</router-link>
+			</RouterLink>
 
-			<router-link
+			<RouterLink
 				to="/information"
 				class="flex flex-col items-center no-underline gap-0.5 text-white text-[14px] sm:text-base md:text-xl leading-[1.43] sm:leading-6 md:leading-[1.4] transition-colors duration-200 active:text-gray-300 active:scale-105">
-				<ion-icon :icon="informationCircle" class="text-2xl md:text-3xl"></ion-icon>
+				<IonIcon :icon="informationCircle" class="text-2xl md:text-3xl"></IonIcon>
 				<span>Informatie</span>
-			</router-link>
+			</RouterLink>
 		</div>
 	</footer>
 </template>

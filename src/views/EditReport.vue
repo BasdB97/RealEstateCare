@@ -170,9 +170,12 @@ async function completeReport() {
 		}
 	}
 	try {
-		await store.persistReportWithStatus(report.value.id, true);
-		toast("Rapport opgeslagen en afgerond");
-		router.push("/assigned-reports");
+		if (await store.persistReportWithStatus(report.value.id, true)) {
+			toast("Rapport opgeslagen en afgerond");
+			router.push("/assigned-reports");
+		} else {
+			toast("Fout bij opslaan: " + (error.message || "Probeer opnieuw"));
+		}
 	} catch (error) {
 		toast("Fout bij opslaan: " + (error.message || "Probeer opnieuw"));
 	}

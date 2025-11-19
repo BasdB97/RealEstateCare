@@ -14,26 +14,13 @@
 </template>
 
 <script setup>
-import { IonIcon, IonButton } from "@ionic/vue";
+import { IonIcon } from "@ionic/vue";
 import { notifications, refresh, logOutOutline } from "ionicons/icons";
-import { ref } from "vue";
-import { useReportsStore } from "@/stores/reports";
 import { useLoginStore } from "@/stores/login";
 import { useRouter } from "vue-router";
 
-const busy = ref(false);
-const store = useReportsStore();
 const loginStore = useLoginStore();
 const router = useRouter();
-
-async function onReset() {
-	try {
-		busy.value = true;
-		await store.resetFromDbJson();
-	} finally {
-		busy.value = false;
-	}
-}
 
 const handleLogout = () => {
 	loginStore.logout();

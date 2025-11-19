@@ -35,19 +35,31 @@ export const useReportsStore = defineStore("reports", {
 	},
 
 	actions: {
-		async resetFromDbJson() {
-			localStorage.clear();
-			console.log("Local storage cleared");
-			const response = await fetch("/db.json");
-			if (!response.ok) throw new Error("db.json niet gevonden");
-			const seed = await response.json();
-			console.log("Seed data loaded:", seed);
+		async resetDatabase() {
+			try {
+				// Alleen jouw eigen key verwijderen
+				localStorage.removeItem("realEstateCare:reports");
 
-			const url = "https://api.jsonbin.io/v3/b/6891b4e2f7e7a370d1f429da";
-			await api.put(url, seed);
+				const response = await fetch("/db.json");
+				if (!response.ok) throw new Error("db.json niet gevonden");
 
-			this.reports = seed.reports;
-			this._saveLocalCache();
+				const seed = await response.json();
+
+				const url = "https://api.jsonbin.io/v3/b/6891b4e2f7e7a370d1f429da";
+				const putResponse = await api.put(url, seed);
+
+				if (putResponse.status !== 200) {
+					throw new Error(`Reset mislukt, status: ${putResponse.status}`);
+				}
+
+				this.reports = seed.reports;
+				this._saveLocalCache();
+
+				return true; // belangrijk
+			} catch (err) {
+				console.error("Reset error:", err);
+				throw err; // doorgeven aan component
+			}
 		},
 
 		//
@@ -161,9 +173,13 @@ export const useReportsStore = defineStore("reports", {
 				// Nu de volledige database terugsturen
 				const response = await api.put(url, fullDatabase);
 
+				if (response.status !== 200) {
+					throw new Error(`Opslaan mislukt, status: ${response.status}`);
+				}
+
 				delete this.dirtyReports[reportId];
 				this._saveLocalCache();
-				return response;
+				return true;
 			} catch (err) {
 				// rollback
 				this.reports = this.reports.map((r) => (r.id === reportId ? original : r));
@@ -181,11 +197,17 @@ export const useReportsStore = defineStore("reports", {
 				const response = await api.get(url);
 				console.log("Knowledge base response:", response);
 				this.knowledgeBase = response.data.record.knowledgeBase || [];
-				console.log("Knowledge base loaded:", this.knowledgeBase);
-			} catch (e) {
-				this.error = "Kon kennisbank niet laden";
-			} finally {
+				console.log("Knowledge base loaded:", JSON.stringify(this.knowledgeBase, null, 4));
+				if (response.status !== 200) {
+					throw new Error(`Kennisbank laden mislukt, status: ${response.status}`);
+				}
 				this.loading = false;
+				return true;
+			} catch (err) {
+				console.error("Error fetching knowledge base:", err);
+				this.error = "Kon kennisbank niet laden";
+				this.loading = false;
+				throw err;
 			}
 		},
 	},
