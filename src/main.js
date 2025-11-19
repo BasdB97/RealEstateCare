@@ -33,5 +33,6 @@ app.component("BaseLayout", BaseLayout);
 
 router.isReady().then(() => {
 	useSettingsStore().loadSettings();
+	useSettingsStore().applyTheme();
 	app.mount("#app");
 });

@@ -1,5 +1,7 @@
 import { defineStore } from "pinia";
 
+const STORAGE_KEY = "user-settings";
+
 export const useSettingsStore = defineStore("settings", {
 	state: () => ({
 		name: "",
@@ -7,43 +9,27 @@ export const useSettingsStore = defineStore("settings", {
 		profession: "",
 		email: "",
 		avatar: null,
-		language: "nl",
-		notifications: {
-			push: true,
-			email: true,
-		},
-		sound: true,
-		vibration: true,
+		pushNotificationsEnabled: true,
+		soundEnabled: true,
 		theme: "light", // Default theme is light
 	}),
 
-	getters: {
-		avatarInitials: (state) => {
-			if (!state.name) return "?";
-			const names = state.name.trim().split(" ");
-			if (names.length === 1) return names[0][0].toUpperCase();
-			return (names[0][0] + names[names.length - 1][0]).toUpperCase();
-		},
-	},
-
 	actions: {
-		setTheme(theme) {
-			this.theme = theme; // 'dark' | 'light' - Default theme is light
-			const root = document.documentElement;
-			root.classList.toggle("dark", theme === "dark");
-			root.style.setProperty("color-scheme", theme === "dark" ? "dark" : "light");
-			this.saveSettings();
-		},
-		toggleTheme() {
-			this.setTheme(this.theme === "dark" ? "light" : "dark");
-		},
 		loadSettings() {
-			const saved = JSON.parse(localStorage.getItem("user-settings") || "{}");
-			Object.assign(this, saved);
-			this.setTheme(
-				this.theme || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")
-			);
+			const raw = localStorage.getItem(STORAGE_KEY);
+			if (!raw) return;
+
+			try {
+				const data = JSON.parse(raw);
+				if (data.theme) this.theme = data.theme;
+				if (typeof data.soundEnabled === "boolean") this.soundEnabled = data.soundEnabled;
+				if (typeof data.pushNotificationsEnabled === "boolean")
+					this.pushNotificationsEnabled = data.pushNotificationsEnabled;
+			} catch (e) {
+				console.error("Kon settings niet lezen:", e);
+			}
 		},
+
 		saveSettings() {
 			const settings = {
 				name: this.name,
@@ -51,26 +37,29 @@ export const useSettingsStore = defineStore("settings", {
 				profession: this.profession,
 				email: this.email,
 				avatar: this.avatar,
-				language: this.language,
-				notifications: this.notifications,
-				sound: this.sound,
-				vibration: this.vibration,
+				soundEnabled: this.soundEnabled,
+				pushNotificationsEnabled: this.pushNotificationsEnabled,
 				theme: this.theme,
 			};
-			localStorage.setItem("user-settings", JSON.stringify(settings));
+			localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
 		},
 
-		updateNotificationSettings(type, value) {
-			this.notifications[type] = value;
+		applyTheme() {
+			document.documentElement.classList.toggle("dark", this.theme === "dark");
+		},
+		toggleTheme() {
+			this.theme = this.theme === "dark" ? "light" : "dark";
+			this.applyTheme();
 			this.saveSettings();
 		},
 
-		clearCache() {
-			const userSettings = localStorage.getItem("user-settings");
-			localStorage.clear();
-			if (userSettings) {
-				localStorage.setItem("user-settings", userSettings);
-			}
+		setPushNotificationsEnabled(value) {
+			this.pushNotificationsEnabled = value;
+			this.saveSettings();
+		},
+		setSoundEnabled(value) {
+			this.soundEnabled = value;
+			this.saveSettings();
 		},
 	},
 });

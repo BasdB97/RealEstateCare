@@ -1,7 +1,12 @@
 <template>
 	<BaseLayout>
 		<div>
-			<IonSpinner v-if="loading" name="circles" id="loading-spinner" />
+			<h1 class="text-3xl px-4 pt-4 font-bold text-primarybg dark:text-white">
+				Toegewezen rapporten
+			</h1>
+			<div v-if="loading" class="flex justify-center items-center h-64">
+				<IonSpinner name="circles" />
+			</div>
 			<div v-else-if="error" class="text-red-600 dark:text-red-400">{{ error }}</div>
 			<div v-else>
 				<IonAccordionGroup

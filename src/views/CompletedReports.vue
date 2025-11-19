@@ -1,12 +1,16 @@
 <!-- src/views/CompletedReports.vue -->
 <template>
 	<BaseLayout title="Uitgevoerde rapporten">
-		<IonSpinner v-if="loading" name="circles" />
+		<h1 class="text-3xl px-4 pt-4 font-bold text-primarybg dark:text-white">
+			Uitgevoerde rapporten
+		</h1>
+		<div v-if="loading" class="flex justify-center items-center h-64">
+			<IonSpinner name="circles" />
+		</div>
+
 		<div v-else-if="error" class="text-red-600 dark:text-red-400">{{ error }}</div>
 
-		<div
-			v-else
-			class="m-2 p-2 border-2 border-primarybg dark:border-slate-600 rounded-lg shadow-md space-y-2">
+		<div v-else class="m-2 p-2 dark:border-slate-600 rounded-lg shadow-md space-y-2">
 			<p v-if="completed.length === 0" class="text-slate-500 dark:text-slate-400">
 				Nog geen uitgevoerde rapporten.
 			</p>

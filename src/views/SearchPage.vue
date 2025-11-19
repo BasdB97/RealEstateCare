@@ -1,7 +1,7 @@
 <template>
 	<BaseLayout>
-		<div class="p-4">
-			<p class="dark:text-slate-200">Hier komt de zoekfunctionaliteit.</p>
+		<div class="p-4 max-w-2xl mx-auto">
+			<h1 class="text-3xl font-bold text-primarybg dark:text-white mb-6">Informatie</h1>
 		</div>
 	</BaseLayout>
 </template>
