@@ -11,14 +11,16 @@
 				<IonCardContent>
 					<!-- Theme Toggle -->
 					<IonItem>
-						<ion-icon :icon="store.isDarkMode ? moon : sunny" slot="start"></ion-icon>
+						<ion-icon :icon="store.theme === 'dark' ? moon : sunny" slot="start"></ion-icon>
 						<IonLabel>
 							<h3>Donkere modus</h3>
 							<p>Schakel tussen licht en donker thema</p>
 						</IonLabel>
-						<!-- Let op: boolean toggle -->
-						<IonToggle :checked="isDark" @ionChange="toggleDark()"></IonToggle>
-						<p>{{ isDark }}</p>
+						<!-- Gebruik store.theme in plaats van isDark -->
+						<IonToggle
+							:checked="store.theme === 'dark'"
+							@ionChange="store.toggleTheme()"></IonToggle>
+						<p>{{ store.theme }}</p>
 					</IonItem>
 				</IonCardContent>
 			</IonCard>
@@ -58,9 +60,6 @@ import {
 import { moon, sunny, save } from "ionicons/icons";
 
 const store = useSettingsStore();
-
-const isDark = useDark();
-const toggleDark = useToggle(isDark);
 
 // lokale UI-states
 const showToast = ref(false);
