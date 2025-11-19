@@ -14,6 +14,7 @@ export const useSettingsStore = defineStore("settings", {
 		},
 		sound: true,
 		vibration: true,
+		theme: "light", // Default theme is light
 	}),
 
 	getters: {
@@ -27,7 +28,7 @@ export const useSettingsStore = defineStore("settings", {
 
 	actions: {
 		setTheme(theme) {
-			this.theme = theme; // 'dark' | 'light'
+			this.theme = theme; // 'dark' | 'light' - Default theme is light
 			const root = document.documentElement;
 			root.classList.toggle("dark", theme === "dark");
 			root.style.setProperty("color-scheme", theme === "dark" ? "dark" : "light");
@@ -54,6 +55,7 @@ export const useSettingsStore = defineStore("settings", {
 				notifications: this.notifications,
 				sound: this.sound,
 				vibration: this.vibration,
+				theme: this.theme,
 			};
 			localStorage.setItem("user-settings", JSON.stringify(settings));
 		},

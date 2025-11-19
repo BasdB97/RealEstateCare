@@ -1,18 +1,13 @@
 <template>
 	<header>
 		<div class="bg-primarybg flex justify-between h-14">
-			<router-link to="/">
+			<RouterLink to="/">
 				<img src="/src/assets/images/logo.svg" alt="RealEstateCare Logo" class="invert h-14 p-2" />
-			</router-link>
-			<IonButton @click="toggleDark()">
-				<IonIcon :icon="isDark ? moon : sunny" />
-			</IonButton>
-			<IonButton @click="onReset" :disabled="busy">
-				<IonIcon :icon="refresh" class="mr-2" />
-				Reset database
-			</IonButton>
+			</RouterLink>
+
 			<div class="flex items-center">
-				<ion-icon :icon="notifications" class="header-icon"></ion-icon>
+				<IonIcon :icon="logOutOutline" @click="handleLogout" />
+				<IonIcon :icon="notifications" class="header-icon"></IonIcon>
 			</div>
 		</div>
 	</header>
@@ -20,16 +15,16 @@
 
 <script setup>
 import { IonIcon, IonButton } from "@ionic/vue";
-import { notifications, refresh, moon, sunny } from "ionicons/icons";
-import { useDark, useToggle } from "@vueuse/core";
+import { notifications, refresh, logOutOutline } from "ionicons/icons";
 import { ref } from "vue";
 import { useReportsStore } from "@/stores/reports";
+import { useLoginStore } from "@/stores/login";
+import { useRouter } from "vue-router";
 
 const busy = ref(false);
 const store = useReportsStore();
-
-const isDark = useDark();
-const toggleDark = useToggle(isDark);
+const loginStore = useLoginStore();
+const router = useRouter();
 
 async function onReset() {
 	try {
@@ -39,6 +34,11 @@ async function onReset() {
 		busy.value = false;
 	}
 }
+
+const handleLogout = () => {
+	loginStore.logout();
+	router.push("/login");
+};
 </script>
 
 <style scoped>

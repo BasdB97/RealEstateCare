@@ -150,7 +150,17 @@ export const useReportsStore = defineStore("reports", {
 
 			try {
 				const url = "https://api.jsonbin.io/v3/b/6891b4e2f7e7a370d1f429da";
-				const response = await api.put(url, { reports: this.reports });
+
+				// EERST de volledige database ophalen
+				const getResponse = await api.get(url);
+				const fullDatabase = getResponse.data.record;
+
+				// Dan alleen de reports updaten in de volledige database
+				fullDatabase.reports = this.reports;
+
+				// Nu de volledige database terugsturen
+				const response = await api.put(url, fullDatabase);
+
 				delete this.dirtyReports[reportId];
 				this._saveLocalCache();
 				return response;

@@ -30,6 +30,11 @@
 				Instellingen opslaan
 			</IonButton>
 
+			<IonButton @click="onReset" :disabled="busy">
+				<IonIcon :icon="refresh" class="mr-2" />
+				Reset database
+			</IonButton>
+
 			<!-- Toast for feedback -->
 			<IonToast
 				:is-open="showToast"
@@ -55,7 +60,7 @@ import {
 	IonButton,
 	IonToast,
 } from "@ionic/vue";
-import { moon, sunny, save } from "ionicons/icons";
+import { moon, sunny, save, refresh } from "ionicons/icons";
 
 const store = useSettingsStore();
 

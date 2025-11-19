@@ -3,13 +3,12 @@
 		<IonContent class="ion-padding">
 			<div class="flex flex-col items-center justify-center h-full max-w-md mx-auto px-4">
 				<!-- Logo Section -->
-				<div class="mb-8 text-center">
+				<div class="mb-2 text-center">
 					<img
 						src="@/assets/images/logo.svg"
 						alt="Real Estate Care Logo"
-						class="w-32 h-32 mx-auto mb-4" />
-					<h1 class="text-3xl font-bold text-primarybg dark:text-white">Real Estate Care</h1>
-					<p class="text-gray-600 dark:text-gray-400 mt-2">Welkom terug</p>
+						class="w-48 mb-4 mx-auto" />
+					<h3 class="text-gray-600 dark:text-gray-400 mt-2">Welkom terug</h3>
 				</div>
 
 				<!-- Login Form Card -->
@@ -18,7 +17,7 @@
 						<form @submit.prevent="handleLogin">
 							<!-- Employee ID Input -->
 							<div class="mb-4">
-								<IonLabel class="block mb-2 text-sm font-medium text-primarybg dark:text-white">
+								<IonLabel class="block text-lg font-medium text-primarybg dark:text-white">
 									Werknemer ID
 								</IonLabel>
 								<IonInput
@@ -26,7 +25,7 @@
 									type="text"
 									placeholder="Voer uw werknemer ID in"
 									fill="outline"
-									class="w-full"
+									class="w-full text-lg dark:text-gray-400 dark:focus-within:text-white"
 									:class="{ 'ion-invalid': errors.employeeId }"
 									@ionInput="errors.employeeId = ''"
 									required />
@@ -37,7 +36,7 @@
 
 							<!-- Password Input -->
 							<div class="mb-6">
-								<IonLabel class="block mb-2 text-sm font-medium text-primarybg dark:text-white">
+								<IonLabel class="block text-lg font-medium text-primarybg dark:text-white">
 									Wachtwoord
 								</IonLabel>
 								<IonInput
@@ -45,7 +44,7 @@
 									:type="showPassword ? 'text' : 'password'"
 									placeholder="Voer uw wachtwoord in"
 									fill="outline"
-									class="w-full"
+									class="w-full text-lg dark:text-gray-400 dark:focus-within:text-white"
 									:class="{ 'ion-invalid': errors.password }"
 									@ionInput="errors.password = ''"
 									required>
@@ -84,11 +83,6 @@
 						</form>
 					</IonCardContent>
 				</IonCard>
-
-				<!-- Footer Text -->
-				<p class="text-xs text-gray-500 dark:text-gray-500 mt-6 text-center">
-					© 2025 Real Estate Care. Alle rechten voorbehouden.
-				</p>
 			</div>
 
 			<!-- Toast for feedback -->
@@ -98,6 +92,40 @@
 				:duration="3000"
 				:color="toastColor"
 				@didDismiss="showToast = false" />
+
+			<IonModal :is-open="showAuthModal" @didDismiss="closeAuthModal">
+				<IonCard class="mx-4 my-10">
+					<IonCardContent>
+						<IonLabel class="block mb-2 font-semibold">Authenticatie</IonLabel>
+						<IonText class="block mb-2 text-l text-gray-600 dark:text-gray-300">
+							Voer de 6-cijferige code in ter bevestiging:
+						</IonText>
+
+						<IonInput
+							mode="md"
+							label="Code"
+							placeholder="Code is te vinden in de console"
+							maxlength="6"
+							inputmode="numeric"
+							:clear-input="true"
+							class="mb-2"
+							v-model="authCode"
+							@keyup.enter="checkAuthCode" />
+						<IonText v-if="authError" color="danger" class="block text-xs mb-2">{{
+							authError
+						}}</IonText>
+						<IonButton expand="block" @click="checkAuthCode"> Bevestigen </IonButton>
+						<IonButton
+							expand="block"
+							fill="clear"
+							color="medium"
+							class="mt-2"
+							@click="closeAuthModal">
+							Annuleren
+						</IonButton>
+					</IonCardContent>
+				</IonCard>
+			</IonModal>
 		</IonContent>
 	</IonPage>
 </template>
@@ -105,6 +133,8 @@
 <script setup>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
+import { useLoginStore } from "@/stores/login";
+
 import {
 	IonPage,
 	IonContent,
@@ -117,15 +147,21 @@ import {
 	IonText,
 	IonSpinner,
 	IonToast,
+	IonModal,
 } from "@ionic/vue";
 import { logInOutline, eyeOutline, eyeOffOutline } from "ionicons/icons";
 
 const router = useRouter();
 
+const loginStore = useLoginStore();
+
 // Form data
 const employeeId = ref("");
 const password = ref("");
 const showPassword = ref(false);
+const showAuthModal = ref(false);
+const authCode = ref("");
+const authError = ref("");
 
 // UI states
 const isLoading = ref(false);
@@ -172,30 +208,12 @@ const handleLogin = async () => {
 	isLoading.value = true;
 
 	try {
-		// Simulate API call - Replace with actual authentication logic
-		await new Promise((resolve) => setTimeout(resolve, 1000));
-
-		// Example validation (replace with real authentication)
-		if (employeeId.value === "demo" && password.value === "demo") {
-			// Store authentication token/session
-			localStorage.setItem("isAuthenticated", "true");
-			localStorage.setItem("employeeId", employeeId.value);
-
-			// Show success toast
-			toastMessage.value = "Succesvol ingelogd!";
-			toastColor.value = "success";
-			showToast.value = true;
-
-			// Navigate to home page
-			setTimeout(() => {
-				router.push("/");
-			}, 500);
-		} else {
-			loginError.value = "Ongeldige werknemer ID of wachtwoord";
-		}
+		await loginStore.login(employeeId.value, password.value);
+		// Als we hier komen, was de login succesvol
+		showAuthModal.value = true;
 	} catch (error) {
 		console.error("Login error:", error);
-		loginError.value = "Er is een fout opgetreden. Probeer het opnieuw.";
+		loginError.value = "Onjuiste inloggegevens. Controleer uw werknemer ID en wachtwoord.";
 	} finally {
 		isLoading.value = false;
 	}
@@ -203,9 +221,28 @@ const handleLogin = async () => {
 
 // Handle forgot password
 const handleForgotPassword = () => {
-	toastMessage.value = "Neem contact op met uw beheerder voor wachtwoordherstel";
+	toastMessage.value = "Deze functionaliteit is momenteel nog niet beschikbaar.";
 	toastColor.value = "primary";
 	showToast.value = true;
+};
+
+const closeAuthModal = () => {
+	showAuthModal.value = false;
+	authCode.value = "";
+	authError.value = "";
+};
+
+const checkAuthCode = async () => {
+	const randomNumber = localStorage.getItem("randomNumber");
+	if (authCode.value === randomNumber) {
+		showAuthModal.value = false;
+		toastMessage.value = "Welkom, " + loginStore.employeeName + "!";
+		toastColor.value = "success";
+		showToast.value = true;
+		router.push("/");
+	} else {
+		authError.value = "Ongeldige code";
+	}
 };
 </script>
 
