@@ -20,7 +20,6 @@
 						<IonToggle
 							:checked="store.theme === 'dark'"
 							@ionChange="store.toggleTheme()"></IonToggle>
-						<p>{{ store.theme }}</p>
 					</IonItem>
 				</IonCardContent>
 			</IonCard>
@@ -43,7 +42,6 @@
 
 <script setup>
 import { ref } from "vue";
-import { useDark, useToggle } from "@vueuse/core";
 import { useSettingsStore } from "@/stores/settings";
 import {
 	IonCard,
