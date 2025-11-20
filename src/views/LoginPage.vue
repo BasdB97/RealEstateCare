@@ -101,6 +101,15 @@
 							Voer de 6-cijferige code in ter bevestiging:
 						</IonText>
 
+						<div class="my-4 p-4 bg-blue-100 dark:bg-blue-900 rounded-lg text-center">
+							<IonText class="block text-sm text-gray-600 dark:text-gray-300 mb-1">
+								Uw authenticatiecode:
+							</IonText>
+							<IonText class="block text-3xl font-bold text-blue-600 dark:text-blue-400">
+								{{ displayedAuthCode }}
+							</IonText>
+						</div>
+
 						<IonInput
 							mode="md"
 							label="Code"
@@ -162,6 +171,7 @@ const showPassword = ref(false);
 const showAuthModal = ref(false);
 const authCode = ref("");
 const authError = ref("");
+const displayedAuthCode = ref("");
 
 // UI states
 const isLoading = ref(false);
@@ -208,8 +218,9 @@ const handleLogin = async () => {
 	isLoading.value = true;
 
 	try {
-		await loginStore.login(employeeId.value, password.value);
+		const randomNumber = await loginStore.login(employeeId.value, password.value);
 		// Als we hier komen, was de login succesvol
+		displayedAuthCode.value = randomNumber.toString(); // TOEVOEGEN: sla de code op
 		showAuthModal.value = true;
 	} catch (error) {
 		console.error("Login error:", error);
@@ -230,6 +241,7 @@ const closeAuthModal = () => {
 	showAuthModal.value = false;
 	authCode.value = "";
 	authError.value = "";
+	displayedAuthCode.value = "";
 };
 
 const checkAuthCode = async () => {

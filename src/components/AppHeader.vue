@@ -7,7 +7,10 @@
 
 			<div class="flex items-center">
 				<IonIcon :icon="logOutOutline" @click="handleLogout" />
-				<IonIcon :icon="notifications" class="header-icon"></IonIcon>
+				<IonIcon
+					:icon="notificationsEnabled ? notifications : notificationsOff"
+					@click="toggleNotifications"
+					class="header-icon"></IonIcon>
 			</div>
 		</div>
 	</header>
@@ -15,16 +18,22 @@
 
 <script setup>
 import { IonIcon } from "@ionic/vue";
-import { notifications, refresh, logOutOutline } from "ionicons/icons";
+import { notifications, notificationsOff, logOutOutline } from "ionicons/icons";
 import { useLoginStore } from "@/stores/login";
 import { useRouter } from "vue-router";
+import { ref } from "vue";
 
 const loginStore = useLoginStore();
 const router = useRouter();
+const notificationsEnabled = ref(true);
 
 const handleLogout = () => {
 	loginStore.logout();
 	router.push("/login");
+};
+
+const toggleNotifications = () => {
+	notificationsEnabled.value = !notificationsEnabled.value;
 };
 </script>
 

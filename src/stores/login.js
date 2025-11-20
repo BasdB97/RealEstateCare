@@ -39,6 +39,7 @@ export const useLoginStore = defineStore("login", {
 					localStorage.setItem("employeeName", user.name);
 					localStorage.setItem("employeeId", user.employeeId);
 					localStorage.setItem("loggedIn", true);
+					return randomNumber;
 				} else {
 					this.employeeName = "";
 					console.log("Login failed - no matching user found");

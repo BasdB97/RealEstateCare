@@ -83,6 +83,7 @@
 							<p>Schakel tussen licht en donker thema</p>
 						</IonLabel>
 						<IonToggle
+							slot="end"
 							:checked="settingsStore.theme === 'dark'"
 							@ionChange="settingsStore.toggleTheme()"></IonToggle>
 					</IonItem>
@@ -91,6 +92,7 @@
 						<IonIcon :icon="volumeHigh" slot="start"></IonIcon>
 						<IonLabel>Geluidseffecten</IonLabel>
 						<IonToggle
+							slot="end"
 							:checked="settingsStore.soundEnabled"
 							@ionChange="settingsStore.setSoundEnabled($event.target.checked)"></IonToggle>
 					</IonItem>
@@ -99,6 +101,7 @@
 						<IonIcon :icon="phonePortraitOutline" slot="start"></IonIcon>
 						<IonLabel>Push meldingen</IonLabel>
 						<IonToggle
+							slot="end"
 							:checked="settingsStore.pushNotificationsEnabled"
 							@ionChange="
 								settingsStore.setPushNotificationsEnabled($event.target.checked)
@@ -111,6 +114,12 @@
 			<IonButton expand="block" @click="onSave" class="mt-4 mb-4">
 				<IonIcon :icon="save" slot="start"></IonIcon>
 				Instellingen opslaan
+			</IonButton>
+
+			<!-- Log out Button -->
+			<IonButton expand="block" color="danger" @click="onLogOut" class="mt-4 mb-4">
+				<IonIcon :icon="logOutOutline" slot="start"></IonIcon>
+				Uitloggen
 			</IonButton>
 
 			<IonButton @click="onResetDatabase" :disabled="reportsStore.loading">
@@ -155,6 +164,7 @@ import {
 	camera,
 	volumeHigh,
 	phonePortraitOutline,
+	logOutOutline,
 } from "ionicons/icons";
 
 const settingsStore = useSettingsStore();
@@ -183,8 +193,6 @@ const onResetDatabase = async () => {
 		showToastMessage("Fout bij resetten van de database: " + e.message);
 	}
 };
-
-
 </script>
 
 <style scoped></style>
