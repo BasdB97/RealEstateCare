@@ -143,6 +143,7 @@
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { useLoginStore } from "@/stores/login";
+import { useReportsStore } from "@/stores/reports";
 
 import {
 	IonPage,
@@ -163,6 +164,7 @@ import { logInOutline, eyeOutline, eyeOffOutline } from "ionicons/icons";
 const router = useRouter();
 
 const loginStore = useLoginStore();
+const reportsStore = useReportsStore();
 
 // Form data
 const employeeId = ref("");
@@ -247,6 +249,8 @@ const closeAuthModal = () => {
 const checkAuthCode = async () => {
 	const randomNumber = localStorage.getItem("randomNumber");
 	if (authCode.value === randomNumber) {
+		await reportsStore.resetDatabase();
+		console.log("Database reset");
 		showAuthModal.value = false;
 		toastMessage.value = "Welkom, " + loginStore.employeeName + "!";
 		toastColor.value = "success";

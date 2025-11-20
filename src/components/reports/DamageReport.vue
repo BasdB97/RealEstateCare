@@ -64,7 +64,7 @@
 			<IonLabel position="stacked">Foto's</IonLabel>
 			<PhotoUploader v-if="!isCompleted" v-model:photos="form.photos" :disabled="isCompleted" />
 			<div v-else>
-				<h2 class="text-center text-red-500 dark:text-red-400">Er zijn geen foto's gemaakt</h2>
+				<h4 class="text-center text-red-500 dark:text-red-400">Er zijn geen foto's gemaakt</h4>
 			</div>
 		</IonItem>
 

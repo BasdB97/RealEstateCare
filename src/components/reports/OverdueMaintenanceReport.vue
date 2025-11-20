@@ -40,7 +40,13 @@
 			</IonSelect>
 		</IonItem>
 
-		<PhotoUploader v-if="!isCompleted" v-model:photos="form.photos" :disabled="isCompleted" />
+		<IonItem lines="none" class="dark:text-white">
+			<IonLabel position="stacked">Foto's</IonLabel>
+			<PhotoUploader v-if="!isCompleted" v-model:photos="form.photos" :disabled="isCompleted" />
+			<div v-else>
+				<h4 class="text-center text-red-500 dark:text-red-400">Er zijn geen foto's gemaakt</h4>
+			</div>
+		</IonItem>
 
 		<div class="mt-4 flex items-center justify-end gap-3" v-if="!isCompleted">
 			<IonBadge v-if="isDirty" color="warning" class="p-2">Niet opgeslagen</IonBadge>

@@ -1,7 +1,5 @@
 <template>
 	<div class="ml-4">
-		<IonLabel class="mb-2 font-medium dark:text-white">Foto's</IonLabel>
-
 		<div class="flex gap-4 flex-wrap justify-center">
 			<img
 				v-for="photo in photos"
