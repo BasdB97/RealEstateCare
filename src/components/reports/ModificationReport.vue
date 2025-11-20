@@ -1,6 +1,6 @@
 <template>
 	<IonList :class="{ 'pointer-events-none opacity-100': isCompleted }">
-		<IonItem v-if="form.existingDocs" lines="fill">
+		<IonItem v-if="form.existingDocs && !isCompleted" lines="fill">
 			<div class="text-lg font-medium mb-4">
 				<IonLabel position="stacked">
 					Bestaande situatie of reeds gedocumenteerde modificaties:

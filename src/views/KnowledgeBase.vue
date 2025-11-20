@@ -1,5 +1,5 @@
 <template>
-	<BaseLayout title="Kennisbank">
+	<BaseLayout>
 		<h1 class="text-3xl px-4 pt-4 font-bold text-primarybg dark:text-white">Kennisbank</h1>
 		<div v-if="loading" class="flex justify-center items-center h-64">
 			<IonSpinner name="circles" />

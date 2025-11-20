@@ -28,7 +28,7 @@
 				:readonly="isCompleted" />
 		</IonItem>
 
-		<IonItem v-if="form.testProcedure">
+		<IonItem v-if="form.testProcedure && !isCompleted">
 			<div class="text-lg font-medium mb-4">
 				<IonLabel position="stacked">Testprocedure:</IonLabel>
 			</div>

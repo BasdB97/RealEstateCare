@@ -1,11 +1,12 @@
 <template>
-	<BaseLayout :title="report ? report.location : 'Rapport'">
+	<BaseLayout>
 		<IonSpinner v-if="loading" name="circles" id="loading-spinner" />
 		<div v-else-if="error" class="text-red-600 dark:text-red-400">{{ error }}</div>
 		<div v-else>
+			<BackButton />
 			<IonCard class="" v-if="report">
 				<IonCardHeader>
-					<IonCardSubtitle v-if="isCompleted" class="text-slate-500 dark:text-slate-400">
+					<IonCardSubtitle v-if="isCompleted" class="text-red-500 dark:text-red-400">
 						Dit rapport is afgerond en kan niet meer worden bewerkt.
 					</IonCardSubtitle>
 					<IonCardTitle
@@ -81,6 +82,7 @@ import DamageReport from "@/components/reports/DamageReport.vue";
 import OverdueMaintenanceReport from "@/components/reports/OverdueMaintenanceReport.vue";
 import TechnicalInstallationReport from "@/components/reports/TechnicalInstallationReport.vue";
 import ModificationReport from "@/components/reports/ModificationReport.vue";
+import BackButton from "@/components/BackButton.vue";
 
 import { computed, onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";

@@ -4,7 +4,6 @@
 			<h1 class="text-3xl font-bold text-primarybg dark:text-white mb-6">Instellingen</h1>
 
 			<!-- Account Details Section -->
-			<!-- Account Details Section -->
 			<IonCard class="mb-4">
 				<IonCardHeader>
 					<IonCardTitle class="text-center border-b mb-2">Account Gegevens</IonCardTitle>

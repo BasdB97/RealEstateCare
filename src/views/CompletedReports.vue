@@ -1,6 +1,6 @@
 <!-- src/views/CompletedReports.vue -->
 <template>
-	<BaseLayout title="Uitgevoerde rapporten">
+	<BaseLayout>
 		<h1 class="text-3xl px-4 pt-4 font-bold text-primarybg dark:text-white">
 			Uitgevoerde rapporten
 		</h1>
@@ -31,9 +31,10 @@
 </template>
 
 <script setup>
+import BaseLayout from "@/components/BaseLayout.vue";
+
 import { onMounted, computed } from "vue";
 import { IonSpinner, IonList, IonItem, IonLabel, IonBadge } from "@ionic/vue";
-import BaseLayout from "@/components/BaseLayout.vue";
 import { useReportsStore } from "@/stores/reports";
 import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
