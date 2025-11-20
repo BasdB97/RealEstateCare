@@ -57,7 +57,7 @@
 				placeholder="Beschrijf opmerking..." />
 		</IonItem>
 
-		<PhotoUploader v-model:photos="form.photos" :disabled="isCompleted" />
+		<PhotoUploader v-if="!isCompleted" v-model:photos="form.photos" :disabled="isCompleted" />
 
 		<div class="mt-4 flex items-center justify-end gap-3" v-if="!isCompleted">
 			<IonBadge v-if="isDirty" color="warning" class="p-2">Niet opgeslagen</IonBadge>

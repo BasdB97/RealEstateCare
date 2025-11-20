@@ -1,6 +1,6 @@
 <template>
 	<IonList :class="{ 'pointer-events-none opacity-100': isCompleted }">
-		<IonItem>
+		<IonItem class="dark:text-white">
 			<IonLabel position="stacked" class="dark:text-white">Locatie</IonLabel>
 			<IonInput
 				v-model="form.location"
@@ -8,19 +8,19 @@
 				:readonly="isCompleted" />
 		</IonItem>
 
-		<IonItem>
-			<IonLabel class="dark:text-white">Nieuwe schade?</IonLabel>
+		<IonItem class="dark:text-white">
+			<IonLabel>Nieuwe schade?</IonLabel>
 			<IonCheckbox slot="end" v-model="form.newDamage" :disabled="isCompleted" />
 		</IonItem>
 
-		<IonItem>
+		<IonItem class="dark:text-white">
+			<IonLabel>Soort schade</IonLabel>
 			<IonSelect
 				position="stacked"
 				v-model="form.damageType"
-				label="Soort schade"
-				class="dark:text-white"
 				labelPlacement="fixed"
 				interface="action-sheet"
+				class="w-full dark:text-slate-400"
 				placeholder="Selecteer soort schade">
 				<IonSelectOption value="moedwillig">Moedwillig</IonSelectOption>
 				<IonSelectOption value="slijtage">Slijtage</IonSelectOption>
@@ -31,8 +31,8 @@
 			</IonSelect>
 		</IonItem>
 
-		<IonItem>
-			<IonLabel class="dark:text-white">Datum</IonLabel>
+		<IonItem class="dark:text-white">
+			<IonLabel>Datum</IonLabel>
 			<IonDatetimeButton :datetime="`dt-${form.id ?? 'x'}`" slot="end" :readonly="isCompleted" />
 			<IonModal v-if="!isCompleted" :keep-contents-mounted="true" close-on-click-backdrop="true">
 				<IonDatetime
@@ -45,13 +45,13 @@
 			</IonModal>
 		</IonItem>
 
-		<IonItem>
-			<IonLabel class="dark:text-white">Acute actie vereist?</IonLabel>
+		<IonItem class="dark:text-white">
+			<IonLabel>Acute actie vereist?</IonLabel>
 			<IonCheckbox slot="end" v-model="form.urgentActionRequired" :disabled="isCompleted" />
 		</IonItem>
 
-		<IonItem>
-			<IonLabel position="stacked" class="dark:text-white">Omschrijving</IonLabel>
+		<IonItem class="dark:text-white">
+			<IonLabel position="stacked">Omschrijving</IonLabel>
 			<IonTextarea
 				class="dark:text-slate-400"
 				v-model="form.damageDescription"
@@ -60,7 +60,13 @@
 				:readonly="isCompleted" />
 		</IonItem>
 
-		<PhotoUploader v-model:photos="form.photos" :disabled="isCompleted" />
+		<IonItem lines="none" class="dark:text-white">
+			<IonLabel position="stacked">Foto's</IonLabel>
+			<PhotoUploader v-if="!isCompleted" v-model:photos="form.photos" :disabled="isCompleted" />
+			<div v-else>
+				<h2 class="text-center text-red-500 dark:text-red-400">Er zijn geen foto's gemaakt</h2>
+			</div>
+		</IonItem>
 
 		<div class="mt-4 flex items-center justify-end gap-3" v-if="!isCompleted">
 			<IonBadge v-if="isDirty" color="warning" class="p-2">Niet opgeslagen</IonBadge>
