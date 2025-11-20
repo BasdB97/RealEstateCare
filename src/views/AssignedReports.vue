@@ -42,7 +42,7 @@
 											(i) => !isEmptyInspection(i)
 										)"
 										:key="index">
-										<IonLabel class="mb-0 pb-0 dark:text-slate-400">{{
+										<IonLabel class="mb-0 pb-0 dark:text-white">{{
 											getInspectionLabel(inspection)
 										}}</IonLabel>
 										<IonBadge v-if="hasUrgentAction(inspection)" color="danger" class="py-1"
