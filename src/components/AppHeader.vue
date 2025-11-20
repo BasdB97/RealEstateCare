@@ -6,7 +6,6 @@
 			</RouterLink>
 
 			<div class="flex items-center">
-				<IonIcon :icon="logOutOutline" @click="handleLogout" />
 				<IonIcon
 					:icon="notificationsEnabled ? notifications : notificationsOff"
 					@click="toggleNotifications"
@@ -18,19 +17,10 @@
 
 <script setup>
 import { IonIcon } from "@ionic/vue";
-import { notifications, notificationsOff, logOutOutline } from "ionicons/icons";
-import { useLoginStore } from "@/stores/login";
-import { useRouter } from "vue-router";
+import { notifications, notificationsOff } from "ionicons/icons";
 import { ref } from "vue";
 
-const loginStore = useLoginStore();
-const router = useRouter();
 const notificationsEnabled = ref(true);
-
-const handleLogout = () => {
-	loginStore.logout();
-	router.push("/login");
-};
 
 const toggleNotifications = () => {
 	notificationsEnabled.value = !notificationsEnabled.value;

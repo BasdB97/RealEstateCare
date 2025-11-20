@@ -4,42 +4,49 @@
 		<div v-if="loading" class="flex justify-center items-center h-64">
 			<IonSpinner name="circles" />
 		</div>
-		<IonSearchbar v-model="q" placeholder="Zoek in documenten..." />
-		<IonList
-			v-if="filtered.length > 0"
-			class="m-2 p-2 border-2 border-primarybg dark:border-slate-600 rounded-lg shadow-md space-y-2">
-			<IonItem v-for="doc in filtered" :key="doc.id" lines="full">
-				<IonLabel>
-					<span class="font-semibold dark:text-white">{{ doc.title }}</span>
-					<br />
-					<span class="text-sm opacity-80 dark:text-slate-300"
-						>{{ doc.category }} · {{ doc.version }}</span
+		<div v-else-if="error" class="text-red-600 dark:text-red-400">{{ error }}</div>
+		<div v-else>
+			<IonSearchbar v-model="q" placeholder="Zoek in documenten..." />
+			<IonList
+				v-if="filtered.length > 0"
+				class="m-2 p-2 border-2 border-primarybg dark:border-slate-600 rounded-lg shadow-md space-y-2">
+				<IonItem v-for="doc in filtered" :key="doc.id" lines="full">
+					<IonLabel>
+						<span class="font-semibold dark:text-white">{{ doc.title }}</span>
+						<br />
+						<span class="text-sm opacity-80 dark:text-slate-300"
+							>{{ doc.category }} · {{ doc.version }}</span
+						>
+						<br />
+						<span class="text-xs opacity-70 dark:text-slate-400">{{ doc.description }}</span>
+					</IonLabel>
+					<IonButton :href="urlFor(doc.url)" target="_blank" rel="noopener" slot="end"
+						>Open PDF</IonButton
 					>
-					<br />
-					<span class="text-xs opacity-70 dark:text-slate-400">{{ doc.description }}</span>
-				</IonLabel>
-				<IonButton :href="urlFor(doc.url)" target="_blank" rel="noopener" slot="end"
-					>Open PDF</IonButton
-				>
-			</IonItem>
-		</IonList>
-		<div
-			v-else
-			class="m-2 p-2 border-2 border-primarybg dark:border-slate-600 rounded-lg shadow-md space-y-2">
-			<p class="text-center text-slate-500 dark:text-slate-400">Geen documenten gevonden</p>
+				</IonItem>
+			</IonList>
+			<div
+				v-else
+				class="m-2 p-2 border-2 border-primarybg dark:border-slate-600 rounded-lg shadow-md space-y-2">
+				<p class="text-center text-slate-500 dark:text-slate-400">
+					Geen documenten gevonden. Probeer het later opnieuw.
+				</p>
+			</div>
 		</div>
 	</BaseLayout>
 </template>
 
 <script setup>
 import { ref, computed, onMounted } from "vue";
-import { IonList, IonItem, IonLabel, IonButton, IonSearchbar } from "@ionic/vue";
+import { IonList, IonItem, IonLabel, IonButton, IonSearchbar, IonSpinner } from "@ionic/vue";
 import { useReportsStore } from "@/stores/reports";
+import { storeToRefs } from "pinia";
 
 const store = useReportsStore();
 const q = ref("");
 onMounted(async () => await store.fetchKnowledgeBase());
 const filtered = computed(() => (q.value ? store.search(q.value) : store.knowledgeBase));
+const { loading, error } = storeToRefs(store);
 
 const urlFor = (u) =>
 	u.startsWith("http")

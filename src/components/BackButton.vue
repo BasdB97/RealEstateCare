@@ -1,5 +1,5 @@
 <template>
-	<IonButton :fill="outline" :size="default" :color="primary" @click="goBack" class="back-button">
+	<IonButton :fill="fill" :size="size" :color="color" @click="goBack" class="back-button">
 		<IonIcon :icon="arrowBackOutline" slot="start" />
 		Terug
 	</IonButton>
@@ -9,6 +9,12 @@
 import { IonButton, IonIcon } from "@ionic/vue";
 import { arrowBackOutline } from "ionicons/icons";
 import { useRouter } from "vue-router";
+
+const props = defineProps({
+	fill: { type: String, default: "outline" },
+	size: { type: String, default: "medium" },
+	color: { type: String, default: "primary" },
+});
 
 const router = useRouter();
 

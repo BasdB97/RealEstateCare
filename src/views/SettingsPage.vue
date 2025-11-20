@@ -124,7 +124,7 @@
 			</IonButton>
 
 			<!-- Log out Button -->
-			<IonButton expand="block" color="danger" @click="onLogOut" class="mt-4 mb-4">
+			<IonButton expand="block" color="danger" @click="handleLogout" class="mt-4 mb-4">
 				<IonIcon :icon="logOutOutline" slot="start"></IonIcon>
 				Uitloggen
 			</IonButton>
@@ -148,6 +148,9 @@
 import { ref } from "vue";
 import { useSettingsStore } from "@/stores/settings";
 import { useReportsStore } from "@/stores/reports";
+import { useLoginStore } from "@/stores/login";
+import { useRouter } from "vue-router";
+
 import {
 	IonCard,
 	IonIcon,
@@ -176,7 +179,8 @@ import {
 
 const settingsStore = useSettingsStore();
 const reportsStore = useReportsStore();
-
+const loginStore = useLoginStore();
+const router = useRouter();
 // lokale UI-states
 const showToast = ref(false);
 const toastMessage = ref("");
@@ -199,6 +203,11 @@ const onResetDatabase = async () => {
 	} catch (e) {
 		showToastMessage("Fout bij resetten van de database: " + e.message);
 	}
+};
+
+const handleLogout = () => {
+	loginStore.logout();
+	router.push("/login");
 };
 </script>
 

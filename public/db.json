@@ -1,0 +1,276 @@
+{
+	"reports": [
+		{
+			"id": 0,
+			"reportDate": "2024-07-10",
+			"location": "Appelhof 21, 5235JF, Amstelveen",
+			"completed": false,
+			"inspections": [
+				{
+					"type": "damage",
+					"id": 1,
+					"location": "Achterdeur",
+					"newDamage": false,
+					"damageType": "slijtage",
+					"date": "2024-05-14",
+					"urgentActionRequired": true,
+					"damageDescription": "Voordeur is beschadigd",
+					"photos": []
+				},
+				{
+					"type": "overdueMaintenance",
+					"id": 2,
+					"location": "Keukenraam",
+					"maintenanceType": "schilderwerk",
+					"urgentActionRequired": true,
+					"costEstimate": "3000-5000",
+					"photos": [],
+					"date": null,
+					"overdueMaintenanceType": "leidingwerk"
+				},
+				{
+					"type": "technicalInstallation",
+					"id": 3,
+					"location": "CV-ruimte",
+					"installationType": "verwarming",
+					"reportedIssues": "Ketel maakt tikkend geluid bij opstarten",
+					"testProcedure": "http://www.zivelab.com/app/ziveapp1.pdf",
+					"approved": true,
+					"remarks": "Regelmatig onderhoud aanbevolen",
+					"photos": []
+				},
+				{
+					"type": "modification",
+					"id": 4,
+					"existingDocs": "modificaties_overzicht.pdf",
+					"location": "Woonkamer",
+					"executedBy": "huurder",
+					"modificationDescription": "Eigenhandig wand geplaatst",
+					"actionRequired": "laten keuren",
+					"remarks": "Controle door aannemer noodzakelijk",
+					"photos": []
+				}
+			]
+		},
+		{
+			"id": 1,
+			"reportDate": "2024-08-22",
+			"location": "Lindelaan 8, 4811AB, Breda",
+			"completed": false,
+			"inspections": [
+				{
+					"type": "technicalInstallation",
+					"id": 5,
+					"location": "Meterkast",
+					"installationType": "elektra",
+					"reportedIssues": "Aardlekschakelaar slaat onregelmatig af",
+					"testProcedure": "test_elektrische_installatie.pdf",
+					"approved": false,
+					"remarks": "Volledige keuring inplannen",
+					"photos": []
+				},
+				{
+					"type": "modification",
+					"id": 6,
+					"existingDocs": "modificatie_aanvraag_keuken.pdf",
+					"location": "Keuken",
+					"executedBy": "huurder",
+					"modificationDescription": "Extra stopcontacten geplaatst boven aanrecht",
+					"actionRequired": "laten keuren",
+					"remarks": "Controle op juiste groep en aarding",
+					"photos": []
+				}
+			]
+		},
+		{
+			"id": 2,
+			"reportDate": "2024-09-15",
+			"location": "Kerkstraat 45, 3512GC, Utrecht",
+			"completed": true,
+			"inspections": [
+				{
+					"type": "damage",
+					"id": 7,
+					"location": "Badkamer",
+					"newDamage": true,
+					"damageType": "vochtschade",
+					"date": "2024-09-10",
+					"urgentActionRequired": true,
+					"damageDescription": "Waterlekkage bij douche, schimmelvorming op muur",
+					"photos": []
+				},
+				{
+					"type": "overdueMaintenance",
+					"id": 8,
+					"location": "Dak",
+					"maintenanceType": "dakonderhoud",
+					"urgentActionRequired": false,
+					"costEstimate": "8000-12000",
+					"photos": [],
+					"date": null,
+					"overdueMaintenanceType": "dakbedekking"
+				},
+				{
+					"type": "technicalInstallation",
+					"id": 9,
+					"location": "Keuken",
+					"installationType": "koeling",
+					"reportedIssues": "Geen gebreken geconstateerd",
+					"testProcedure": "http://www.zivelab.com/app/ziveapp1.pdf",
+					"approved": true,
+					"remarks": "Installatie functioneert optimaal",
+					"photos": []
+				}
+			]
+		},
+		{
+			"id": 3,
+			"reportDate": "2024-10-03",
+			"location": "Maasstraat 112, 3011NB, Rotterdam",
+			"completed": false,
+			"inspections": [
+				{
+					"type": "damage",
+					"id": 10,
+					"location": "Trapportaal",
+					"newDamage": false,
+					"damageType": "geweld",
+					"date": "2024-09-28",
+					"urgentActionRequired": false,
+					"damageDescription": "Leuning losgeraakt door normale slijtage",
+					"photos": []
+				},
+				{
+					"type": "modification",
+					"id": 11,
+					"existingDocs": "zolder_verbouwing_aanvraag.pdf",
+					"location": "Zolder",
+					"executedBy": "aannemer",
+					"modificationDescription": "Dakraam geplaatst en vloer geisoleerd",
+					"actionRequired": "documenteren",
+					"remarks": "Werk uitgevoerd volgens bouwverordening",
+					"photos": []
+				},
+				{
+					"type": "technicalInstallation",
+					"id": 12,
+					"location": "Kelder",
+					"installationType": "ventilatie",
+					"reportedIssues": "Afzuiging werkt niet op volle capaciteit",
+					"testProcedure": "ventilatie_test_protocol.pdf",
+					"approved": false,
+					"remarks": "Filter vervangen en leidingen controleren",
+					"photos": []
+				}
+			]
+		},
+		{
+			"id": 4,
+			"reportDate": "2024-11-12",
+			"location": "Wilhelminapark 88, 5041EA, Tilburg",
+			"completed": false,
+			"inspections": [
+				{
+					"type": "overdueMaintenance",
+					"id": 13,
+					"location": "Voorgevel",
+					"maintenanceType": "schilderwerk",
+					"urgentActionRequired": true,
+					"costEstimate": "6000-8000",
+					"photos": [],
+					"date": null,
+					"overdueMaintenanceType": "schilderwerk"
+				},
+				{
+					"type": "damage",
+					"id": 14,
+					"location": "Slaapkamer",
+					"newDamage": true,
+					"damageType": "normale slijtage",
+					"date": "2024-11-08",
+					"urgentActionRequired": false,
+					"damageDescription": "Vloerbedekking versleten, opnieuw beleggen vereist",
+					"photos": []
+				},
+				{
+					"type": "modification",
+					"id": 15,
+					"existingDocs": "tuin_aanpassing.pdf",
+					"location": "Achtertuin",
+					"executedBy": "huurder",
+					"modificationDescription": "Houten schutting geplaatst langs erfgrens",
+					"actionRequired": "goedkeuren",
+					"remarks": "Hoogte voldoet aan gemeentelijke normen",
+					"photos": []
+				},
+				{
+					"type": "technicalInstallation",
+					"id": 16,
+					"location": "Berging",
+					"installationType": "elektra",
+					"reportedIssues": "Geen gebreken geconstateerd",
+					"testProcedure": "elektrische_keuring_2024.pdf",
+					"approved": true,
+					"remarks": "Installatie conform NEN 1010",
+					"photos": []
+				}
+			]
+		}
+	],
+	"knowledgeBase": [
+		{
+			"id": "kb-001",
+			"title": "NEN 3140 – Bedrijfsvoering van elektrische installaties",
+			"category": "Normblad",
+			"description": "Veilig werken aan of nabij elektrische installaties.",
+			"version": "2021",
+			"tags": ["elektra", "veiligheid"],
+			"updatedAt": "2024-11-01",
+			"fileSizeKB": 842,
+			"url": "/docs/nen-3140.pdf"
+		},
+		{
+			"id": "kb-002",
+			"title": "Testprocedure CV-installatie",
+			"category": "Testprocedure",
+			"description": "Stapsgewijze controle van CV-installaties tijdens inspectie.",
+			"version": "v3.2",
+			"tags": ["verwarming", "inspectie"],
+			"updatedAt": "2025-02-10",
+			"fileSizeKB": 256,
+			"url": "https://www.scientific-devices.com.au/pdfs/WeTransfer-NZvJB6Cw/Capacitance/Fundamentals%20of%20CV%20Measurement.pdf"
+		},
+		{
+			"id": "kb-003",
+			"title": "Onderhoudsrichtlijn gevelbekleding",
+			"category": "Handleiding",
+			"description": "Inspectiecriteria en onderhoudsfrequentie voor gevelpanelen.",
+			"version": "v2.0",
+			"tags": ["gevel", "onderhoud"],
+			"updatedAt": "2024-08-05",
+			"fileSizeKB": 392,
+			"url": "/docs/gevelbekleding-handleiding.pdf"
+		}
+	],
+
+	"settings": {
+		"version": "1.0.0",
+		"lastUpdated": "2025-11-10",
+		"offlineModeEnabled": true
+	},
+
+	"users": [
+		{
+			"id": 1,
+			"name": "Sjon de Vries",
+			"employeeId": "1234",
+			"password": "1234"
+		},
+		{
+			"id": 2,
+			"name": "Piet Janssen",
+			"employeeId": "5678",
+			"password": "5678"
+		}
+	]
+}

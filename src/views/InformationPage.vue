@@ -64,7 +64,7 @@
 						<IonItem lines="none">
 							<IonLabel>
 								<h3 class="font-semibold dark:text-white">Versie</h3>
-								<p class="text-sm text-slate-500">2.4.1 (Build 2024.11.19)</p>
+								<p class="text-sm text-slate-500">2.4.1</p>
 							</IonLabel>
 						</IonItem>
 
@@ -72,7 +72,7 @@
 						<IonItem lines="none">
 							<IonLabel>
 								<h3 class="font-semibold dark:text-white">Release datum</h3>
-								<p class="text-sm text-slate-500">19 november 2024</p>
+								<p class="text-sm text-slate-500">20 november 2025</p>
 							</IonLabel>
 						</IonItem>
 
