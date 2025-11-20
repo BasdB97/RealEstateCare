@@ -5,6 +5,7 @@
 			<IonInput
 				v-model="form.location"
 				class="w-full dark:text-slate-400"
+				:required="true"
 				:readonly="isCompleted" />
 		</IonItem>
 
@@ -17,10 +18,12 @@
 			<IonLabel>Soort schade</IonLabel>
 			<IonSelect
 				position="stacked"
+				slot="end"
 				v-model="form.damageType"
 				labelPlacement="fixed"
 				interface="action-sheet"
-				class="w-full dark:text-slate-400"
+				class="dark:text-slate-400"
+				:required="true"
 				placeholder="Selecteer soort schade">
 				<IonSelectOption value="moedwillig">Moedwillig</IonSelectOption>
 				<IonSelectOption value="slijtage">Slijtage</IonSelectOption>
@@ -33,7 +36,11 @@
 
 		<IonItem class="dark:text-white">
 			<IonLabel>Datum</IonLabel>
-			<IonDatetimeButton :datetime="`dt-${form.id ?? 'x'}`" slot="end" :readonly="isCompleted" />
+			<IonDatetimeButton
+				:datetime="`dt-${form.id ?? 'x'}`"
+				slot="end"
+				:readonly="isCompleted"
+				:required="true" />
 			<IonModal v-if="!isCompleted" :keep-contents-mounted="true" close-on-click-backdrop="true">
 				<IonDatetime
 					v-model="form.date"
@@ -57,7 +64,8 @@
 				v-model="form.damageDescription"
 				auto-grow
 				placeholder="Beschrijf schade..."
-				:readonly="isCompleted" />
+				:readonly="isCompleted"
+				:required="true" />
 		</IonItem>
 
 		<IonItem lines="none" class="dark:text-white">
@@ -118,9 +126,6 @@ const emit = defineEmits(["saveLocalChanges"]);
 
 // isDirty: houdt bij of het formulier is gewijzigd sinds laatste opslag
 const isDirty = ref(false);
-const fileInput = ref(null);
-
-const objectUrls = [];
 
 // form: reactive kopie van inspection data voor two-way binding
 const form = reactive({
@@ -164,34 +169,6 @@ function saveLocalChanges() {
 	baseline.value = JSON.stringify({ ...toRaw(form) });
 	isDirty.value = false;
 }
-
-function handleAddPhoto() {
-	if (fileInput.value) {
-		fileInput.value.click();
-	}
-}
-
-function handleFileChange(event) {
-	const files = Array.from(event.target.files || []);
-
-	files.forEach((file) => {
-		const url = URL.createObjectURL(file);
-		objectUrls.push(url);
-
-		form.photos.push({
-			id: `${Date.now()}-${Math.random().toString(36).slice(2)}`,
-			url,
-			name: file.name,
-		});
-	});
-
-	// input resetten zodat dezelfde file later opnieuw gekozen kan worden
-	event.target.value = "";
-}
-
-onBeforeUnmount(() => {
-	objectUrls.forEach((url) => URL.revokeObjectURL(url));
-});
 
 defineExpose({
 	saveLocalChanges,

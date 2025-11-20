@@ -1,13 +1,12 @@
 <template>
 	<BaseLayout>
-		<IonSpinner v-if="loading" name="circles" id="loading-spinner" />
-		<div v-else-if="error" class="text-red-600 dark:text-red-400">{{ error }}</div>
-		<div v-else>
+		<div v-if="error" class="text-red-600 dark:text-red-400">{{ error }}</div>
+		<div v-else-if="report">
 			<BackButton />
-			<IonCard class="" v-if="report">
+			<IonCard class="">
 				<IonCardHeader>
 					<IonCardSubtitle v-if="isCompleted" class="text-red-500 dark:text-red-400">
-						Dit rapport is afgerond en kan niet meer worden bewerkt.
+						Dit rapport is afgerond en alleen nog ter inzage.
 					</IonCardSubtitle>
 					<IonCardTitle
 						class="text-2xl font-bold text-primarybg dark:text-white border-b border-primarybg dark:border-slate-400">
@@ -50,12 +49,7 @@
 					</IonAccordion>
 				</IonAccordionGroup>
 			</IonCard>
-			<IonToast
-				:is-open="toastOpen"
-				:message="toastMessage"
-				duration="1500"
-				position="bottom"
-				@didDismiss="toastOpen = false" />
+
 			<div class="flex flex-col gap-3 mt-6 p-4" v-if="!isCompleted">
 				<IonButton
 					expand="block"
@@ -73,6 +67,13 @@
 					Rapport opslaan en afronden
 				</IonButton>
 			</div>
+
+			<IonToast
+				:is-open="toastOpen"
+				:message="toastMessage"
+				duration="1500"
+				position="bottom"
+				@didDismiss="toastOpen = false" />
 		</div>
 	</BaseLayout>
 </template>
@@ -95,7 +96,6 @@ import {
 	IonItem,
 	IonLabel,
 	IonBadge,
-	IonSpinner,
 	IonCard,
 	IonCardHeader,
 	IonCardTitle,
@@ -118,7 +118,7 @@ const id = Number(route.params.id);
 const store = useReportsStore();
 const toastOpen = ref(false);
 const toastMessage = ref("");
-const { loading, error } = storeToRefs(store);
+const { error } = storeToRefs(store);
 const openAccordion = ref(null);
 const isCompleted = computed(() => !!report.value?.completed);
 const inspectionRefs = ref({});
@@ -171,6 +171,7 @@ async function completeReport() {
 			componentRef.saveLocalChanges();
 		}
 	}
+  
 	try {
 		if (await store.persistReportWithStatus(report.value.id, true)) {
 			toast("Rapport opgeslagen en afgerond");

@@ -1,25 +1,35 @@
 <template>
 	<BaseLayout>
 		<div>
-			<h1 class="text-3xl px-4 pt-4 font-bold text-primarybg dark:text-white">
-				Toegewezen rapporten
-			</h1>
-			<div v-if="loading" class="flex justify-center items-center h-64">
-				<IonSpinner name="circles" />
+			<h1 class="page-title">Toegewezen rapporten</h1>
+			<div v-if="error" class="text-center text-red-600 dark:text-red-400 p-4">
+				<p class="mb-2">{{ error }}</p>
+				<IonButton size="small" @click="store.fetchReports(true)">Opnieuw proberen</IonButton>
 			</div>
-			<div v-else-if="error" class="text-red-600 dark:text-red-400">{{ error }}</div>
-			<div v-else>
+			<div v-else-if="assignedReports.length > 0">
+				<div class="px-4 pt-2 pb-3">
+					<input
+						v-model="query"
+						type="search"
+						placeholder="Zoek op locatie..."
+						class="w-full rounded-lg border border-slate-300 dark:border-slate-600 px-3 py-2 text-sm bg-white dark:bg-slate-800 dark:text-white" />
+				</div>
+
 				<IonAccordionGroup
 					expand="inset"
 					class="m-2 p-2 rounded-lg space-y-2"
-					v-if="assignedReports.length > 0">
-					<IonAccordion v-for="r in assignedReports || []" :key="r?.id">
+					v-if="filteredReports.length > 0">
+					<IonAccordion v-for="r in filteredReports || []" :key="r?.id">
 						<IonItem slot="header">
 							<IonLabel>
 								<h2 class="text-slate-800 dark:text-white">
-									{{ r.location.split(", ")[0] }}, {{ r.location.split(", ")[2] }}
+									{{ r.location.split(", ")[0] }}
+									<!-- Straat + huisnr -->
 								</h2>
-								<p class="text-slate-500 dark:text-slate-400">{{ r.location.split(", ")[1] }}</p>
+								<p class="text-slate-500 dark:text-slate-400">
+									{{ r.location.split(", ")[1] }} - {{ r.location.split(", ")[2] }}
+								</p>
+								<p class="text-xs text-slate-400">{{ r.inspections.length }} inspecties</p>
 							</IonLabel>
 						</IonItem>
 
@@ -70,7 +80,7 @@
 </template>
 
 <script setup>
-import { onMounted } from "vue";
+import { onMounted, computed, ref } from "vue";
 import { storeToRefs } from "pinia";
 import { getInspectionLabel, hasUrgentAction, isEmptyInspection } from "@/utils/reportHelpers";
 import {
@@ -80,7 +90,6 @@ import {
 	IonItem,
 	IonLabel,
 	IonBadge,
-	IonSpinner,
 	IonButton,
 } from "@ionic/vue";
 
@@ -89,9 +98,17 @@ import { useRouter } from "vue-router";
 
 const store = useReportsStore();
 const router = useRouter();
-const { assignedReports, loading, error } = storeToRefs(store);
+const { assignedReports, error } = storeToRefs(store);
+
+const query = ref("");
 
 const openReport = (id) => router.push({ name: "edit-report", params: { id } });
+
+const filteredReports = computed(() => {
+	if (!query.value) return assignedReports.value;
+	const q = query.value.toLowerCase();
+	return assignedReports.value.filter((r) => r.location.toLowerCase().includes(q));
+});
 
 onMounted(async () => {
 	await store.fetchReports();
