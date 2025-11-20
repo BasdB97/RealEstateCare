@@ -40,17 +40,7 @@
 			</IonSelect>
 		</IonItem>
 
-		<div class="ml-4">
-			<IonLabel class="mb-2 font-medium dark:text-slate-200">Foto's</IonLabel>
-			<div class="flex gap-4 flex-wrap justify-center">
-				<img
-					v-for="n in [1, 2, 3, 4]"
-					:key="n"
-					:src="`/photos/${n}.jpg`"
-					alt="Inspectiefoto"
-					class="w-32 h-32 object-cover rounded-lg shadow dark:shadow-slate-900" />
-			</div>
-		</div>
+		<PhotoUploader v-model:photos="form.photos" :disabled="isCompleted" />
 
 		<div class="mt-4 flex items-center justify-end gap-3" v-if="!isCompleted">
 			<IonBadge v-if="isDirty" color="warning" class="p-2">Niet opgeslagen</IonBadge>
@@ -63,6 +53,7 @@
 </template>
 
 <script setup>
+import PhotoUploader from "@/components/reports/PhotoUploader.vue";
 // Vue composition API functies importeren
 import { reactive, watch, toRaw, ref } from "vue";
 import {

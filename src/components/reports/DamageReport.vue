@@ -50,7 +50,7 @@
 			<IonCheckbox slot="end" v-model="form.urgentActionRequired" :disabled="isCompleted" />
 		</IonItem>
 
-		<IonItem lines="none">
+		<IonItem>
 			<IonLabel position="stacked" class="dark:text-white">Omschrijving</IonLabel>
 			<IonTextarea
 				class="dark:text-slate-400"
@@ -60,17 +60,8 @@
 				:readonly="isCompleted" />
 		</IonItem>
 
-		<div class="ml-4">
-			<IonLabel class="mb-2 font-medium dark:text-white">Foto's</IonLabel>
-			<div class="flex gap-4 flex-wrap justify-center">
-				<img
-					v-for="n in [1, 2, 3, 4]"
-					:key="n"
-					:src="`/photos/${n}.jpg`"
-					alt="Inspectiefoto"
-					class="w-32 h-32 object-cover rounded-lg shadow dark:shadow-slate-900" />
-			</div>
-		</div>
+		<PhotoUploader v-model:photos="form.photos" :disabled="isCompleted" />
+
 		<div class="mt-4 flex items-center justify-end gap-3" v-if="!isCompleted">
 			<IonBadge v-if="isDirty" color="warning" class="p-2">Niet opgeslagen</IonBadge>
 			<IonBadge v-else color="success" class="p-2">Opgeslagen</IonBadge>
@@ -82,8 +73,10 @@
 </template>
 
 <script setup>
+import PhotoUploader from "@/components/reports/PhotoUploader.vue";
+
 // Vue composition API functies importeren
-import { reactive, watch, toRaw, ref } from "vue";
+import { reactive, watch, toRaw, ref, onBeforeUnmount } from "vue";
 
 // Ionic UI componenten importeren
 import {
@@ -119,10 +112,14 @@ const emit = defineEmits(["saveLocalChanges"]);
 
 // isDirty: houdt bij of het formulier is gewijzigd sinds laatste opslag
 const isDirty = ref(false);
+const fileInput = ref(null);
+
+const objectUrls = [];
 
 // form: reactive kopie van inspection data voor two-way binding
 const form = reactive({
 	...props.inspection,
+	photos: props.inspection.photos ?? [],
 });
 
 // baseline: JSON string van laatste opgeslagen staat voor vergelijking
@@ -161,6 +158,34 @@ function saveLocalChanges() {
 	baseline.value = JSON.stringify({ ...toRaw(form) });
 	isDirty.value = false;
 }
+
+function handleAddPhoto() {
+	if (fileInput.value) {
+		fileInput.value.click();
+	}
+}
+
+function handleFileChange(event) {
+	const files = Array.from(event.target.files || []);
+
+	files.forEach((file) => {
+		const url = URL.createObjectURL(file);
+		objectUrls.push(url);
+
+		form.photos.push({
+			id: `${Date.now()}-${Math.random().toString(36).slice(2)}`,
+			url,
+			name: file.name,
+		});
+	});
+
+	// input resetten zodat dezelfde file later opnieuw gekozen kan worden
+	event.target.value = "";
+}
+
+onBeforeUnmount(() => {
+	objectUrls.forEach((url) => URL.revokeObjectURL(url));
+});
 
 defineExpose({
 	saveLocalChanges,

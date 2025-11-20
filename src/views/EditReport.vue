@@ -32,8 +32,8 @@
 								: `${inspection.type}-${index}`
 						"
 						class="mb-4">
-						<IonItem slot="header">
-							<IonLabel class="dark:text-white">{{ getInspectionLabel(inspection) }}</IonLabel>
+						<IonItem slot="header" class="dark:text-slate-400">
+							<IonLabel>{{ getInspectionLabel(inspection) }}</IonLabel>
 							<IonBadge v-if="hasUrgentAction(inspection)" color="danger" class="py-1"
 								>Urgent!</IonBadge
 							>
