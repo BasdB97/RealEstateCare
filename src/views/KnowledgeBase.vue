@@ -9,11 +9,13 @@
 			v-if="filtered.length > 0"
 			class="m-2 p-2 border-2 border-primarybg dark:border-slate-600 rounded-lg shadow-md space-y-2">
 			<IonItem v-for="doc in filtered" :key="doc.id" lines="full">
-				<IonLabel class="flex flex-col">
-					<span class="font-semibold dark:text-slate-100">{{ doc.title }}</span>
+				<IonLabel>
+					<span class="font-semibold dark:text-white">{{ doc.title }}</span>
+					<br />
 					<span class="text-sm opacity-80 dark:text-slate-300"
 						>{{ doc.category }} · {{ doc.version }}</span
 					>
+					<br />
 					<span class="text-xs opacity-70 dark:text-slate-400">{{ doc.description }}</span>
 				</IonLabel>
 				<IonButton :href="urlFor(doc.url)" target="_blank" rel="noopener" slot="end"

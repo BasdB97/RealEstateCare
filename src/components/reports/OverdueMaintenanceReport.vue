@@ -1,36 +1,38 @@
 <template>
 	<IonList :class="{ 'pointer-events-none opacity-100': isCompleted }">
 		<IonItem>
-			<IonLabel position="stacked">Locatie</IonLabel>
-			<IonInput v-model="form.location" class="w-full" :readonly="isCompleted" />
+			<IonLabel position="stacked" class="dark:text-white">Locatie</IonLabel>
+			<IonInput
+				v-model="form.location"
+				class="w-full dark:text-slate-400"
+				:readonly="isCompleted" />
 		</IonItem>
 
 		<!-- TODO: add v-for to the IonSelectOptions and update script with options -->
 		<IonItem class="items-start">
-			<IonLabel position="stacked">Soort onderhoud</IonLabel>
+			<IonLabel position="stacked" class="dark:text-white">Soort onderhoud</IonLabel>
 			<IonSelect
 				v-model="form.overdueMaintenanceType"
 				interface="action-sheet"
-				placeholder="Selecteer soort onderhoud">
-				<IonSelectOption value="schilderwerk">Schilderwerk</IonSelectOption>
-				<IonSelectOption value="houtrot">Houtrot</IonSelectOption>
-				<IonSelectOption value="elektra">Elektra</IonSelectOption>
-				<IonSelectOption value="leidingwerk">Leidingwerk</IonSelectOption>
-				<IonSelectOption value="beglazing">Beglazing</IonSelectOption>
+				placeholder="Selecteer soort onderhoud"
+				class="dark:text-slate-400">
+				<IonSelectOption v-for="type in maintenanceTypes" :key="type.value" :value="type.value">
+					{{ type.label }}
+				</IonSelectOption>
 			</IonSelect>
 		</IonItem>
 
 		<IonItem>
-			<IonLabel>Acute actie vereist?</IonLabel>
+			<IonLabel class="dark:text-white">Acute actie vereist?</IonLabel>
 			<IonCheckbox slot="end" v-model="form.urgentActionRequired" :disabled="isCompleted" />
 		</IonItem>
 
 		<IonItem class="items-start">
-			<IonLabel position="stacked">Kostenindicatie</IonLabel>
+			<IonLabel position="stacked" class="dark:text-white">Kostenindicatie</IonLabel>
 			<IonSelect
 				v-model="form.costEstimate"
 				interface="action-sheet"
-				class="w-full"
+				class="w-full dark:text-slate-400"
 				placeholder="Selecteer kostenindicatie">
 				<IonSelectOption value="500-1500">€0 - €500</IonSelectOption>
 				<IonSelectOption value="1500-3000">€500 - €1500</IonSelectOption>
@@ -126,4 +128,12 @@ defineExpose({
 	saveLocalChanges,
 	isDirty,
 });
+
+const maintenanceTypes = [
+	{ label: "Schilderwerk", value: "schilderwerk" },
+	{ label: "Houtrot", value: "houtrot" },
+	{ label: "Elektra", value: "elektra" },
+	{ label: "Leidingwerk", value: "leidingwerk" },
+	{ label: "Beglazing", value: "beglazing" },
+];
 </script>

@@ -10,7 +10,7 @@
 						Dit rapport is afgerond en kan niet meer worden bewerkt.
 					</IonCardSubtitle>
 					<IonCardTitle
-						class="text-2xl font-bold text-primarybg dark:text-slate-100 border-b border-primarybg dark:border-slate-400">
+						class="text-2xl font-bold text-primarybg dark:text-white border-b border-primarybg dark:border-slate-400">
 						{{ (report.location || "").split(", ")[0] || report.location }},
 						<template v-if="(report.location || '').split(', ')[2]">
 							{{ report.location.split(", ")[2] }}
@@ -33,7 +33,7 @@
 						"
 						class="mb-4">
 						<IonItem slot="header">
-							<IonLabel>{{ getInspectionLabel(inspection) }}</IonLabel>
+							<IonLabel class="dark:text-white">{{ getInspectionLabel(inspection) }}</IonLabel>
 							<IonBadge v-if="hasUrgentAction(inspection)" color="danger" class="py-1"
 								>Urgent!</IonBadge
 							>

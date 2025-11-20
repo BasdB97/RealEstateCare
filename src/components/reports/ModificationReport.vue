@@ -2,7 +2,7 @@
 	<IonList :class="{ 'pointer-events-none opacity-100': isCompleted }">
 		<IonItem v-if="form.existingDocs && !isCompleted" lines="fill">
 			<div class="text-lg font-medium mb-4">
-				<IonLabel position="stacked">
+				<IonLabel position="stacked" class="dark:text-white">
 					Bestaande situatie of reeds gedocumenteerde modificaties:
 					<span class="font-bold">{{ form.existingDocs }}</span>
 				</IonLabel>
@@ -17,15 +17,21 @@
 		</IonItem>
 
 		<IonItem>
-			<IonLabel position="stacked">Locatie aangetroffen modificatie:</IonLabel>
-			<IonInput v-model="form.location" class="w-full" :readonly="isCompleted" />
+			<IonLabel position="stacked" class="dark:text-white"
+				>Locatie aangetroffen modificatie:</IonLabel
+			>
+			<IonInput
+				v-model="form.location"
+				class="w-full dark:text-slate-400"
+				:readonly="isCompleted" />
 		</IonItem>
 
 		<IonItem class="items-start">
-			<IonLabel position="stacked">Uitgevoerd door:</IonLabel>
+			<IonLabel position="stacked" class="dark:text-white">Uitgevoerd door:</IonLabel>
 			<IonSelect
 				v-model="form.executedBy"
 				interface="action-sheet"
+				class="dark:text-slate-400"
 				placeholder="Selecteer uitvoerder">
 				<IonSelectOption value="huurder">Huurder</IonSelectOption>
 				<IonSelectOption value="aannemer">Aannemer</IonSelectOption>
@@ -34,21 +40,22 @@
 		</IonItem>
 
 		<IonItem>
-			<IonLabel position="stacked">Beschrijving modificatie:</IonLabel>
+			<IonLabel position="stacked" class="dark:text-white">Beschrijving modificatie:</IonLabel>
 			<IonTextarea
 				lines="3"
 				cols="20"
-				class="w-full"
+				class="w-full dark:text-slate-400"
 				v-model="form.modificationDescription"
 				placeholder="Beschrijf de aangetroffen modificatie..."
 				:readonly="isCompleted" />
 		</IonItem>
 
 		<IonItem class="items-start">
-			<IonLabel position="stacked">Te ondernemen actie:</IonLabel>
+			<IonLabel position="stacked" class="dark:text-white">Te ondernemen actie:</IonLabel>
 			<IonSelect
 				v-model="form.actionRequired"
 				interface="action-sheet"
+				class="dark:text-slate-400"
 				placeholder="Selecteer te ondernemen actie">
 				<IonSelectOption value="laten controleren">Accepteren</IonSelectOption>
 				<IonSelectOption value="laten keuren">Laten keuren</IonSelectOption>
@@ -58,9 +65,9 @@
 		</IonItem>
 
 		<IonItem>
-			<IonLabel position="stacked">Opmerkingen:</IonLabel>
+			<IonLabel position="stacked" class="dark:text-white">Opmerkingen:</IonLabel>
 			<IonTextarea
-				class="w-full"
+				class="w-full dark:text-slate-400"
 				lines="3"
 				cols="20"
 				v-model="form.remarks"

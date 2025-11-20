@@ -18,7 +18,7 @@
 			<IonList v-else class="divide-y divide-slate-200 dark:divide-slate-600">
 				<IonItem v-for="r in completed" :key="r.id" button @click="openReport(r.id)">
 					<IonLabel>
-						<h2 class="font-semibold dark:text-slate-100">
+						<h2 class="font-semibold dark:text-white">
 							{{ r.location.split(", ")[0] }}, {{ r.location.split(", ")[2] }}
 						</h2>
 						<p class="text-sm text-slate-500 dark:text-slate-400">Datum: {{ r.reportDate }}</p>

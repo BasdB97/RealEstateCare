@@ -16,7 +16,7 @@
 					<IonAccordion v-for="r in assignedReports || []" :key="r?.id">
 						<IonItem slot="header">
 							<IonLabel>
-								<h2 class="text-slate-800 dark:text-slate-100">
+								<h2 class="text-slate-800 dark:text-white">
 									{{ r.location.split(", ")[0] }}, {{ r.location.split(", ")[2] }}
 								</h2>
 								<p class="text-slate-500 dark:text-slate-400">{{ r.location.split(", ")[1] }}</p>
@@ -30,7 +30,7 @@
 							<section>
 								<div
 									class="mb-2 flex justify-between w-full border-b border-primarybg dark:border-slate-400">
-									<h2 class="text-primarybg dark:text-slate-100 text-3xl font-medium">
+									<h2 class="text-primarybg dark:text-white text-3xl font-medium">
 										Uit te voeren inspecties:
 									</h2>
 								</div>
@@ -42,7 +42,7 @@
 											(i) => !isEmptyInspection(i)
 										)"
 										:key="index">
-										<IonLabel class="mb-0 pb-0 dark:text-slate-100">{{
+										<IonLabel class="mb-0 pb-0 dark:text-slate-400">{{
 											getInspectionLabel(inspection)
 										}}</IonLabel>
 										<IonBadge v-if="hasUrgentAction(inspection)" color="danger" class="py-1"

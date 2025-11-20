@@ -1,12 +1,15 @@
 <template>
 	<IonList :class="{ 'pointer-events-none opacity-100': isCompleted }">
 		<IonItem>
-			<IonLabel position="stacked">Locatie</IonLabel>
-			<IonInput v-model="form.location" class="w-full" :readonly="isCompleted" />
+			<IonLabel position="stacked" class="dark:text-white">Locatie</IonLabel>
+			<IonInput
+				v-model="form.location"
+				class="w-full dark:text-slate-400"
+				:readonly="isCompleted" />
 		</IonItem>
 
 		<IonItem>
-			<IonLabel>Nieuwe schade?</IonLabel>
+			<IonLabel class="dark:text-white">Nieuwe schade?</IonLabel>
 			<IonCheckbox slot="end" v-model="form.newDamage" :disabled="isCompleted" />
 		</IonItem>
 
@@ -15,6 +18,7 @@
 				position="stacked"
 				v-model="form.damageType"
 				label="Soort schade"
+				class="dark:text-white"
 				labelPlacement="fixed"
 				interface="action-sheet"
 				placeholder="Selecteer soort schade">
@@ -28,7 +32,7 @@
 		</IonItem>
 
 		<IonItem>
-			<IonLabel>Datum</IonLabel>
+			<IonLabel class="dark:text-white">Datum</IonLabel>
 			<IonDatetimeButton :datetime="`dt-${form.id ?? 'x'}`" slot="end" :readonly="isCompleted" />
 			<IonModal v-if="!isCompleted" :keep-contents-mounted="true" close-on-click-backdrop="true">
 				<IonDatetime
@@ -42,13 +46,14 @@
 		</IonItem>
 
 		<IonItem>
-			<IonLabel>Acute actie vereist?</IonLabel>
+			<IonLabel class="dark:text-white">Acute actie vereist?</IonLabel>
 			<IonCheckbox slot="end" v-model="form.urgentActionRequired" :disabled="isCompleted" />
 		</IonItem>
 
 		<IonItem lines="none">
-			<IonLabel position="stacked">Omschrijving</IonLabel>
+			<IonLabel position="stacked" class="dark:text-white">Omschrijving</IonLabel>
 			<IonTextarea
+				class="dark:text-slate-400"
 				v-model="form.damageDescription"
 				auto-grow
 				placeholder="Beschrijf schade..."
@@ -56,7 +61,7 @@
 		</IonItem>
 
 		<div class="ml-4">
-			<IonLabel class="mb-2 font-medium dark:text-slate-200">Foto's</IonLabel>
+			<IonLabel class="mb-2 font-medium dark:text-white">Foto's</IonLabel>
 			<div class="flex gap-4 flex-wrap justify-center">
 				<img
 					v-for="n in [1, 2, 3, 4]"

@@ -1,16 +1,17 @@
 <template>
 	<IonList :class="{ 'pointer-events-none opacity-100': isCompleted }">
 		<IonItem>
-			<IonLabel position="stacked">Locatie</IonLabel>
-			<IonInput v-model="form.location" class="w-full" />
+			<IonLabel position="stacked" class="dark:text-white">Locatie</IonLabel>
+			<IonInput v-model="form.location" class="w-full dark:text-slate-400" />
 		</IonItem>
 
 		<IonItem class="items-start">
-			<IonLabel position="stacked">Soort installatie</IonLabel>
+			<IonLabel position="stacked" class="dark:text-white">Soort installatie</IonLabel>
 			<IonSelect
 				v-model="form.technicalInstallationType"
 				interface="action-sheet"
-				placeholder="Selecteer soort installatie">
+				placeholder="Selecteer soort installatie"
+				class="dark:text-slate-400">
 				<IonSelectOption v-for="type in technicalInstallationTypes" :key="type" :value="type">
 					{{ type }}
 				</IonSelectOption>
@@ -18,9 +19,9 @@
 		</IonItem>
 
 		<IonItem>
-			<IonLabel position="stacked">Gemelde storingen</IonLabel>
+			<IonLabel position="stacked" class="dark:text-white">Gemelde storingen</IonLabel>
 			<IonTextarea
-				class="w-full"
+				class="w-full dark:text-slate-400"
 				lines="3"
 				cols="20"
 				v-model="form.reportedProblems"
@@ -30,7 +31,7 @@
 
 		<IonItem v-if="form.testProcedure && !isCompleted">
 			<div class="text-lg font-medium mb-4">
-				<IonLabel position="stacked">Testprocedure:</IonLabel>
+				<IonLabel position="stacked" class="dark:text-white">Testprocedure:</IonLabel>
 			</div>
 			<div class="flex gap-2">
 				<IonButton :href="pdfUrl" target="_blank" rel="noopener"> Open PDF </IonButton>
@@ -42,14 +43,14 @@
 		</IonItem>
 
 		<IonItem>
-			<IonLabel>Goedgekeurd?</IonLabel>
+			<IonLabel class="dark:text-white">Goedgekeurd?</IonLabel>
 			<IonCheckbox slot="end" v-model="form.approved" :disabled="isCompleted" />
 		</IonItem>
 
 		<IonItem lines="none">
-			<IonLabel position="stacked">Opmerkingen</IonLabel>
+			<IonLabel position="stacked" class="dark:text-white">Opmerkingen</IonLabel>
 			<IonTextarea
-				class="w-full"
+				class="w-full dark:text-slate-400"
 				v-model="form.remarks"
 				:readonly="isCompleted"
 				auto-grow

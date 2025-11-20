@@ -6,7 +6,9 @@
 			<!-- Account Details Section -->
 			<IonCard class="mb-4">
 				<IonCardHeader>
-					<IonCardTitle class="text-center border-b mb-2">Account Gegevens</IonCardTitle>
+					<IonCardTitle class="text-center border-b mb-2 dark:text-white"
+						>Account Gegevens</IonCardTitle
+					>
 				</IonCardHeader>
 				<IonCardContent>
 					<!-- Avatar Section -->
@@ -25,31 +27,40 @@
 
 					<!-- Name -->
 					<IonItem>
-						<IonLabel position="stacked">Naam</IonLabel>
-						<IonInput type="text" value="John Doe" placeholder="Voer je naam in"></IonInput>
+						<IonLabel position="stacked" class="dark:text-white">Naam</IonLabel>
+						<IonInput
+							type="text"
+							value="John Doe"
+							placeholder="Voer je naam in"
+							class="dark:text-slate-400"></IonInput>
 					</IonItem>
 
 					<!-- Username -->
 					<IonItem>
-						<IonLabel position="stacked">Gebruikersnaam</IonLabel>
+						<IonLabel position="stacked" class="dark:text-white">Gebruikersnaam</IonLabel>
 						<IonInput
 							type="text"
 							value="johndoe123"
-							placeholder="Voer je gebruikersnaam in"></IonInput>
+							placeholder="Voer je gebruikersnaam in"
+							class="dark:text-slate-400"></IonInput>
 					</IonItem>
 
 					<IonItem>
-						<IonLabel position="stacked">Wachtwoord</IonLabel>
+						<IonLabel position="stacked" class="dark:text-white">Wachtwoord</IonLabel>
 						<IonInput
 							type="password"
 							value="********"
-							placeholder="Voer je wachtwoord in"></IonInput>
+							placeholder="Voer je wachtwoord in"
+							class="dark:text-slate-400"></IonInput>
 					</IonItem>
 
 					<!-- Profession -->
 					<IonItem>
-						<IonLabel position="stacked">Beroep</IonLabel>
-						<IonSelect value="inspector" placeholder="Selecteer je beroep">
+						<IonLabel position="stacked" class="dark:text-white">Beroep</IonLabel>
+						<IonSelect
+							value="inspector"
+							placeholder="Selecteer je beroep"
+							class="dark:text-slate-400">
 							<IonSelectOption value="inspector">Inspecteur</IonSelectOption>
 							<IonSelectOption value="technician">Technicus</IonSelectOption>
 							<IonSelectOption value="manager">Manager</IonSelectOption>
@@ -59,11 +70,12 @@
 
 					<!-- Email -->
 					<IonItem>
-						<IonLabel position="stacked">E-mail</IonLabel>
+						<IonLabel position="stacked" class="dark:text-white">E-mail</IonLabel>
 						<IonInput
 							type="email"
 							value="john.doe@example.com"
-							placeholder="Voer je e-mailadres in"></IonInput>
+							placeholder="Voer je e-mailadres in"
+							class="dark:text-slate-400"></IonInput>
 					</IonItem>
 				</IonCardContent>
 			</IonCard>
@@ -71,16 +83,14 @@
 			<!-- Interface Preferences Section -->
 			<IonCard class="mb-4">
 				<IonCardHeader>
-					<IonCardTitle class="text-center border-b mb-2">Interface Voorkeuren</IonCardTitle>
+					<IonCardTitle class="text-center border-b mb-2 dark:text-white"
+						>Interface Voorkeuren</IonCardTitle
+					>
 				</IonCardHeader>
 				<IonCardContent>
 					<!-- Theme Toggle -->
 					<IonItem>
-						<IonIcon :icon="settingsStore.theme === 'dark' ? moon : sunny" slot="start"></IonIcon>
-						<IonLabel>
-							<h3>Donkere modus</h3>
-							<p>Schakel tussen licht en donker thema</p>
-						</IonLabel>
+						<IonLabel class="dark:text-white"> Donkere modus </IonLabel>
 						<IonToggle
 							slot="end"
 							:checked="settingsStore.theme === 'dark'"
@@ -88,8 +98,7 @@
 					</IonItem>
 
 					<IonItem>
-						<IonIcon :icon="volumeHigh" slot="start"></IonIcon>
-						<IonLabel>Geluidseffecten</IonLabel>
+						<IonLabel class="dark:text-white">Geluidseffecten</IonLabel>
 						<IonToggle
 							slot="end"
 							:checked="settingsStore.soundEnabled"
@@ -97,8 +106,7 @@
 					</IonItem>
 
 					<IonItem>
-						<IonIcon :icon="phonePortraitOutline" slot="start"></IonIcon>
-						<IonLabel>Push meldingen</IonLabel>
+						<IonLabel class="dark:text-white">Push meldingen</IonLabel>
 						<IonToggle
 							slot="end"
 							:checked="settingsStore.pushNotificationsEnabled"
