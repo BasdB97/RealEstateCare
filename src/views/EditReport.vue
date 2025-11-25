@@ -53,27 +53,32 @@
 			<div class="flex flex-col gap-3 mt-6 p-4" v-if="!isCompleted">
 				<IonButton
 					expand="block"
-					color="medium"
+					color="primary"
 					class="rounded-lg font-semibold"
+					:disabled="isSavingDraft || isSavingComplete"
 					@click="saveDraft">
-					Rapport opslaan
+					{{ isSavingDraft ? "Opslaan..." : "Rapport opslaan" }}
+					<IonSpinner v-if="isSavingDraft" name="crescent" />
 				</IonButton>
 
 				<IonButton
 					expand="block"
 					color="success"
 					class="rounded-lg font-semibold"
+					:disabled="isSavingDraft || isSavingComplete"
 					@click="completeReport">
-					Rapport opslaan en afronden
+					{{ isSavingComplete ? "Opslaan..." : "Rapport opslaan en afronden" }}
+					<IonSpinner v-if="isSavingComplete" name="crescent" />
 				</IonButton>
 			</div>
 
 			<IonToast
-				:is-open="toastOpen"
+				:is-open="showToast"
 				:message="toastMessage"
-				duration="1500"
-				position="bottom"
-				@didDismiss="toastOpen = false" />
+				:color="toastColor"
+				:duration="2000"
+				position="top"
+				@didDismiss="showToast = false" />
 		</div>
 	</BaseLayout>
 </template>
@@ -103,6 +108,7 @@ import {
 	IonToast,
 	IonAccordionGroup,
 	IonAccordion,
+	IonSpinner,
 } from "@ionic/vue";
 
 const typeMap = {
@@ -116,12 +122,17 @@ const route = useRoute();
 const router = useRouter();
 const id = Number(route.params.id);
 const store = useReportsStore();
-const toastOpen = ref(false);
-const toastMessage = ref("");
 const { error } = storeToRefs(store);
 const openAccordion = ref(null);
 const isCompleted = computed(() => !!report.value?.completed);
 const inspectionRefs = ref({});
+const isSavingDraft = ref(false);
+const isSavingComplete = ref(false);
+
+// Toast state
+const showToast = ref(false);
+const toastMessage = ref("");
+const toastColor = ref("success");
 
 function setInspectionRef(el, inspection) {
 	const key =
@@ -136,18 +147,19 @@ function setInspectionRef(el, inspection) {
 	}
 }
 
-function toast(message) {
+function showToastMessage(message, color = "success") {
 	toastMessage.value = message;
-	toastOpen.value = true;
+	toastColor.value = color;
+	showToast.value = true;
 }
 
 async function saveLocalChanges(reportId, updated) {
 	store.updateInspectionLocal(reportId, updated);
-	toast("Inspectie opgeslagen");
 	openAccordion.value = null;
 }
 
 async function saveDraft() {
+	isSavingDraft.value = true;
 	// First, trigger save on all child components to ensure no data loss
 	// (don't check isDirty due to 150ms debounce race condition)
 	for (const componentRef of Object.values(inspectionRefs.value)) {
@@ -157,13 +169,15 @@ async function saveDraft() {
 	}
 	try {
 		await store.persistReportWithStatus(report.value.id, false);
-		toast("Rapport opgeslagen, nog niet afgerond");
+		showToastMessage("Rapport opgeslagen, nog niet afgerond", "success");
 	} catch (error) {
-		toast("Fout bij opslaan: " + (error.message || "Probeer opnieuw"));
+		showToastMessage("Fout bij opslaan: " + (error.message || "Probeer opnieuw"), "danger");
 	}
+	isSavingDraft.value = false;
 }
 
 async function completeReport() {
+	isSavingComplete.value = true;
 	// First, trigger save on all child components to ensure no data loss
 	// (don't check isDirty due to 150ms debounce race condition)
 	for (const componentRef of Object.values(inspectionRefs.value)) {
@@ -171,17 +185,24 @@ async function completeReport() {
 			componentRef.saveLocalChanges();
 		}
 	}
-  
+
 	try {
 		if (await store.persistReportWithStatus(report.value.id, true)) {
-			toast("Rapport opgeslagen en afgerond");
+			showToastMessage("Rapport opgeslagen en afgerond", "success");
 			router.push("/assigned-reports");
 		} else {
-			toast("Fout bij opslaan: " + (error.message || "Probeer opnieuw"));
+			showToastMessage(
+				"Fout bij opslaan en afronden: " + (error.message || "Probeer opnieuw"),
+				"danger"
+			);
 		}
 	} catch (error) {
-		toast("Fout bij opslaan: " + (error.message || "Probeer opnieuw"));
+		showToastMessage(
+			"Fout bij opslaan en afronden: " + (error.message || "Probeer opnieuw"),
+			"danger"
+		);
 	}
+	isSavingComplete.value = false;
 }
 
 onMounted(async () => {

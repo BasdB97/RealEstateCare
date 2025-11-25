@@ -91,6 +91,7 @@
 				:message="toastMessage"
 				:duration="3000"
 				:color="toastColor"
+				position="top"
 				@didDismiss="showToast = false" />
 
 			<IonModal :is-open="showAuthModal" @didDismiss="closeAuthModal">
@@ -183,7 +184,7 @@ const errors = ref({
 	password: "",
 });
 
-// Toast
+// Toast state
 const showToast = ref(false);
 const toastMessage = ref("");
 const toastColor = ref("success");
@@ -232,11 +233,16 @@ const handleLogin = async () => {
 	}
 };
 
+// Helper function for toast
+const showToastMessage = (message, color = "success") => {
+	toastMessage.value = message;
+	toastColor.value = color;
+	showToast.value = true;
+};
+
 // Handle forgot password
 const handleForgotPassword = () => {
-	toastMessage.value = "Deze functionaliteit is momenteel nog niet beschikbaar.";
-	toastColor.value = "primary";
-	showToast.value = true;
+	showToastMessage("Deze functionaliteit is momenteel nog niet beschikbaar.", "primary");
 };
 
 const closeAuthModal = () => {
@@ -253,9 +259,7 @@ const checkAuthCode = async () => {
 		await reportsStore.resetDatabase();
 		// console.log("Database reset");
 		showAuthModal.value = false;
-		toastMessage.value = "Welkom, " + loginStore.employeeName + "!";
-		toastColor.value = "success";
-		showToast.value = true;
+		showToastMessage("Welkom, " + loginStore.employeeName + "!", "success");
 		router.push("/");
 	} else {
 		authError.value = "Ongeldige code";

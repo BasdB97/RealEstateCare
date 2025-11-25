@@ -118,14 +118,13 @@
 			</IonCard>
 
 			<!-- Save Button -->
-			<IonButton expand="block" @click="onSave" class="mt-4 mb-4">
-				<IonIcon :icon="save" slot="start"></IonIcon>
-				Instellingen opslaan
+			<IonButton expand="block" @click="onSave" :disabled="isSaving" class="mt-4 mb-4">
+				{{ isSaving ? "Opslaan..." : "Instellingen opslaan" }}
+				<IonSpinner v-if="isSaving" name="crescent" />
 			</IonButton>
 
 			<!-- Log out Button -->
 			<IonButton expand="block" color="danger" @click="handleLogout" class="mt-4 mb-4">
-				<IonIcon :icon="logOutOutline" slot="start"></IonIcon>
 				Uitloggen
 			</IonButton>
 
@@ -138,7 +137,9 @@
 			<IonToast
 				:is-open="showToast"
 				:message="toastMessage"
+				:color="toastColor"
 				:duration="3000"
+				position="top"
 				@didDismiss="showToast = false"></IonToast>
 		</div>
 	</BaseLayout>
@@ -154,6 +155,7 @@ import { useRouter } from "vue-router";
 import {
 	IonCard,
 	IonIcon,
+	IonSpinner,
 	IonCardHeader,
 	IonCardTitle,
 	IonCardContent,
@@ -166,42 +168,44 @@ import {
 	IonSelect,
 	IonSelectOption,
 } from "@ionic/vue";
-import {
-	moon,
-	sunny,
-	save,
-	refresh,
-	camera,
-	volumeHigh,
-	phonePortraitOutline,
-	logOutOutline,
-} from "ionicons/icons";
+import { save, refresh, camera, logOutOutline } from "ionicons/icons";
 
 const settingsStore = useSettingsStore();
 const reportsStore = useReportsStore();
 const loginStore = useLoginStore();
 const router = useRouter();
-// lokale UI-states
+
+// Toast state
 const showToast = ref(false);
 const toastMessage = ref("");
+const toastColor = ref("success");
+const isSaving = ref(false);
 
-// helpers
-const showToastMessage = (m) => {
-	toastMessage.value = m;
+// Helper function for toast
+const showToastMessage = (message, color = "success") => {
+	toastMessage.value = message;
+	toastColor.value = color;
 	showToast.value = true;
 };
 
-const onSave = () => {
+const onSave = async () => {
+	isSaving.value = true;
+
+	// Simuleer een korte vertraging voor visuele feedback
+	await new Promise((resolve) => setTimeout(resolve, 500));
+
 	settingsStore.saveSettings();
 	showToastMessage("Instellingen succesvol opgeslagen!");
+
+	isSaving.value = false;
 };
 
 const onResetDatabase = async () => {
 	try {
 		await reportsStore.resetDatabase();
-		showToastMessage("Database succesvol gereset!");
+		showToastMessage("Database succesvol gereset!", "success");
 	} catch (e) {
-		showToastMessage("Fout bij resetten van de database: " + e.message);
+		showToastMessage("Fout bij resetten van de database: " + e.message, "danger");
 	}
 };
 
