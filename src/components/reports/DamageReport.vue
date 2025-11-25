@@ -144,7 +144,7 @@ watch(
 		Object.assign(form, v); // Update form met nieuwe data
 		baseline.value = JSON.stringify(v); // Sla nieuwe baseline op
 		isDirty.value = false; // Reset dirty flag (geen wijzigingen)
-		console.log("form changed:", v); // Debug log
+		// console.log("form changed:", v);
 	},
 	{ deep: true } // Observeer ook nested properties
 );
@@ -164,7 +164,7 @@ watch(
 );
 
 function saveLocalChanges() {
-	console.log("saveLocalChanges", { ...toRaw(form) });
+	// console.log("saveLocalChanges", { ...toRaw(form) });
 	emit("saveLocalChanges", { ...toRaw(form) });
 	baseline.value = JSON.stringify({ ...toRaw(form) });
 	isDirty.value = false;

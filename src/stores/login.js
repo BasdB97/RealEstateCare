@@ -24,25 +24,23 @@ export const useLoginStore = defineStore("login", {
 					},
 				});
 
-				console.log("Filtered users:", response.data.record);
-
 				// response.data.record is direct een array met de gefilterde gebruiker(s)
 				if (response.status === 200 && response.data.record[0] !== undefined) {
 					// Genereer altijd een 6-cijferige code (100000 tot 999999)
 					const randomNumber = Math.floor(Math.random() * 900000) + 100000;
-					console.log("randomNumber", randomNumber);
+					console.log("Authenticatiecode:", randomNumber);
 					localStorage.setItem("randomNumber", randomNumber);
 					const user = response.data.record[0]; // Eerste (en enige) match
 					this.employeeName = user.name;
 					this.employeeId = user.employeeId;
-					console.log("Login successful for:", user.name);
+					// console.log("Login successful for:", user.name);
 					localStorage.setItem("employeeName", user.name);
 					localStorage.setItem("employeeId", user.employeeId);
 					localStorage.setItem("loggedIn", true);
 					return randomNumber;
 				} else {
 					this.employeeName = "";
-					console.log("Login failed - no matching user found");
+					// console.log("Login failed - no matching user found");
 					throw new Error("Login failed - no matching user found");
 				}
 			} catch (err) {

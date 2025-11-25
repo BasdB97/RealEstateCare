@@ -76,7 +76,6 @@ export const useReportsStore = defineStore("reports", {
 		async fetchReports(force = false) {
 			// Prevent duplicate requests if already loading
 			if (this.loading) {
-				console.log("Already fetching reports, skipping...");
 				return;
 			}
 
@@ -89,7 +88,7 @@ export const useReportsStore = defineStore("reports", {
 
 			this.loading = true;
 			this.error = null;
-			console.log("Fetching reports from API...");
+			// console.log("Rapporten ophalen via API...");
 
 			try {
 				// Load cache first for instant display
@@ -97,33 +96,29 @@ export const useReportsStore = defineStore("reports", {
 
 				const url = "https://api.jsonbin.io/v3/b/6891b4e2f7e7a370d1f429da";
 
-				console.log("Making API request to:", url);
-
 				const response = await api.get(url);
-				console.log("Response received:", response.status);
+				// console.log("Response received:", response.status);
 
 				this.reports = Array.isArray(response.data.record.reports)
 					? response.data.record.reports
 					: [];
 				this.lastFetch = Date.now();
 				this._saveLocalCache();
-				console.log("Reports loaded:", this.reports.length);
+				// console.log("Reports loaded:", this.reports.length);
 			} catch (err) {
-				console.error("Error fetching reports:", err);
-				console.error("Error details:", {
-					message: err.message,
-					code: err.code,
-					status: err.response?.status,
-					statusText: err.response?.statusText,
-				});
-				this.error = "Er is een fout opgetreden bij het ophalen van de rapportages.";
+				// console.error("Error details:", {
+				// 	message: err.message,
+				// 	code: err.code,
+				// 	status: err.response?.status,
+				// 	statusText: err.response?.statusText,
+				// });
+				this.error = "Er is een fout opgetreden bij het ophalen van de rapportages: " + err.message;
 				// Keep cached data if available
 				if (this.reports.length === 0) {
 					this.hydrateFromCache();
 				}
 			} finally {
 				this.loading = false;
-				console.log("Fetch complete, loading:", this.loading);
 			}
 		},
 
@@ -195,17 +190,16 @@ export const useReportsStore = defineStore("reports", {
 			try {
 				const url = "https://api.jsonbin.io/v3/b/6891b4e2f7e7a370d1f429da";
 				const response = await api.get(url);
-				console.log("Knowledge base response:", response);
+				// console.log("Knowledge base response:", response);
 				this.knowledgeBase = response.data.record.knowledgeBase || [];
-				console.log("Knowledge base loaded:", JSON.stringify(this.knowledgeBase, null, 4));
 				if (response.status !== 200) {
 					throw new Error(`Kennisbank laden mislukt, status: ${response.status}`);
 				}
 				this.loading = false;
 				return true;
 			} catch (err) {
-				console.error("Error fetching knowledge base:", err);
-				this.error = "Kon kennisbank niet laden";
+				// console.error("Error fetching knowledge base:", err);
+				this.error = "Kon kennisbank niet laden:" + err.message;
 				this.loading = false;
 				throw err;
 			}

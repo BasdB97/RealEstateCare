@@ -134,7 +134,7 @@ watch(
 		Object.assign(form, v);
 		baseline.value = JSON.stringify(v);
 		isDirty.value = false;
-		console.log("form changed:", v);
+		// console.log("form changed:", v);
 	},
 	{ deep: true }
 );
@@ -152,7 +152,7 @@ watch(
 );
 
 function saveLocalChanges() {
-	console.log("saveLocalChanges", { ...toRaw(form) });
+	// console.log("saveLocalChanges", { ...toRaw(form) });
 	emit("saveLocalChanges", { ...toRaw(form) });
 	baseline.value = JSON.stringify({ ...toRaw(form) });
 	isDirty.value = false;

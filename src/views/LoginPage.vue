@@ -113,7 +113,7 @@
 						<IonInput
 							mode="md"
 							label="Code"
-							placeholder="Code is te vinden in de console"
+							placeholder="Voer de code in"
 							maxlength="6"
 							inputmode="numeric"
 							:clear-input="true"
@@ -222,10 +222,10 @@ const handleLogin = async () => {
 	try {
 		const randomNumber = await loginStore.login(employeeId.value, password.value);
 		// Als we hier komen, was de login succesvol
-		displayedAuthCode.value = randomNumber.toString(); // TOEVOEGEN: sla de code op
+		displayedAuthCode.value = randomNumber.toString();
 		showAuthModal.value = true;
-	} catch (error) {
-		console.error("Login error:", error);
+	} catch (err) {
+		// console.error("Login error:", err);
 		loginError.value = "Onjuiste inloggegevens. Controleer uw werknemer ID en wachtwoord.";
 	} finally {
 		isLoading.value = false;
@@ -249,8 +249,9 @@ const closeAuthModal = () => {
 const checkAuthCode = async () => {
 	const randomNumber = localStorage.getItem("randomNumber");
 	if (authCode.value === randomNumber) {
+		// Reset de database bij elke login
 		await reportsStore.resetDatabase();
-		console.log("Database reset");
+		// console.log("Database reset");
 		showAuthModal.value = false;
 		toastMessage.value = "Welkom, " + loginStore.employeeName + "!";
 		toastColor.value = "success";
