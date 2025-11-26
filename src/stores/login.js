@@ -27,16 +27,19 @@ export const useLoginStore = defineStore("login", {
 				// response.data.record is direct een array met de gefilterde gebruiker(s)
 				if (response.status === 200 && response.data.record[0] !== undefined) {
 					// Genereer altijd een 6-cijferige code (100000 tot 999999)
+					const user = response.data.record[0]; // Eerste (en enige) match
 					const randomNumber = Math.floor(Math.random() * 900000) + 100000;
 					console.log("Authenticatiecode:", randomNumber);
-					localStorage.setItem("randomNumber", randomNumber);
-					const user = response.data.record[0]; // Eerste (en enige) match
+
+					// Data die eventueel gebruikt kan worden in de app
 					this.employeeName = user.name;
 					this.employeeId = user.employeeId;
-					// console.log("Login successful for:", user.name);
+
+					localStorage.setItem("randomNumber", randomNumber);
 					localStorage.setItem("employeeName", user.name);
 					localStorage.setItem("employeeId", user.employeeId);
 					localStorage.setItem("loggedIn", true);
+
 					return randomNumber;
 				} else {
 					this.employeeName = "";

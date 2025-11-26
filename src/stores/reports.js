@@ -17,21 +17,12 @@ export const useReportsStore = defineStore("reports", {
 		error: null,
 		dirtyReports: {},
 		lastFetch: null,
-		knowledgeBase: [],
 	}),
 
 	getters: {
 		assignedReports: (s) => (s.reports ?? []).filter((r) => !r.completed),
 		completedReports: (state) => (state.reports ?? []).filter((r) => r.completed),
 		getReportById: (state) => (id) => (state.reports ?? []).find((r) => r.id === id),
-		byCategory: (s) => (c) => s.knowledgeBase.filter((i) => i.category === c),
-		search: (s) => (q) =>
-			s.knowledgeBase.filter((i) =>
-				[i.title, i.description, ...(i.tags || [])]
-					.join(" ")
-					.toLowerCase()
-					.includes(q.toLowerCase())
-			),
 	},
 
 	actions: {
@@ -180,27 +171,6 @@ export const useReportsStore = defineStore("reports", {
 				this.reports = this.reports.map((r) => (r.id === reportId ? original : r));
 				this._saveLocalCache();
 				this.error = completed ? "Opslaan & afronden mislukt" : "Opslaan mislukt";
-				throw err;
-			}
-		},
-
-		async fetchKnowledgeBase() {
-			this.loading = true;
-			this.error = null;
-			try {
-				const url = "https://api.jsonbin.io/v3/b/6891b4e2f7e7a370d1f429da";
-				const response = await api.get(url);
-				// console.log("Knowledge base response:", response);
-				this.knowledgeBase = response.data.record.knowledgeBase || [];
-				if (response.status !== 200) {
-					throw new Error(`Kennisbank laden mislukt, status: ${response.status}`);
-				}
-				this.loading = false;
-				return true;
-			} catch (err) {
-				// console.error("Error fetching knowledge base:", err);
-				this.error = "Kon kennisbank niet laden:" + err.message;
-				this.loading = false;
 				throw err;
 			}
 		},

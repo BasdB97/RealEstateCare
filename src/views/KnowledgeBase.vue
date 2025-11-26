@@ -3,13 +3,15 @@
 		<h1 class="page-title">Kennisbank</h1>
 		<div v-if="error" class="text-center text-red-600 dark:text-red-400 p-4">
 			<p class="mb-2">{{ error }}</p>
-			<IonButton size="small" @click="store.fetchKnowledgeBase()">Opnieuw proberen</IonButton>
+			<IonButton size="small" @click="knowledgeBaseStore.fetchKnowledgeBase()"
+				>Opnieuw proberen</IonButton
+			>
 		</div>
-		<div v-else-if="filtered.length > 0">
-			<IonSearchbar v-model="q" placeholder="Zoek in documenten..." />
+		<div v-else-if="knowledgeBase.length > 0">
+			<IonSearchbar placeholder="Zoek in documenten..." />
 			<IonList
 				class="m-2 p-2 border-2 border-primarybg dark:border-slate-600 rounded-lg shadow-md space-y-2">
-				<IonItem v-for="doc in filtered" :key="doc.id" lines="full">
+				<IonItem v-for="doc in knowledgeBase" :key="doc.id" lines="full">
 					<IonLabel>
 						<span class="font-semibold dark:text-white">{{ doc.title }}</span>
 						<br />
@@ -36,16 +38,15 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from "vue";
+import { onMounted } from "vue";
 import { IonList, IonItem, IonLabel, IonButton, IonSearchbar } from "@ionic/vue";
-import { useReportsStore } from "@/stores/reports";
+import { useKnowledgeBaseStore } from "@/stores/knowledgebase";
 import { storeToRefs } from "pinia";
 
-const store = useReportsStore();
-const q = ref("");
-onMounted(async () => await store.fetchKnowledgeBase());
-const filtered = computed(() => (q.value ? store.search(q.value) : store.knowledgeBase));
-const { error } = storeToRefs(store);
+const knowledgeBaseStore = useKnowledgeBaseStore();
+const { error, knowledgeBase } = storeToRefs(knowledgeBaseStore);
+
+onMounted(async () => await knowledgeBaseStore.fetchKnowledgeBase());
 
 const urlFor = (u) =>
 	u.startsWith("http")

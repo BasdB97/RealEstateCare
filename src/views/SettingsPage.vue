@@ -2,7 +2,6 @@
 	<BaseLayout>
 		<div class="p-4 max-w-2xl mx-auto">
 			<h1 class="text-3xl font-bold text-primarybg dark:text-white mb-6">Instellingen</h1>
-
 			<!-- Account Details Section -->
 			<IonCard class="mb-4">
 				<IonCardHeader>
@@ -167,6 +166,8 @@ import {
 	IonInput,
 	IonSelect,
 	IonSelectOption,
+	IonAccordionGroup,
+	IonAccordion,
 } from "@ionic/vue";
 import { save, refresh, camera, logOutOutline } from "ionicons/icons";
 

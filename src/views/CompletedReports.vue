@@ -31,7 +31,7 @@
 import BaseLayout from "@/components/BaseLayout.vue";
 
 import { onMounted, computed } from "vue";
-import { IonList, IonItem, IonLabel, IonBadge } from "@ionic/vue";
+import { IonList, IonItem, IonLabel, IonBadge, IonButton } from "@ionic/vue";
 import { useReportsStore } from "@/stores/reports";
 import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";

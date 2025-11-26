@@ -224,9 +224,6 @@
 			"category": "Normblad",
 			"description": "Veilig werken aan of nabij elektrische installaties.",
 			"version": "2021",
-			"tags": ["elektra", "veiligheid"],
-			"updatedAt": "2024-11-01",
-			"fileSizeKB": 842,
 			"url": "/docs/nen-3140.pdf"
 		},
 		{
@@ -235,9 +232,6 @@
 			"category": "Testprocedure",
 			"description": "Stapsgewijze controle van CV-installaties tijdens inspectie.",
 			"version": "v3.2",
-			"tags": ["verwarming", "inspectie"],
-			"updatedAt": "2025-02-10",
-			"fileSizeKB": 256,
 			"url": "https://www.scientific-devices.com.au/pdfs/WeTransfer-NZvJB6Cw/Capacitance/Fundamentals%20of%20CV%20Measurement.pdf"
 		},
 		{
@@ -246,9 +240,6 @@
 			"category": "Handleiding",
 			"description": "Inspectiecriteria en onderhoudsfrequentie voor gevelpanelen.",
 			"version": "v2.0",
-			"tags": ["gevel", "onderhoud"],
-			"updatedAt": "2024-08-05",
-			"fileSizeKB": 392,
 			"url": "/docs/gevelbekleding-handleiding.pdf"
 		}
 	],
