@@ -36,20 +36,23 @@
 
 		<IonItem class="dark:text-white">
 			<IonLabel>Datum</IonLabel>
-			<IonDatetimeButton
-				:datetime="`dt-${form.id ?? 'x'}`"
-				slot="end"
-				:readonly="isCompleted"
-				:required="true" />
-			<IonModal v-if="!isCompleted" :keep-contents-mounted="true" close-on-click-backdrop="true">
-				<IonDatetime
-					v-model="form.date"
-					:id="`dt-${form.id ?? 'x'}`"
-					presentation="date"
-					:show-default-buttons="true"
-					done-text="Opslaan"
-					cancel-text="Annuleren" />
-			</IonModal>
+			<template v-if="isCompleted">
+				<IonLabel slot="end" class="dark:text-slate-400">
+					{{ form.date ? new Date(form.date).toLocaleDateString("nl-NL") : "Geen datum" }}
+				</IonLabel>
+			</template>
+			<template v-else>
+				<IonDatetimeButton :datetime="`dt-${form.id ?? 'x'}`" slot="end" :required="true" />
+				<IonModal :keep-contents-mounted="true" close-on-click-backdrop="true">
+					<IonDatetime
+						v-model="form.date"
+						:id="`dt-${form.id ?? 'x'}`"
+						presentation="date"
+						:show-default-buttons="true"
+						done-text="Opslaan"
+						cancel-text="Annuleren" />
+				</IonModal>
+			</template>
 		</IonItem>
 
 		<IonItem class="dark:text-white">
