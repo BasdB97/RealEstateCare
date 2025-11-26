@@ -3,8 +3,7 @@
 		<div class="p-4 max-w-2xl mx-auto">
 			<h1 class="text-3xl font-bold text-primarybg dark:text-white mb-6">Zoeken</h1>
 			<IonSearchbar placeholder="Zoek naar taken, documenten etc." class="dark:text-white mb-4" />
-			<IonList
-				class="m-2 p-2 border-2 border-primarybg dark:border-slate-600 rounded-lg shadow-md space-y-2">
+			<IonList class="m-2 p-2 dark:border-slate-600 rounded-lg shadow-md space-y-2">
 				<IonItem lines="full">
 					<IonLabel>
 						<span class="font-semibold dark:text-white">Resultaten komen hier</span>
