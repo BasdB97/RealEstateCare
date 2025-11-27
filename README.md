@@ -94,3 +94,10 @@ Ik ben nog niet volledig tevreden met de styling, dit kan ik later nog verfijnen
 Ionic componenten ondersteunen het gebruik van toetsenbord en screenreaders. Deze zijn goed te gebruiken voor gebruikers met een beperking. Waar nodig zijn extra labels toegevoegd.
 Alle afbeeldingen zijn voorzien van een alt tekst.
 Er is gekozen voor kleuren met een goede contrast ratio, zowel in dark als in light mode.
+
+## Eind woord:
+
+Ik heb veel geleerd over het maken van een Progressive web app. Door in het diepe te moeten springen na een tijd van theorie was ik erg op mijzelf aangewezen om het project volgens de opdracht van het bedrijf tot een mooi einderesultaat te brengen.
+Ik heb geleerd welke tools en libraries ik kan toepassen om een mooie en gebruiksvriendelijke applicatie te maken en ik weet welke manieren van werken ik minder makkelijk vind.
+
+Deze applicatie voldoet volgens mij aan de eisen van de opdracht maar kan nog zeker uitgebreid en verbeterd worden.
