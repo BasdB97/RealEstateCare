@@ -1,6 +1,6 @@
 <template>
-	<BaseLayout>  
-		<BackButton to="/home" />
+	<BaseLayout>
+		<BackButton />
 		<div class="p-4 max-w-2xl mx-auto">
 			<h1 class="text-3xl font-bold text-primarybg dark:text-white mb-6">Informatie</h1>
 
@@ -116,6 +116,7 @@
 </template>
 
 <script setup>
+import BackButton from "@/components/BackButton.vue";
 import {
 	IonCard,
 	IonCardHeader,

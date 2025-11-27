@@ -51,6 +51,8 @@
 </template>
 
 <script setup>
+import BackButton from "@/components/BackButton.vue";
+
 import { onMounted } from "vue";
 import { IonList, IonItem, IonLabel, IonButton, IonSearchbar } from "@ionic/vue";
 import { useKnowledgeBaseStore } from "@/stores/knowledgebase";

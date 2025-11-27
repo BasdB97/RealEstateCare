@@ -1,5 +1,6 @@
 <template>
 	<BaseLayout>
+		<BackButton to="/home" />
 		<div class="p-4 max-w-2xl mx-auto">
 			<h1 class="text-3xl font-bold text-primarybg dark:text-white mb-6">Instellingen</h1>
 			<!-- Account Details Section -->
@@ -198,6 +199,8 @@
 </template>
 
 <script setup>
+import BackButton from "@/components/BackButton.vue";
+
 import { ref } from "vue";
 import { useSettingsStore } from "@/stores/settings";
 import { useReportsStore } from "@/stores/reports";

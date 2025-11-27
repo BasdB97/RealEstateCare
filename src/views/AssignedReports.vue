@@ -93,6 +93,8 @@
 </template>
 
 <script setup>
+import BackButton from "@/components/BackButton.vue";
+
 import { onMounted, computed, ref } from "vue";
 import { storeToRefs } from "pinia";
 import { getInspectionLabel, hasUrgentAction, isEmptyInspection } from "@/utils/reportHelpers";

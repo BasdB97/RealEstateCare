@@ -39,7 +39,7 @@
 </template>
 
 <script setup>
-import BaseLayout from "@/components/BaseLayout.vue";
+import BackButton from "@/components/BackButton.vue";
 
 import { onMounted, computed } from "vue";
 import { IonList, IonItem, IonLabel, IonBadge, IonButton } from "@ionic/vue";

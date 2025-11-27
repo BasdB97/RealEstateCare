@@ -1,5 +1,6 @@
 <template>
 	<BaseLayout>
+		<BackButton />
 		<div class="p-4 max-w-2xl mx-auto">
 			<h1 class="text-3xl font-bold text-primarybg dark:text-white mb-6">Zoeken</h1>
 			<IonSearchbar
@@ -20,5 +21,6 @@
 </template>
 
 <script setup>
+import BackButton from "@/components/BackButton.vue";
 import { IonList, IonItem, IonLabel, IonSearchbar } from "@ionic/vue";
 </script>
