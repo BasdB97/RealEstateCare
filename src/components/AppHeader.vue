@@ -9,7 +9,8 @@
 				<IonIcon
 					:icon="notificationsEnabled ? notifications : notificationsOff"
 					@click="toggleNotifications"
-					class="header-icon"></IonIcon>
+					class="header-icon"
+					aria-label="Meldingen uit/aan"></IonIcon>
 			</div>
 		</div>
 	</header>

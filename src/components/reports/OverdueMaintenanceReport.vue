@@ -1,21 +1,23 @@
 <template>
 	<IonList :class="{ 'pointer-events-none opacity-100': isCompleted }">
 		<IonItem>
-			<IonLabel position="stacked" class="dark:text-white">Locatie</IonLabel>
 			<IonInput
+				label="Locatie van het onderhoud"
+				labelPlacement="stacked"
 				v-model="form.location"
 				class="w-full dark:text-slate-400"
-				:readonly="isCompleted" />
+				:readonly="isCompleted"
+				:required="true" />
 		</IonItem>
 
-		<!-- TODO: add v-for to the IonSelectOptions and update script with options -->
-		<IonItem class="items-start">
-			<IonLabel position="stacked" class="dark:text-white">Soort onderhoud</IonLabel>
+		<IonItem>
 			<IonSelect
+				label="Soort onderhoud"
 				v-model="form.overdueMaintenanceType"
 				interface="action-sheet"
 				placeholder="Selecteer soort onderhoud"
-				class="dark:text-slate-400">
+				class="dark:text-slate-400"
+				:required="true">
 				<IonSelectOption v-for="type in maintenanceTypes" :key="type.value" :value="type.value">
 					{{ type.label }}
 				</IonSelectOption>
@@ -23,35 +25,55 @@
 		</IonItem>
 
 		<IonItem>
-			<IonLabel class="dark:text-white">Acute actie vereist?</IonLabel>
-			<IonCheckbox slot="end" v-model="form.urgentActionRequired" :disabled="isCompleted" />
+			<IonLabel id="urgentActionRequired"> Acute actie vereist? </IonLabel>
+			<IonCheckbox
+				slot="end"
+				v-model="form.urgentActionRequired"
+				:disabled="isCompleted"
+				:required="true" />
 		</IonItem>
 
-		<IonItem class="items-start">
-			<IonLabel position="stacked" class="dark:text-white">Kostenindicatie</IonLabel>
+		<IonItem>
 			<IonSelect
+				label="Kosten indicatie"
 				v-model="form.costEstimate"
 				interface="action-sheet"
-				class="w-full dark:text-slate-400"
-				placeholder="Selecteer kostenindicatie">
-				<IonSelectOption value="500-1500">€0 - €500</IonSelectOption>
-				<IonSelectOption value="1500-3000">€500 - €1500</IonSelectOption>
-				<IonSelectOption value="3000-5000">€1500+</IonSelectOption>
+				class="dark:text-slate-400"
+				placeholder="Selecteer kostenindicatie"
+				:required="true">
+				<IonSelectOption
+					v-for="estimate in costEstimates"
+					:key="estimate.value"
+					:value="estimate.value">
+					{{ estimate.label }}
+				</IonSelectOption>
 			</IonSelect>
 		</IonItem>
 
 		<IonItem lines="none" class="dark:text-white">
-			<IonLabel position="stacked">Foto's</IonLabel>
-			<PhotoUploader v-if="!isCompleted" v-model:photos="form.photos" :disabled="isCompleted" />
+			<IonLabel position="stacked" id="photos">Foto's:</IonLabel>
+			<PhotoUploader
+				v-if="!isCompleted"
+				v-model:photos="form.photos"
+				:disabled="isCompleted"
+				:aria-labelledby="'photos'" />
 			<div v-else>
 				<h4 class="text-center text-red-500 dark:text-red-400">Er zijn geen foto's gemaakt</h4>
 			</div>
 		</IonItem>
 
 		<div class="mt-4 flex items-center justify-end gap-3" v-if="!isCompleted">
-			<IonBadge v-if="isDirty" color="warning" class="p-2">Niet opgeslagen</IonBadge>
-			<IonBadge v-else color="success" class="p-2">Opgeslagen</IonBadge>
-			<IonButton size="small" :disabled="!isDirty" @click="saveLocalChanges">
+			<IonBadge role="status" aria-live="polite" v-if="isDirty" color="warning" class="p-2"
+				>Niet opgeslagen</IonBadge
+			>
+			<IonBadge role="status" aria-live="polite" v-else color="success" class="p-2"
+				>Opgeslagen</IonBadge
+			>
+			<IonButton
+				size="small"
+				:disabled="!isDirty"
+				@click="saveLocalChanges"
+				aria-label="Inspectie opslaan">
 				Inspectie opslaan
 			</IonButton>
 		</div>
@@ -59,7 +81,7 @@
 </template>
 
 <script setup>
-import PhotoUploader from "@/components/reports/PhotoUploader.vue";
+import PhotoUploader from "@/components/PhotoUploader.vue";
 // Vue composition API functies importeren
 import { reactive, watch, toRaw, ref } from "vue";
 import {
@@ -132,5 +154,11 @@ const maintenanceTypes = [
 	{ label: "Elektra", value: "elektra" },
 	{ label: "Leidingwerk", value: "leidingwerk" },
 	{ label: "Beglazing", value: "beglazing" },
+];
+
+const costEstimates = [
+	{ label: "€0 - €500", value: "500-1500" },
+	{ label: "€500 - €1500", value: "1500-3000" },
+	{ label: "€1500+", value: "3000-5000" },
 ];
 </script>

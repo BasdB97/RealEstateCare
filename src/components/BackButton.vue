@@ -1,5 +1,11 @@
 <template>
-	<IonButton :fill="fill" :size="size" :color="color" @click="goBack" class="back-button">
+	<IonButton
+		aria-label="Terug naar de vorige pagina"
+		:fill="fill"
+		:size="size"
+		:color="color"
+		@click="goBack"
+		class="back-button">
 		<IonIcon :icon="arrowBackOutline" slot="start" />
 		Terug
 	</IonButton>

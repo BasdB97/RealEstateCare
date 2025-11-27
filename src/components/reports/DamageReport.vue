@@ -1,8 +1,10 @@
 <template>
 	<IonList :class="{ 'pointer-events-none opacity-100': isCompleted }">
 		<IonItem class="dark:text-white">
-			<IonLabel position="stacked" class="dark:text-white">Locatie</IonLabel>
 			<IonInput
+				id="damageLocation"
+				label="Locatie van de schade"
+				labelPlacement="stacked"
 				v-model="form.location"
 				class="w-full dark:text-slate-400"
 				:required="true"
@@ -10,39 +12,43 @@
 		</IonItem>
 
 		<IonItem class="dark:text-white">
-			<IonLabel>Nieuwe schade?</IonLabel>
-			<IonCheckbox slot="end" v-model="form.newDamage" :disabled="isCompleted" />
+			<IonLabel id="newDamage"> Betreft het nieuwe schade? </IonLabel>
+			<IonCheckbox
+				aria-labelledby="newDamage"
+				slot="end"
+				v-model="form.newDamage"
+				:disabled="isCompleted"
+				:required="true" />
 		</IonItem>
 
 		<IonItem class="dark:text-white">
-			<IonLabel>Soort schade</IonLabel>
 			<IonSelect
-				position="stacked"
-				slot="end"
-				v-model="form.damageType"
+				id="damageType"
+				label="Soort schade"
 				labelPlacement="fixed"
+				v-model="form.damageType"
 				interface="action-sheet"
 				class="dark:text-slate-400"
 				:required="true"
 				placeholder="Selecteer soort schade">
-				<IonSelectOption value="moedwillig">Moedwillig</IonSelectOption>
-				<IonSelectOption value="slijtage">Slijtage</IonSelectOption>
-				<IonSelectOption value="geweld">Geweld</IonSelectOption>
-				<IonSelectOption value="normaal gebruik">Normaal gebruik</IonSelectOption>
-				<IonSelectOption value="calamiteit">Calamiteit</IonSelectOption>
-				<IonSelectOption value="anders">Anders</IonSelectOption>
+				<IonSelectOption v-for="type in damageTypes" :key="type.value" :value="type.value">
+					{{ type.label }}
+				</IonSelectOption>
 			</IonSelect>
 		</IonItem>
 
 		<IonItem class="dark:text-white">
-			<IonLabel>Datum</IonLabel>
+			<IonLabel id="damageDate">Datum van de schade:</IonLabel>
 			<template v-if="isCompleted">
 				<IonLabel slot="end" class="dark:text-slate-400">
 					{{ form.date ? new Date(form.date).toLocaleDateString("nl-NL") : "Geen datum" }}
 				</IonLabel>
 			</template>
 			<template v-else>
-				<IonDatetimeButton :datetime="`dt-${form.id ?? 'x'}`" slot="end" :required="true" />
+				<IonDatetimeButton
+					:datetime="`dt-${form.id ?? 'x'}`"
+					slot="end"
+					aria-labelledby="damageDate" />
 				<IonModal :keep-contents-mounted="true" close-on-click-backdrop="true">
 					<IonDatetime
 						v-model="form.date"
@@ -50,39 +56,57 @@
 						presentation="date"
 						:show-default-buttons="true"
 						done-text="Opslaan"
-						cancel-text="Annuleren" />
+						cancel-text="Annuleren"
+						aria-labelledby="damageDate" />
 				</IonModal>
 			</template>
 		</IonItem>
 
 		<IonItem class="dark:text-white">
-			<IonLabel>Acute actie vereist?</IonLabel>
-			<IonCheckbox slot="end" v-model="form.urgentActionRequired" :disabled="isCompleted" />
+			<IonLabel id="urgentActionRequired"> Acute actie vereist? </IonLabel>
+			<IonCheckbox
+				slot="end"
+				v-model="form.urgentActionRequired"
+				:disabled="isCompleted"
+				:required="true" />
 		</IonItem>
 
 		<IonItem class="dark:text-white">
-			<IonLabel position="stacked">Omschrijving</IonLabel>
 			<IonTextarea
-				class="dark:text-slate-400"
+				label="Omschrijving van de schade"
+				labelPlacement="stacked"
+				class="w-full dark:text-slate-400"
 				v-model="form.damageDescription"
+				:readonly="isCompleted"
 				auto-grow
 				placeholder="Beschrijf schade..."
-				:readonly="isCompleted"
 				:required="true" />
 		</IonItem>
 
 		<IonItem lines="none" class="dark:text-white">
-			<IonLabel position="stacked">Foto's</IonLabel>
-			<PhotoUploader v-if="!isCompleted" v-model:photos="form.photos" :disabled="isCompleted" />
+			<IonLabel position="stacked" id="photos">Foto's:</IonLabel>
+			<PhotoUploader
+				v-if="!isCompleted"
+				v-model:photos="form.photos"
+				:disabled="isCompleted"
+				:aria-labelledby="'photos'" />
 			<div v-else>
 				<h4 class="text-center text-red-500 dark:text-red-400">Er zijn geen foto's gemaakt</h4>
 			</div>
 		</IonItem>
 
 		<div class="mt-4 flex items-center justify-end gap-3" v-if="!isCompleted">
-			<IonBadge v-if="isDirty" color="warning" class="p-2">Niet opgeslagen</IonBadge>
-			<IonBadge v-else color="success" class="p-2">Opgeslagen</IonBadge>
-			<IonButton size="small" :disabled="!isDirty" @click="saveLocalChanges">
+			<IonBadge role="status" aria-live="polite" v-if="isDirty" color="warning" class="p-2"
+				>Niet opgeslagen</IonBadge
+			>
+			<IonBadge role="status" aria-live="polite" v-else color="success" class="p-2"
+				>Opgeslagen</IonBadge
+			>
+			<IonButton
+				size="small"
+				:disabled="!isDirty"
+				@click="saveLocalChanges"
+				aria-label="Inspectie opslaan">
 				Inspectie opslaan
 			</IonButton>
 		</div>
@@ -90,7 +114,7 @@
 </template>
 
 <script setup>
-import PhotoUploader from "@/components/reports/PhotoUploader.vue";
+import PhotoUploader from "@/components/PhotoUploader.vue";
 
 // Vue composition API functies importeren
 import { reactive, watch, toRaw, ref, onBeforeUnmount } from "vue";
@@ -177,4 +201,13 @@ defineExpose({
 	saveLocalChanges,
 	isDirty,
 });
+
+const damageTypes = [
+	{ label: "Moedwillig", value: "moedwillig" },
+	{ label: "Slijtage", value: "slijtage" },
+	{ label: "Geweld", value: "geweld" },
+	{ label: "Normaal gebruik", value: "normaal gebruik" },
+	{ label: "Calamiteit", value: "calamiteit" },
+	{ label: "Anders", value: "anders" },
+];
 </script>

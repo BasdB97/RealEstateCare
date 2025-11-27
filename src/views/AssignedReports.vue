@@ -4,11 +4,18 @@
 			<h1 class="page-title">Toegewezen rapporten</h1>
 			<div v-if="error" class="text-center text-red-600 dark:text-red-400 p-4">
 				<p class="mb-2">{{ error }}</p>
-				<IonButton size="small" @click="store.fetchReports(true)">Opnieuw proberen</IonButton>
+				<IonButton
+					aria-label="Opnieuw proberen rapporten te laden"
+					size="small"
+					@click="store.fetchReports(true)"
+					>Opnieuw proberen</IonButton
+				>
 			</div>
 			<div v-else-if="assignedReports.length > 0">
 				<div class="px-4 pt-2 pb-3">
 					<input
+						aria-label="Zoek op locatie"
+						id="searchLocation"
 						v-model="query"
 						type="search"
 						placeholder="Zoek op locatie..."
@@ -19,12 +26,14 @@
 					expand="inset"
 					class="m-2 p-2 rounded-lg space-y-2"
 					v-if="filteredReports.length > 0">
-					<IonAccordion v-for="r in filteredReports || []" :key="r?.id">
+					<IonAccordion
+						:aria-label="`Rapport ${r.location}`"
+						v-for="r in filteredReports || []"
+						:key="r?.id">
 						<IonItem slot="header">
 							<IonLabel>
 								<h2 class="text-slate-800 dark:text-white">
 									{{ r.location.split(", ")[0] }}
-									<!-- Straat + huisnr -->
 								</h2>
 								<p class="text-slate-500 dark:text-slate-400">
 									{{ r.location.split(", ")[1] }} - {{ r.location.split(", ")[2] }}
@@ -35,7 +44,6 @@
 
 						<div
 							slot="content"
-							id="content"
 							class="ion-padding m-2 border-2 border-slate-200 dark:border-slate-600 rounded-lg">
 							<section>
 								<div
@@ -62,7 +70,11 @@
 								</IonList>
 							</section>
 							<div class="flex justify-center">
-								<IonButton @click="openReport(r.id)" class="mt-4" expand="block">
+								<IonButton
+									aria-label="Rapport openen"
+									@click="openReport(r.id)"
+									class="mt-4"
+									expand="block">
 									Rapport openen
 								</IonButton>
 							</div>

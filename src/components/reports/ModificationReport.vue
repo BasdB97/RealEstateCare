@@ -2,37 +2,44 @@
 	<IonList :class="{ 'pointer-events-none opacity-100': isCompleted }">
 		<IonItem v-if="form.existingDocs && !isCompleted" lines="fill">
 			<div class="text-lg font-medium mb-4">
-				<IonLabel position="stacked" class="dark:text-white">
+				<IonLabel position="stacked" class="dark:text-white" id="existingDocs">
 					Bestaande situatie of reeds gedocumenteerde modificaties:
 					<span class="font-bold">{{ form.existingDocs }}</span>
 				</IonLabel>
 			</div>
 			<div class="flex gap-2">
-				<IonButton :href="pdfUrl" target="_blank" rel="noopener"> Open PDF </IonButton>
-				<IonButton :href="pdfUrl" download>Download PDF</IonButton>
+				<IonButton :href="pdfUrl" target="_blank" rel="noopener" aria-label="Open PDF" id="openPdf">
+					Open PDF
+				</IonButton>
+				<IonButton :href="pdfUrl" download aria-label="Download PDF" id="downloadPdf"
+					>Download PDF</IonButton
+				>
 			</div>
 		</IonItem>
 		<IonItem v-else class="text-red-500 dark:text-red-400">
-			<IonLabel>Geen bestaande situatie of reeds gedocumenteerde modificaties beschikbaar</IonLabel>
+			<IonLabel id="noExistingDocs"
+				>Geen bestaande situatie of reeds gedocumenteerde modificaties beschikbaar</IonLabel
+			>
 		</IonItem>
 
 		<IonItem>
-			<IonLabel position="stacked" class="dark:text-white"
-				>Locatie aangetroffen modificatie:</IonLabel
-			>
 			<IonInput
+				label="Locatie aangetroffen modificatie"
+				labelPlacement="stacked"
 				v-model="form.location"
 				class="w-full dark:text-slate-400"
+				:required="true"
 				:readonly="isCompleted" />
 		</IonItem>
 
-		<IonItem class="items-start">
-			<IonLabel position="stacked" class="dark:text-white">Uitgevoerd door:</IonLabel>
+		<IonItem>
 			<IonSelect
+				label="Uitgevoerd door"
 				v-model="form.executedBy"
 				interface="action-sheet"
 				class="dark:text-slate-400"
-				placeholder="Selecteer uitvoerder">
+				placeholder="Selecteer uitvoerder"
+				:required="true">
 				<IonSelectOption value="huurder">Huurder</IonSelectOption>
 				<IonSelectOption value="aannemer">Aannemer</IonSelectOption>
 				<IonSelectOption value="andere">Onbekend</IonSelectOption>
@@ -40,22 +47,24 @@
 		</IonItem>
 
 		<IonItem>
-			<IonLabel position="stacked" class="dark:text-white">Beschrijving modificatie:</IonLabel>
 			<IonTextarea
-				lines="3"
-				cols="20"
+				label="Beschrijving modificatie"
+				labelPlacement="stacked"
 				class="w-full dark:text-slate-400"
 				v-model="form.modificationDescription"
+				:readonly="isCompleted"
+				auto-grow
 				placeholder="Beschrijf de aangetroffen modificatie..."
-				:readonly="isCompleted" />
+				:required="true" />
 		</IonItem>
 
-		<IonItem class="items-start">
-			<IonLabel position="stacked" class="dark:text-white">Te ondernemen actie:</IonLabel>
+		<IonItem>
 			<IonSelect
+				label="Te ondernemen actie"
 				v-model="form.actionRequired"
 				interface="action-sheet"
 				class="dark:text-slate-400"
+				:required="true"
 				placeholder="Selecteer te ondernemen actie">
 				<IonSelectOption value="laten controleren">Accepteren</IonSelectOption>
 				<IonSelectOption value="laten keuren">Laten keuren</IonSelectOption>
@@ -65,28 +74,41 @@
 		</IonItem>
 
 		<IonItem>
-			<IonLabel position="stacked" class="dark:text-white">Opmerkingen:</IonLabel>
 			<IonTextarea
+				label="Opmerkingen"
+				labelPlacement="stacked"
 				class="w-full dark:text-slate-400"
-				lines="3"
-				cols="20"
 				v-model="form.remarks"
+				:readonly="isCompleted"
+				auto-grow
 				placeholder="Beschrijf opmerking..."
-				:readonly="isCompleted" />
+				:required="true" />
 		</IonItem>
 
 		<IonItem lines="none" class="dark:text-white">
-			<IonLabel position="stacked">Foto's</IonLabel>
-			<PhotoUploader v-if="!isCompleted" v-model:photos="form.photos" :disabled="isCompleted" />
+			<IonLabel position="stacked" id="photos">Foto's:</IonLabel>
+			<PhotoUploader
+				v-if="!isCompleted"
+				v-model:photos="form.photos"
+				:disabled="isCompleted"
+				:aria-labelledby="'photos'" />
 			<div v-else>
 				<h4 class="text-center text-red-500 dark:text-red-400">Er zijn geen foto's gemaakt</h4>
 			</div>
 		</IonItem>
 
 		<div class="mt-4 flex items-center justify-end gap-3" v-if="!isCompleted">
-			<IonBadge v-if="isDirty" color="warning" class="p-2">Niet opgeslagen</IonBadge>
-			<IonBadge v-else color="success" class="p-2">Opgeslagen</IonBadge>
-			<IonButton size="small" :disabled="!isDirty" @click="saveLocalChanges">
+			<IonBadge role="status" aria-live="polite" v-if="isDirty" color="warning" class="p-2"
+				>Niet opgeslagen</IonBadge
+			>
+			<IonBadge role="status" aria-live="polite" v-else color="success" class="p-2"
+				>Opgeslagen</IonBadge
+			>
+			<IonButton
+				size="small"
+				:disabled="!isDirty"
+				@click="saveLocalChanges"
+				aria-label="Inspectie opslaan">
 				Inspectie opslaan
 			</IonButton>
 		</div>
@@ -94,7 +116,7 @@
 </template>
 
 <script setup>
-import PhotoUploader from "@/components/reports/PhotoUploader.vue";
+import PhotoUploader from "@/components/PhotoUploader.vue";
 
 import { reactive, watch, toRaw, ref } from "vue";
 import {

@@ -17,21 +17,25 @@
 			multiple
 			class="hidden"
 			@change="handleFileChange"
-			:disabled="disabled" />
+			:disabled="disabled"
+			:aria-labelledby="ariaLabelledby" />
 
 		<div class="mt-4 flex items-center justify-center">
-			<IonButton @click="handleAddPhoto" :disabled="disabled"> Foto toevoegen </IonButton>
+			<IonButton @click="handleAddPhoto" :disabled="disabled" :aria-labelledby="ariaLabelledby">
+				Foto toevoegen
+			</IonButton>
 		</div>
 	</div>
 </template>
 
 <script setup>
 import { ref, onBeforeUnmount } from "vue";
-import { IonLabel, IonButton } from "@ionic/vue";
+import { IonButton } from "@ionic/vue";
 
 const props = defineProps({
 	photos: { type: Array, required: true }, // v-model:photos
 	disabled: { type: Boolean, default: false },
+	ariaLabelledby: { type: String, default: undefined },
 });
 
 const emit = defineEmits(["update:photos"]);

@@ -33,7 +33,12 @@
 						class="mb-4">
 						<IonItem slot="header" class="dark:text-slate-400">
 							<IonLabel>{{ getInspectionLabel(inspection) }}</IonLabel>
-							<IonBadge v-if="hasUrgentAction(inspection)" color="danger" class="py-1"
+							<IonBadge
+								v-if="hasUrgentAction(inspection)"
+								color="danger"
+								class="py-1"
+								role="status"
+								aria-label="Urgente actie vereist"
 								>Urgent!</IonBadge
 							>
 						</IonItem>
@@ -52,16 +57,18 @@
 
 			<div class="flex flex-col gap-3 mt-6 p-4" v-if="!isCompleted">
 				<IonButton
+					aria-label="Rapport opslaan als concept"
 					expand="block"
 					color="primary"
 					class="rounded-lg font-semibold"
 					:disabled="isSavingDraft || isSavingComplete"
 					@click="saveDraft">
-					{{ isSavingDraft ? "Opslaan..." : "Rapport opslaan" }}
+					{{ isSavingDraft ? "Opslaan..." : "Rapport opslaan als concept" }}
 					<IonSpinner v-if="isSavingDraft" name="crescent" />
 				</IonButton>
 
 				<IonButton
+					aria-label="Rapport opslaan en afronden"
 					expand="block"
 					color="success"
 					class="rounded-lg font-semibold"
@@ -73,6 +80,8 @@
 			</div>
 
 			<IonToast
+				role="status"
+				aria-live="polite"
 				:is-open="showToast"
 				:message="toastMessage"
 				:color="toastColor"

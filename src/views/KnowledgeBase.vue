@@ -3,15 +3,22 @@
 		<h1 class="page-title">Kennisbank</h1>
 		<div v-if="error" class="text-center text-red-600 dark:text-red-400 p-4">
 			<p class="mb-2">{{ error }}</p>
-			<IonButton size="small" @click="knowledgeBaseStore.fetchKnowledgeBase()"
+			<IonButton
+				aria-label="Opnieuw proberen kennisbank te laden"
+				size="small"
+				@click="knowledgeBaseStore.fetchKnowledgeBase()"
 				>Opnieuw proberen</IonButton
 			>
 		</div>
 		<div v-else-if="knowledgeBase.length > 0">
-			<IonSearchbar placeholder="Zoek in documenten..." />
+			<IonSearchbar aria-label="Zoek in documenten..." placeholder="Zoek in documenten..." />
 			<IonList
 				class="m-2 p-2 border-2 border-primarybg dark:border-slate-600 rounded-lg shadow-md space-y-2">
-				<IonItem v-for="doc in knowledgeBase" :key="doc.id" lines="full">
+				<IonItem
+					:aria-label="`Document: ${doc.title}`"
+					v-for="doc in knowledgeBase"
+					:key="doc.id"
+					lines="full">
 					<IonLabel>
 						<span class="font-semibold dark:text-white">{{ doc.title }}</span>
 						<br />
@@ -21,7 +28,12 @@
 						<br />
 						<span class="text-xs opacity-70 dark:text-slate-400">{{ doc.description }}</span>
 					</IonLabel>
-					<IonButton :href="urlFor(doc.url)" target="_blank" rel="noopener" slot="end"
+					<IonButton
+						:aria-label="`Document ${doc.title} openen in een nieuw tabblad`"
+						:href="urlFor(doc.url)"
+						target="_blank"
+						rel="noopener"
+						slot="end"
 						>Open PDF</IonButton
 					>
 				</IonItem>

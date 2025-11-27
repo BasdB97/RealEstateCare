@@ -16,7 +16,11 @@
 							<div
 								class="w-24 h-24 rounded-full bg-primarybg flex items-center justify-center text-white text-3xl font-bold"></div>
 							<IonButton size="small" class="absolute bottom-0 right-0">
-								<IonIcon :icon="camera" slot="icon-only"></IonIcon>
+								<IonIcon
+									:icon="camera"
+									slot="icon-only"
+									aria-label="Camera openen"
+									id="camera"></IonIcon>
 							</IonButton>
 						</div>
 						<div class="ml-4">
@@ -26,40 +30,60 @@
 
 					<!-- Name -->
 					<IonItem>
-						<IonLabel position="stacked" class="dark:text-white">Naam</IonLabel>
+						<IonLabel position="stacked" class="dark:text-white" aria-label="Naam" id="name"
+							>Naam:</IonLabel
+						>
 						<IonInput
 							type="text"
 							value="John Doe"
 							placeholder="Voer je naam in"
-							class="dark:text-slate-400"></IonInput>
+							class="dark:text-slate-400"
+							aria-labelledby="name"></IonInput>
 					</IonItem>
 
 					<!-- Username -->
 					<IonItem>
-						<IonLabel position="stacked" class="dark:text-white">Gebruikersnaam</IonLabel>
+						<IonLabel
+							position="stacked"
+							class="dark:text-white"
+							aria-label="Gebruikersnaam"
+							id="username"
+							>Gebruikersnaam:</IonLabel
+						>
 						<IonInput
 							type="text"
 							value="johndoe123"
 							placeholder="Voer je gebruikersnaam in"
-							class="dark:text-slate-400"></IonInput>
+							class="dark:text-slate-400"
+							aria-labelledby="username"></IonInput>
 					</IonItem>
 
 					<IonItem>
-						<IonLabel position="stacked" class="dark:text-white">Wachtwoord</IonLabel>
+						<IonLabel
+							position="stacked"
+							class="dark:text-white"
+							aria-label="Wachtwoord"
+							id="password"
+							>Wachtwoord:</IonLabel
+						>
 						<IonInput
 							type="password"
 							value="********"
 							placeholder="Voer je wachtwoord in"
-							class="dark:text-slate-400"></IonInput>
+							class="dark:text-slate-400"
+							aria-labelledby="password"></IonInput>
 					</IonItem>
 
 					<!-- Profession -->
 					<IonItem>
-						<IonLabel position="stacked" class="dark:text-white">Beroep</IonLabel>
+						<IonLabel position="stacked" class="dark:text-white" aria-label="Beroep" id="profession"
+							>Beroep:</IonLabel
+						>
 						<IonSelect
 							value="inspector"
 							placeholder="Selecteer je beroep"
-							class="dark:text-slate-400">
+							class="dark:text-slate-400"
+							aria-labelledby="profession">
 							<IonSelectOption value="inspector">Inspecteur</IonSelectOption>
 							<IonSelectOption value="technician">Technicus</IonSelectOption>
 							<IonSelectOption value="manager">Manager</IonSelectOption>
@@ -69,12 +93,15 @@
 
 					<!-- Email -->
 					<IonItem>
-						<IonLabel position="stacked" class="dark:text-white">E-mail</IonLabel>
+						<IonLabel position="stacked" class="dark:text-white" aria-label="E-mail" id="email"
+							>E-mail:</IonLabel
+						>
 						<IonInput
 							type="email"
 							value="john.doe@example.com"
 							placeholder="Voer je e-mailadres in"
-							class="dark:text-slate-400"></IonInput>
+							class="dark:text-slate-400"
+							aria-labelledby="email"></IonInput>
 					</IonItem>
 				</IonCardContent>
 			</IonCard>
@@ -89,45 +116,71 @@
 				<IonCardContent>
 					<!-- Theme Toggle -->
 					<IonItem>
-						<IonLabel class="dark:text-white"> Donkere modus </IonLabel>
+						<IonLabel class="dark:text-white" aria-label="Donkere modus aan/uit" id="darkMode">
+							Donkere modus
+						</IonLabel>
 						<IonToggle
 							slot="end"
 							:checked="settingsStore.theme === 'dark'"
-							@ionChange="settingsStore.toggleTheme()"></IonToggle>
+							@ionChange="settingsStore.toggleTheme()"
+							aria-labelledby="darkMode"></IonToggle>
 					</IonItem>
 
 					<IonItem>
-						<IonLabel class="dark:text-white">Geluidseffecten</IonLabel>
+						<IonLabel class="dark:text-white" aria-label="Geluidseffecten aan/uit" id="soundEffects"
+							>Geluidseffecten:</IonLabel
+						>
 						<IonToggle
 							slot="end"
 							:checked="settingsStore.soundEnabled"
-							@ionChange="settingsStore.setSoundEnabled($event.target.checked)"></IonToggle>
+							@ionChange="settingsStore.setSoundEnabled($event.target.checked)"
+							aria-labelledby="soundEffects"></IonToggle>
 					</IonItem>
 
 					<IonItem>
-						<IonLabel class="dark:text-white">Push meldingen</IonLabel>
+						<IonLabel
+							class="dark:text-white"
+							aria-label="Push meldingen aan/uit"
+							id="pushNotifications"
+							>Push meldingen:</IonLabel
+						>
 						<IonToggle
 							slot="end"
 							:checked="settingsStore.pushNotificationsEnabled"
-							@ionChange="
-								settingsStore.setPushNotificationsEnabled($event.target.checked)
-							"></IonToggle>
+							@ionChange="settingsStore.setPushNotificationsEnabled($event.target.checked)"
+							aria-labelledby="pushNotifications"></IonToggle>
 					</IonItem>
 				</IonCardContent>
 			</IonCard>
 
 			<!-- Save Button -->
-			<IonButton expand="block" @click="onSave" :disabled="isSaving" class="mt-4 mb-4">
+			<IonButton
+				expand="block"
+				@click="onSave"
+				:disabled="isSaving"
+				class="mt-4 mb-4"
+				aria-label="Instellingen opslaan"
+				id="saveSettings">
 				{{ isSaving ? "Opslaan..." : "Instellingen opslaan" }}
 				<IonSpinner v-if="isSaving" name="crescent" />
 			</IonButton>
 
 			<!-- Log out Button -->
-			<IonButton expand="block" color="danger" @click="handleLogout" class="mt-4 mb-4">
+			<IonButton
+				expand="block"
+				color="danger"
+				@click="handleLogout"
+				class="mt-4 mb-4"
+				aria-label="Uitloggen"
+				id="logout">
 				Uitloggen
 			</IonButton>
 
-			<IonButton @click="onResetDatabase" :disabled="reportsStore.loading">
+			<IonButton
+				@click="onResetDatabase"
+				:disabled="reportsStore.loading"
+				aria-label="Reset database"
+				id="resetDatabase">
 				<IonIcon :icon="refresh" class="mr-2" />
 				Reset database
 			</IonButton>

@@ -1,17 +1,23 @@
 <template>
 	<IonList :class="{ 'pointer-events-none opacity-100': isCompleted }">
 		<IonItem>
-			<IonLabel position="stacked" class="dark:text-white">Locatie</IonLabel>
-			<IonInput v-model="form.location" class="w-full dark:text-slate-400" />
+			<IonInput
+				label="Locatie"
+				labelPlacement="stacked"
+				v-model="form.location"
+				class="w-full dark:text-slate-400"
+				:readonly="isCompleted"
+				:required="true" />
 		</IonItem>
 
-		<IonItem class="items-start">
-			<IonLabel position="stacked" class="dark:text-white">Soort installatie</IonLabel>
+		<IonItem>
 			<IonSelect
+				label="Soort installatie"
 				v-model="form.technicalInstallationType"
 				interface="action-sheet"
-				placeholder="Selecteer soort installatie"
-				class="dark:text-slate-400">
+				placeholder="Soort installatie"
+				class="dark:text-slate-400"
+				:required="true">
 				<IonSelectOption v-for="type in technicalInstallationTypes" :key="type" :value="type">
 					{{ type }}
 				</IonSelectOption>
@@ -19,56 +25,77 @@
 		</IonItem>
 
 		<IonItem>
-			<IonLabel position="stacked" class="dark:text-white">Gemelde storingen</IonLabel>
 			<IonTextarea
-				class="w-full dark:text-slate-400"
+				label="Beschrijf gemelde storingen"
+				labelPlacement="stacked"
 				lines="3"
-				cols="20"
+				cols="40"
 				v-model="form.reportedProblems"
 				placeholder="Beschrijf gemelde storingen..."
-				:readonly="isCompleted" />
+				:readonly="isCompleted"
+				:required="true" />
 		</IonItem>
 
 		<IonItem v-if="form.testProcedure && !isCompleted">
 			<div class="text-lg font-medium mb-4">
-				<IonLabel position="stacked" class="dark:text-white">Testprocedure:</IonLabel>
+				<IonLabel position="stacked" class="dark:text-white" id="testProcedure">
+					Testprocedure:
+				</IonLabel>
 			</div>
 			<div class="flex gap-2">
-				<IonButton :href="pdfUrl" target="_blank" rel="noopener"> Open PDF </IonButton>
-				<IonButton :href="pdfUrl" download>Download PDF</IonButton>
+				<IonButton :href="pdfUrl" target="_blank" rel="noopener" aria-label="Open PDF" id="openPdf">
+					Open PDF
+				</IonButton>
+				<IonButton :href="pdfUrl" download aria-label="Download PDF" id="downloadPdf"
+					>Download PDF</IonButton
+				>
 			</div>
 		</IonItem>
 		<IonItem v-else class="text-red-500 dark:text-red-400">
-			<IonLabel>Geen testprocedure beschikbaar</IonLabel>
+			<IonLabel id="noTestProcedure"> Geen testprocedure beschikbaar: </IonLabel>
 		</IonItem>
 
 		<IonItem>
-			<IonLabel class="dark:text-white">Goedgekeurd?</IonLabel>
-			<IonCheckbox slot="end" v-model="form.approved" :disabled="isCompleted" />
+			<IonLabel class="dark:text-white" id="approved"> Goedgekeurd?: </IonLabel>
+			<IonCheckbox slot="end" v-model="form.approved" :disabled="isCompleted" :required="true" />
 		</IonItem>
 
 		<IonItem lines="none">
-			<IonLabel position="stacked" class="dark:text-white">Opmerkingen</IonLabel>
 			<IonTextarea
+				label="Opmerkingen"
+				labelPlacement="stacked"
 				class="w-full dark:text-slate-400"
 				v-model="form.remarks"
 				:readonly="isCompleted"
 				auto-grow
-				placeholder="Beschrijf opmerking..." />
+				placeholder="Beschrijf opmerking..."
+				:required="true" />
 		</IonItem>
 
 		<IonItem lines="none" class="dark:text-white">
-			<IonLabel position="stacked">Foto's</IonLabel>
-			<PhotoUploader v-if="!isCompleted" v-model:photos="form.photos" :disabled="isCompleted" />
+			<IonLabel position="stacked" id="photos">Foto's:</IonLabel>
+			<PhotoUploader
+				v-if="!isCompleted"
+				v-model:photos="form.photos"
+				:disabled="isCompleted"
+				:aria-labelledby="'photos'" />
 			<div v-else>
 				<h4 class="text-center text-red-500 dark:text-red-400">Er zijn geen foto's gemaakt</h4>
 			</div>
 		</IonItem>
 
 		<div class="mt-4 flex items-center justify-end gap-3" v-if="!isCompleted">
-			<IonBadge v-if="isDirty" color="warning" class="p-2">Niet opgeslagen</IonBadge>
-			<IonBadge v-else color="success" class="p-2">Opgeslagen</IonBadge>
-			<IonButton size="small" :disabled="!isDirty" @click="saveLocalChanges">
+			<IonBadge role="status" aria-live="polite" v-if="isDirty" color="warning" class="p-2"
+				>Niet opgeslagen</IonBadge
+			>
+			<IonBadge role="status" aria-live="polite" v-else color="success" class="p-2"
+				>Opgeslagen</IonBadge
+			>
+			<IonButton
+				size="small"
+				:disabled="!isDirty"
+				@click="saveLocalChanges"
+				aria-label="Inspectie opslaan">
 				Inspectie opslaan
 			</IonButton>
 		</div>
@@ -76,7 +103,7 @@
 </template>
 
 <script setup>
-import PhotoUploader from "@/components/reports/PhotoUploader.vue";
+import PhotoUploader from "@/components/PhotoUploader.vue";
 
 import { reactive, watch, toRaw, ref } from "vue";
 

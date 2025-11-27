@@ -2,6 +2,7 @@
 	<footer>
 		<div class="flex justify-evenly items-center py-2 bg-[#00aaa2] dark:bg-teal-800 text-white">
 			<RouterLink
+				:aria-current="$route.path === link.to ? 'page' : undefined"
 				v-for="link in links"
 				:key="link.to"
 				:to="link.to"

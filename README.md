@@ -65,7 +65,7 @@ http://localhost:5173
 
 ### Usability:
 
-10 heuristieken van Jakob Nielsen:
+#### 10 heuristieken van Jakob Nielsen:
 
 1. **Visuele feedback:** De gebruiker krijgt visuele feedback bij acties. Zoals het laden van een pagina en het indrukken van knoppen.
 2. **Het systeem en de echte wereld komen overeen:** Er wordt gesproken in de taal van de gebruiker (Nederlands). De gebruikte taal is goed te begrijpen en er worden duidelijke en herkenbare iconen gebruikt.
@@ -79,3 +79,4 @@ http://localhost:5173
 10. **Bied een helpende hand:** De applicatie heeft niet direct een uitleg in de app. Hier is voor gekozen om zo min mogelijk afleidende teksten op de pagina te zetten. Documenten en een help functie kan op de pagina 'informatie' worden toegevoegd, als hier een wens voor is. De helpende hand kan ook worden toegevoegd aan de pagina's waar nodig.
 
 ## WCAG 2.1 Analyse:
+Ionic componenten ondersteunen het gebruik van toetsenbord en screenreaders. Deze zijn goed te gebruiken voor gebruikers met een beperking.

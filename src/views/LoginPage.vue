@@ -17,10 +17,15 @@
 						<form @submit.prevent="handleLogin">
 							<!-- Employee ID Input -->
 							<div class="mb-4">
-								<IonLabel class="block text-lg font-medium text-primarybg dark:text-white">
+								<IonLabel
+									class="block text-lg font-medium text-primarybg dark:text-white"
+									aria-label="Werknemer ID"
+									id="employeeId">
 									Werknemer ID
 								</IonLabel>
 								<IonInput
+									aria-labelledby="employeeId"
+									aria-required="true"
 									v-model="employeeId"
 									type="text"
 									placeholder="Voer uw werknemer ID in"
@@ -36,10 +41,15 @@
 
 							<!-- Password Input -->
 							<div class="mb-6">
-								<IonLabel class="block text-lg font-medium text-primarybg dark:text-white">
+								<IonLabel
+									class="block text-lg font-medium text-primarybg dark:text-white"
+									aria-label="Wachtwoord"
+									id="password">
 									Wachtwoord
 								</IonLabel>
 								<IonInput
+									aria-labelledby="password"
+									aria-required="true"
 									v-model="password"
 									:type="showPassword ? 'text' : 'password'"
 									placeholder="Voer uw wachtwoord in"
@@ -65,7 +75,13 @@
 							</IonText>
 
 							<!-- Login Button -->
-							<IonButton expand="block" type="submit" :disabled="isLoading" class="mb-3">
+							<IonButton
+								expand="block"
+								type="submit"
+								:disabled="isLoading"
+								class="mb-3"
+								aria-label="Inloggen"
+								id="login">
 								<IonIcon v-if="!isLoading" :icon="logInOutline" slot="start" />
 								<IonSpinner v-if="isLoading" name="crescent" slot="start" />
 								{{ isLoading ? "Inloggen..." : "Inloggen" }}
@@ -76,6 +92,8 @@
 								<a
 									href="#"
 									class="text-sm text-blue-600 dark:text-blue-400 hover:underline"
+									aria-label="Wachtwoord vergeten?"
+									id="forgotPassword"
 									@click.prevent="handleForgotPassword">
 									Wachtwoord vergeten?
 								</a>
@@ -112,6 +130,8 @@
 						</div>
 
 						<IonInput
+							aria-label="Authenticatiecode"
+							id="authCode"
 							mode="md"
 							label="Code"
 							placeholder="Voer de code in"

@@ -5,7 +5,12 @@
 
 		<div v-if="error" class="text-center text-red-600 dark:text-red-400 p-4">
 			<p class="mb-2">{{ error }}</p>
-			<IonButton size="small" @click="store.fetchReports(true)">Opnieuw proberen</IonButton>
+			<IonButton
+				aria-label="Opnieuw proberen rapporten te laden"
+				size="small"
+				@click="store.fetchReports(true)"
+				>Opnieuw proberen</IonButton
+			>
 		</div>
 
 		<p v-if="completed.length === 0" class="text-slate-500 dark:text-slate-400">
@@ -13,7 +18,12 @@
 		</p>
 		<div v-else class="m-2 p-2 dark:border-slate-600 rounded-lg shadow-md space-y-2">
 			<IonList class="divide-y divide-slate-200 dark:divide-slate-600">
-				<IonItem v-for="r in completed" :key="r.id" button @click="openReport(r.id)">
+				<IonItem
+					v-for="r in completed"
+					:key="r.id"
+					button
+					:aria-label="`Open rapport voor ${r.location}`"
+					@click="openReport(r.id)">
 					<IonLabel>
 						<h2 class="font-semibold dark:text-white">
 							{{ r.location.split(", ")[0] }}, {{ r.location.split(", ")[2] }}
