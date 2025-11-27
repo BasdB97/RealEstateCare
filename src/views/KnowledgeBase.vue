@@ -1,5 +1,6 @@
 <template>
 	<BaseLayout>
+		<BackButton to="/home" />
 		<h1 class="page-title">Kennisbank</h1>
 		<div v-if="error" class="text-center text-red-600 dark:text-red-400 p-4">
 			<p class="mb-2">{{ error }}</p>
