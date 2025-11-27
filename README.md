@@ -63,6 +63,12 @@ http://localhost:5173
 
 ### Security:
 
+De applicatie wordt gehost op Netlify. Op deze manier is de applicatie beveiligd tegen bekende aanvallen (bijv. XSS).
+Op dit moment staan alle gegevens in een JSONBin. Als de applicatie naar productie gaat zal er overgegaan moeten worden naar een database.
+Bij het inloggen worden gegevens opgeslagen in de localstorage, dit is in lijn met de opdracht maar moet uiteraard beter worden opgeslagen voor daadwerkelijke productie.
+Tevens moet de authenticatie worden verbeterd door gebruik te maken van een app of sms.
+De API key en URL staan hardcoded in de code. Dit moet uiteraard beter worden opgeslagen voor daadwerkelijke productie.
+
 ### Usability:
 
 #### 10 heuristieken van Jakob Nielsen:
@@ -78,5 +84,13 @@ http://localhost:5173
 9. **Maak foutmeldingen minder eng:** De foutmeldingen zijn duidelijk en eenvoudig te begrijpen. Deze kan altijd nog naar wens verbeterd of aangepast worden.
 10. **Bied een helpende hand:** De applicatie heeft niet direct een uitleg in de app. Hier is voor gekozen om zo min mogelijk afleidende teksten op de pagina te zetten. Documenten en een help functie kan op de pagina 'informatie' worden toegevoegd, als hier een wens voor is. De helpende hand kan ook worden toegevoegd aan de pagina's waar nodig.
 
+### Style Guide:
+
+Ik heb de styling gedaan met Tailwindcss. Deze is makkelijk te gebruiken en heeft een goede documentatie. Ik merkte dat de combinatie tussen Tailwindcss en Ionic componenten niet altijd goed werkte. Dit is omdat Tailwindcss de styles op een andere manier toepast dan Ionic componenten. Ik heb hier tijdens het maken van de applicatie veel tijd in gestoken om de combinatie goed te krijgen.
+Ik ben nog niet volledig tevreden met de styling, dit kan ik later nog verfijnen. Op dit moment voldoet de applicatie aan de gebruiksvriendelijkheidseisen en aan de casus.
+
 ## WCAG 2.1 Analyse:
-Ionic componenten ondersteunen het gebruik van toetsenbord en screenreaders. Deze zijn goed te gebruiken voor gebruikers met een beperking.
+
+Ionic componenten ondersteunen het gebruik van toetsenbord en screenreaders. Deze zijn goed te gebruiken voor gebruikers met een beperking. Waar nodig zijn extra labels toegevoegd.
+Alle afbeeldingen zijn voorzien van een alt tekst.
+Er is gekozen voor kleuren met een goede contrast ratio, zowel in dark als in light mode.
