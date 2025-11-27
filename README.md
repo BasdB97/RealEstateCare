@@ -3,6 +3,9 @@
 Een applicatie gemaakt met Vue en Ionic voor Real Estate Care B.V. Met de applicatie kunnen inspecteurs naar addressen om inspecties uit te voeren aan een pand. Zaken als schade, achterstallig onderhoud, modificaties en technische installaties kunnen worden vastgelegd en opgeslagen.
 De applicatie beschikt over een login met authenticatie, koppeling naar een web API om data in JSON vorm op te halen, offline caching van rapporten om ze later op te slaan en mogelijkheid om het uiterlijk van de applicatie te configureren.
 
+## Live applicatie
+Bekijk de live app op: https://bdb-realestatecare.netlify.app/
+
 ## Uitleg project
 
 - **Inspecties uitvoeren:** Inspecteurs kunnen op locatie toegewezen rapportages openen en eventueel aanpassen waar nodig. Foto's kunnen per inspectie worden toegevoegd. Alle rapporten worden eerst lokaal opgeslagen en vervolgens, als dit mogelijk is, naar de server verstuurd.
