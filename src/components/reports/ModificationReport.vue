@@ -143,24 +143,27 @@ const props = defineProps({
 });
 const emit = defineEmits(["saveLocalChanges"]);
 const isDirty = ref(false);
-// form: reactive kopie van inspection data voor two-way binding
 const form = reactive({
 	...props.inspection,
 });
 const baseline = ref(JSON.stringify(form));
 const pdfUrl = "/public/docs/modificaties_overzicht.pdf";
 
+// Watcher: observeert veranderingen in props.inspection
+// Triggered wanneer parent component nieuwe data doorgeeft
 watch(
 	() => props.inspection,
 	(v) => {
 		Object.assign(form, v);
 		baseline.value = JSON.stringify(v);
 		isDirty.value = false;
-		// console.log("form changed:", v);
+
 	},
 	{ deep: true }
 );
 
+// Watcher: detecteert wijzigingen in het formulier
+// Vergelijkt huidige form-staat met baseline voor dirty tracking
 let t;
 watch(
 	form,
@@ -174,11 +177,12 @@ watch(
 );
 
 function saveLocalChanges() {
-	// console.log("saveLocalChanges", { ...toRaw(form) });
 	emit("saveLocalChanges", { ...toRaw(form) });
 	baseline.value = JSON.stringify({ ...toRaw(form) });
 	isDirty.value = false;
 }
+
+// Expose de functies voor het parent component
 defineExpose({
 	saveLocalChanges,
 	isDirty,

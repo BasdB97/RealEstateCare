@@ -21,8 +21,8 @@ import { IonIcon } from "@ionic/vue";
 import { notifications, notificationsOff } from "ionicons/icons";
 import { ref } from "vue";
 
+// Meldingen uit/aan
 const notificationsEnabled = ref(true);
-
 const toggleNotifications = () => {
 	notificationsEnabled.value = !notificationsEnabled.value;
 };

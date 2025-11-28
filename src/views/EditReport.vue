@@ -143,6 +143,7 @@ const showToast = ref(false);
 const toastMessage = ref("");
 const toastColor = ref("success");
 
+// functie om de referentie van de inspectie op te slaan
 function setInspectionRef(el, inspection) {
 	const key =
 		inspection.id != null
@@ -156,21 +157,22 @@ function setInspectionRef(el, inspection) {
 	}
 }
 
+// functie om de toast message te tonen
 function showToastMessage(message, color = "success") {
 	toastMessage.value = message;
 	toastColor.value = color;
 	showToast.value = true;
 }
 
+// functie om de lokale wijzigingen op te slaan
 async function saveLocalChanges(reportId, updated) {
 	store.updateInspectionLocal(reportId, updated);
 	openAccordion.value = null;
 }
 
+// functie om het concept rapport op te slaan
 async function saveDraft() {
 	isSavingDraft.value = true;
-	// First, trigger save on all child components to ensure no data loss
-	// (don't check isDirty due to 150ms debounce race condition)
 	for (const componentRef of Object.values(inspectionRefs.value)) {
 		if (componentRef && componentRef.saveLocalChanges) {
 			componentRef.saveLocalChanges();
@@ -185,10 +187,9 @@ async function saveDraft() {
 	isSavingDraft.value = false;
 }
 
+// functie om het rapport op te slaan en afronden
 async function completeReport() {
 	isSavingComplete.value = true;
-	// First, trigger save on all child components to ensure no data loss
-	// (don't check isDirty due to 150ms debounce race condition)
 	for (const componentRef of Object.values(inspectionRefs.value)) {
 		if (componentRef && componentRef.saveLocalChanges) {
 			componentRef.saveLocalChanges();

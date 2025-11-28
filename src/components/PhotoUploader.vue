@@ -37,16 +37,16 @@ const props = defineProps({
 	disabled: { type: Boolean, default: false },
 	ariaLabelledby: { type: String, default: undefined },
 });
-
 const emit = defineEmits(["update:photos"]);
-
 const fileInput = ref(null);
 const objectUrls = [];
 
+// Functie om een foto toe te voegen
 function handleAddPhoto() {
 	if (fileInput.value) fileInput.value.click();
 }
 
+// Functie om de foto te wijzigen
 function handleFileChange(event) {
 	const files = Array.from(event.target.files || []);
 
@@ -67,6 +67,7 @@ function handleFileChange(event) {
 	event.target.value = "";
 }
 
+// Functie om de object URLs te verwijderen wanneer de component wordt afgebroken.
 onBeforeUnmount(() => {
 	objectUrls.forEach((url) => URL.revokeObjectURL(url));
 });

@@ -95,9 +95,13 @@
 <script setup>
 import BackButton from "@/components/BackButton.vue";
 
+import { useReportsStore } from "@/stores/reports";
+import { getInspectionLabel, hasUrgentAction, isEmptyInspection } from "@/utils/reportHelpers";
+
+import { useRouter } from "vue-router";
 import { onMounted, computed, ref } from "vue";
 import { storeToRefs } from "pinia";
-import { getInspectionLabel, hasUrgentAction, isEmptyInspection } from "@/utils/reportHelpers";
+
 import {
 	IonAccordionGroup,
 	IonAccordion,
@@ -108,30 +112,24 @@ import {
 	IonButton,
 } from "@ionic/vue";
 
-import { useReportsStore } from "@/stores/reports";
-import { useRouter } from "vue-router";
-
 const store = useReportsStore();
 const router = useRouter();
 const { assignedReports, error } = storeToRefs(store);
-
 const query = ref("");
 
 const openReport = (id) => router.push({ name: "edit-report", params: { id } });
 
+// Filter de rapporten op locatie
 const filteredReports = computed(() => {
 	if (!query.value) return assignedReports.value;
 	const q = query.value.toLowerCase();
 	return assignedReports.value.filter((r) => r.location.toLowerCase().includes(q));
 });
 
+// Haal de rapporten op bij het laden van de pagina
 onMounted(async () => {
 	await store.fetchReports();
 });
 </script>
 
-<style scoped>
-#loading-spinner {
-	margin: 0 auto;
-}
-</style>
+<style scoped></style>

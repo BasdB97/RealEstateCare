@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 
+// Experiment met sleutel voor lokale opslag.
 const STORAGE_KEY = "user-settings";
 
 export const useSettingsStore = defineStore("settings", {
@@ -16,9 +17,11 @@ export const useSettingsStore = defineStore("settings", {
 
 	actions: {
 		loadSettings() {
+			// Haal de instellingen op uit de lokale opslag
 			const raw = localStorage.getItem(STORAGE_KEY);
 			if (!raw) return;
 
+			// Gebruik de instellingen
 			try {
 				const data = JSON.parse(raw);
 				if (data.theme) this.theme = data.theme;
@@ -44,6 +47,7 @@ export const useSettingsStore = defineStore("settings", {
 			localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
 		},
 
+		// Dark-light mode aanpassen
 		applyTheme() {
 			document.documentElement.classList.toggle("dark", this.theme === "dark");
 		},
@@ -53,10 +57,12 @@ export const useSettingsStore = defineStore("settings", {
 			this.saveSettings();
 		},
 
+		// Push meldingen aanpassen
 		setPushNotificationsEnabled(value) {
 			this.pushNotificationsEnabled = value;
 			this.saveSettings();
 		},
+		// Geluidseffecten aanpassen
 		setSoundEnabled(value) {
 			this.soundEnabled = value;
 			this.saveSettings();

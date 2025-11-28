@@ -1,5 +1,6 @@
 import axios from "axios";
 
+// Axios API voor de JSONBin API
 const api = axios.create({
 	baseURL: "https://api.jsonbin.io/v3/b",
 	timeout: 15000, // 15 seconds
@@ -9,9 +10,9 @@ const api = axios.create({
 	},
 });
 
+// Interceptor voor de API response
 api.interceptors.response.use(
 	(response) => {
-		// console.log("API Response:", response.status);
 		return response;
 	},
 	(error) => {

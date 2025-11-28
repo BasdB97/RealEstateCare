@@ -56,6 +56,7 @@ const router = createRouter({
 	routes,
 });
 
+// Guard voor de router
 router.beforeEach((to, from, next) => {
 	const loggedIn = localStorage.getItem("loggedIn");
 	if (to.meta.requiresAuth && !loggedIn) {

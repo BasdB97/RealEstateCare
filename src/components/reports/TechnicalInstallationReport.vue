@@ -138,17 +138,20 @@ const form = reactive({
 const baseline = ref(JSON.stringify(form));
 const pdfUrl = "/public/docs/testprocedure.pdf";
 
+// Watcher: observeert veranderingen in props.inspection
+// Triggered wanneer parent component nieuwe data doorgeeft
 watch(
 	() => props.inspection,
 	(v) => {
 		Object.assign(form, v);
 		baseline.value = JSON.stringify(v);
 		isDirty.value = false;
-		// console.log("form changed:", v);
 	},
 	{ deep: true }
 );
 
+// Watcher: detecteert wijzigingen in het formulier
+// Vergelijkt huidige form-staat met baseline voor dirty tracking
 let t;
 watch(
 	form,
@@ -161,17 +164,20 @@ watch(
 	{ deep: true }
 );
 
+// Sla de wijzigingen op in de local storage
 function saveLocalChanges() {
-	// console.log("saveLocalChanges", { ...toRaw(form) });
 	emit("saveLocalChanges", { ...toRaw(form) });
 	baseline.value = JSON.stringify({ ...toRaw(form) });
 	isDirty.value = false;
 }
+
+// Expose de functies voor het parent component
 defineExpose({
 	saveLocalChanges,
 	isDirty,
 });
 
+// Soorten installaties
 const technicalInstallationTypes = [
 	"Koeling",
 	"Verwarming",

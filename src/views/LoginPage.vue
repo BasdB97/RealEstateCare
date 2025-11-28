@@ -183,11 +183,10 @@ import {
 import { logInOutline, eyeOutline, eyeOffOutline } from "ionicons/icons";
 
 const router = useRouter();
-
 const loginStore = useLoginStore();
 const reportsStore = useReportsStore();
 
-// Form data
+// Invoervelden
 const employeeId = ref("");
 const password = ref("");
 const showPassword = ref(false);
@@ -196,7 +195,7 @@ const authCode = ref("");
 const authError = ref("");
 const displayedAuthCode = ref("");
 
-// UI states
+// UI
 const isLoading = ref(false);
 const loginError = ref("");
 const errors = ref({
@@ -209,7 +208,7 @@ const showToast = ref(false);
 const toastMessage = ref("");
 const toastColor = ref("success");
 
-// Validation
+// Validatie
 const validateForm = () => {
 	let isValid = true;
 	errors.value = { employeeId: "", password: "" };
@@ -230,7 +229,7 @@ const validateForm = () => {
 	return isValid;
 };
 
-// Handle login
+// Login
 const handleLogin = async () => {
 	loginError.value = "";
 
@@ -253,18 +252,19 @@ const handleLogin = async () => {
 	}
 };
 
-// Helper function for toast
+// Toast
 const showToastMessage = (message, color = "success") => {
 	toastMessage.value = message;
 	toastColor.value = color;
 	showToast.value = true;
 };
 
-// Handle forgot password
+// Wachtwoord vergeten
 const handleForgotPassword = () => {
 	showToastMessage("Deze functionaliteit is momenteel nog niet beschikbaar.", "primary");
 };
 
+// Authenticatie modal sluiten
 const closeAuthModal = () => {
 	showAuthModal.value = false;
 	authCode.value = "";
@@ -272,6 +272,7 @@ const closeAuthModal = () => {
 	displayedAuthCode.value = "";
 };
 
+// Authenticatie code controleren
 const checkAuthCode = async () => {
 	const randomNumber = localStorage.getItem("randomNumber");
 	if (authCode.value === randomNumber) {

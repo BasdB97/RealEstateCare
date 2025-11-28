@@ -116,10 +116,8 @@
 <script setup>
 import PhotoUploader from "@/components/PhotoUploader.vue";
 
-// Vue composition API functies importeren
 import { reactive, watch, toRaw, ref, onBeforeUnmount } from "vue";
 
-// Ionic UI componenten importeren
 import {
 	IonList,
 	IonItem,
@@ -136,11 +134,10 @@ import {
 	IonBadge,
 } from "@ionic/vue";
 
-// Props definitie - ontvangt inspection object van parent component
 const props = defineProps({
 	inspection: {
 		type: Object,
-		required: true, // verwacht het damage-inspection object
+		required: true,
 	},
 	isCompleted: {
 		type: Boolean,
@@ -148,19 +145,17 @@ const props = defineProps({
 	},
 });
 
-// Emit definitie - stuurt updates terug naar parent component
 const emit = defineEmits(["saveLocalChanges"]);
 
-// isDirty: houdt bij of het formulier is gewijzigd sinds laatste opslag
+// houdt bij of het formulier is gewijzigd sinds laatste opslag
 const isDirty = ref(false);
 
-// form: reactive kopie van inspection data voor two-way binding
 const form = reactive({
 	...props.inspection,
 	photos: props.inspection.photos ?? [],
 });
 
-// baseline: JSON string van laatste opgeslagen staat voor vergelijking
+// JSON string van laatste opgeslagen staat voor vergelijking
 const baseline = ref(JSON.stringify(form));
 
 // Watcher: observeert veranderingen in props.inspection
@@ -190,18 +185,20 @@ watch(
 	{ deep: true }
 );
 
+// Sla de wijzigingen op in de local storage
 function saveLocalChanges() {
-	// console.log("saveLocalChanges", { ...toRaw(form) });
 	emit("saveLocalChanges", { ...toRaw(form) });
 	baseline.value = JSON.stringify({ ...toRaw(form) });
 	isDirty.value = false;
 }
 
+// Expose de functies voor het parent component
 defineExpose({
 	saveLocalChanges,
 	isDirty,
 });
 
+// Soorten schade
 const damageTypes = [
 	{ label: "Moedwillig", value: "moedwillig" },
 	{ label: "Slijtage", value: "slijtage" },

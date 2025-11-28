@@ -24,10 +24,9 @@ export const useLoginStore = defineStore("login", {
 					},
 				});
 
-				// response.data.record is direct een array met de gefilterde gebruiker(s)
 				if (response.status === 200 && response.data.record[0] !== undefined) {
-					// Genereer altijd een 6-cijferige code (100000 tot 999999)
-					const user = response.data.record[0]; // Eerste (en enige) match
+					// Genereer een willekeurige 6-cijferige code voor de 2-stap authenticatie
+					const user = response.data.record[0];
 					const randomNumber = Math.floor(Math.random() * 900000) + 100000;
 					console.log("Authenticatiecode:", randomNumber);
 
@@ -35,6 +34,7 @@ export const useLoginStore = defineStore("login", {
 					this.employeeName = user.name;
 					this.employeeId = user.employeeId;
 
+					// Sla gegevens op in de local storage
 					localStorage.setItem("randomNumber", randomNumber);
 					localStorage.setItem("employeeName", user.name);
 					localStorage.setItem("employeeId", user.employeeId);
@@ -42,16 +42,17 @@ export const useLoginStore = defineStore("login", {
 
 					return randomNumber;
 				} else {
+					// Login mislukt
 					this.employeeName = "";
-					// console.log("Login failed - no matching user found");
 					throw new Error("Login failed - no matching user found");
 				}
 			} catch (err) {
-				console.error(err);
+				console.error("Login error:", err);
 				throw err; // Re-throw de error zodat LoginPage.vue het kan afhandelen
 			}
 		},
 		logout() {
+			// Log uit en verwijder alle gegevens uit de local storage
 			localStorage.clear();
 			this.isAuthenticated = false;
 			this.user = null;

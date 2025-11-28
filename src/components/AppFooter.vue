@@ -26,6 +26,7 @@
 import { IonIcon } from "@ionic/vue";
 import { home, search, informationCircle } from "ionicons/icons";
 
+// Links voor de footer
 const links = [
 	{
 		icon: home,

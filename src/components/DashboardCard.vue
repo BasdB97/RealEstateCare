@@ -14,6 +14,7 @@
 import { RouterLink } from "vue-router";
 import { IonIcon } from "@ionic/vue";
 
+// Props voor de dashboard card
 defineProps({
 	to: { type: String, required: true },
 	label: { type: String, required: true },

@@ -61,8 +61,10 @@ import { storeToRefs } from "pinia";
 const knowledgeBaseStore = useKnowledgeBaseStore();
 const { error, knowledgeBase } = storeToRefs(knowledgeBaseStore);
 
+// Haal de documenten op bij het laden van de pagina
 onMounted(async () => await knowledgeBaseStore.fetchKnowledgeBase());
 
+// functie om de URL voor het openen van het PDF te bepalen
 const urlFor = (u) =>
 	u.startsWith("http")
 		? u

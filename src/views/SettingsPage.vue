@@ -177,15 +177,6 @@
 				Uitloggen
 			</IonButton>
 
-			<IonButton
-				@click="onResetDatabase"
-				:disabled="reportsStore.loading"
-				aria-label="Reset database"
-				id="resetDatabase">
-				<IonIcon :icon="refresh" class="mr-2" />
-				Reset database
-			</IonButton>
-
 			<!-- Toast for feedback -->
 			<IonToast
 				:is-open="showToast"
@@ -203,7 +194,6 @@ import BackButton from "@/components/BackButton.vue";
 
 import { ref } from "vue";
 import { useSettingsStore } from "@/stores/settings";
-import { useReportsStore } from "@/stores/reports";
 import { useLoginStore } from "@/stores/login";
 import { useRouter } from "vue-router";
 
@@ -222,13 +212,10 @@ import {
 	IonInput,
 	IonSelect,
 	IonSelectOption,
-	IonAccordionGroup,
-	IonAccordion,
 } from "@ionic/vue";
-import { save, refresh, camera, logOutOutline } from "ionicons/icons";
+import { camera } from "ionicons/icons";
 
 const settingsStore = useSettingsStore();
-const reportsStore = useReportsStore();
 const loginStore = useLoginStore();
 const router = useRouter();
 
@@ -238,13 +225,14 @@ const toastMessage = ref("");
 const toastColor = ref("success");
 const isSaving = ref(false);
 
-// Helper function for toast
+// Toast
 const showToastMessage = (message, color = "success") => {
 	toastMessage.value = message;
 	toastColor.value = color;
 	showToast.value = true;
 };
 
+// Instellingen opslaan
 const onSave = async () => {
 	isSaving.value = true;
 
@@ -257,15 +245,7 @@ const onSave = async () => {
 	isSaving.value = false;
 };
 
-const onResetDatabase = async () => {
-	try {
-		await reportsStore.resetDatabase();
-		showToastMessage("Database succesvol gereset!", "success");
-	} catch (e) {
-		showToastMessage("Fout bij resetten van de database: " + e.message, "danger");
-	}
-};
-
+// Uitloggen
 const handleLogout = () => {
 	loginStore.logout();
 	router.push("/login");

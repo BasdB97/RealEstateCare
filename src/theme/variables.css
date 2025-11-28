@@ -19,7 +19,6 @@ html.dark {
   --ion-toolbar-background: #1e293b;
   --ion-card-background: #334155;
   
-  /* PRIMARY - Verbeterd voor WCAG AA compliance (was #3880ff → nu #2563eb) */
   --ion-color-primary: #2563eb;
   --ion-color-primary-rgb: 37, 99, 235;
   --ion-color-primary-contrast: #ffffff;
@@ -27,7 +26,6 @@ html.dark {
   --ion-color-primary-shade: #2157cf;
   --ion-color-primary-tint: #3b73ed;
   
-  /* MEDIUM - Verbeterd contrast voor grijs knoppen (contrast 9.99:1 AAA) */
   --ion-color-medium: #b0b3b8;
   --ion-color-medium-rgb: 176, 179, 184;
   --ion-color-medium-contrast: #000000;
@@ -35,7 +33,6 @@ html.dark {
   --ion-color-medium-shade: #9b9da2;
   --ion-color-medium-tint: #b8bbbf;
   
-  /* SUCCESS - Verbeterd contrast voor groen knoppen (contrast 12.65:1 AAA) */
   --ion-color-success: #34e57d;
   --ion-color-success-rgb: 52, 229, 125;
   --ion-color-success-contrast: #000000;
@@ -43,7 +40,6 @@ html.dark {
   --ion-color-success-shade: #2eca6e;
   --ion-color-success-tint: #48e88a;
   
-  /* DANGER - Maximale leesbaarheid voor "Urgent!" badges (contrast 8.12:1 AAA) */
   --ion-color-danger: #ff8a95;
   --ion-color-danger-rgb: 255, 138, 149;
   --ion-color-danger-contrast: #000000;
@@ -51,7 +47,6 @@ html.dark {
   --ion-color-danger-shade: #e07983;
   --ion-color-danger-tint: #ff96a0;
   
-  /* WARNING - Verbeterd contrast voor geel badges (contrast 14.82:1 AAA) */
   --ion-color-warning: #ffd534;
   --ion-color-warning-rgb: 255, 213, 52;
   --ion-color-warning-contrast: #000000;
@@ -60,7 +55,7 @@ html.dark {
   --ion-color-warning-tint: #ffd948;
 }
 
-/* Platform specific light mode */
+/* Platform specifieke light mode */
 :root.ios {
   --ion-background-color: #f2f2f6;
   --ion-toolbar-background: var(--ion-background-color);
@@ -73,7 +68,7 @@ html.dark {
   --ion-item-background: #fff;
 }
 
-/* Platform specific dark mode */
+/* Platform specifieke dark mode */
 html.dark.ios,
 html.dark.md {
   --ion-background-color: #1e293b;
@@ -81,7 +76,7 @@ html.dark.md {
   --ion-toolbar-background: #1e293b;
 }
 
-/* Ionic's own dark palette fallback */
+/* Ionic's eigen dark palette fallback */
 .ion-palette-dark {
   --ion-background-color: #1e293b;
   --ion-item-background: #334155;
