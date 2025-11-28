@@ -66,11 +66,13 @@ http://localhost:5173
 
 ### Security:
 
-De applicatie wordt gehost op Netlify. Op deze manier is de applicatie beveiligd tegen bekende aanvallen (bijv. XSS).
-Op dit moment staan alle gegevens in een JSONBin. Als de applicatie naar productie gaat zal er overgegaan moeten worden naar een database.
+Vue maakt in templates automatisch gebruik van content-escaping, dit voorkomt XSS aanvallen (https://vuejs.org/guide/best-practices/security)
+Ingevoerde gegevens van de inspecteur worden aan de client zijde gevalideerd.
 Bij het inloggen worden gegevens opgeslagen in de localstorage, dit is in lijn met de opdracht maar moet uiteraard beter worden opgeslagen voor daadwerkelijke productie.
-Tevens moet de authenticatie worden verbeterd door gebruik te maken van een app of sms.
-De API key en URL staan hardcoded in de code. Dit moet uiteraard beter worden opgeslagen voor daadwerkelijke productie.
+Toegang en authenticatie wordt nu gesimuleerd. In productie moet dit worden vervangen worden voor authenticatie via sms of app, en met http-tokens.
+De API key en URL staan hardcoded in de code, voor het gemak van de opdracht. In productie worden deze waardes verplaatst naar server-side variables.
+
+Deze toepassingen zijn passend voor het prototype van de opdracht en zijn in lijn met OWASP.
 
 ### Usability:
 
@@ -87,16 +89,25 @@ De API key en URL staan hardcoded in de code. Dit moet uiteraard beter worden op
 9. **Maak foutmeldingen minder eng:** De foutmeldingen zijn duidelijk en eenvoudig te begrijpen. Deze kan altijd nog naar wens verbeterd of aangepast worden.
 10. **Bied een helpende hand:** De applicatie heeft niet direct een uitleg in de app. Hier is voor gekozen om zo min mogelijk afleidende teksten op de pagina te zetten. Documenten en een help functie kan op de pagina 'informatie' worden toegevoegd, als hier een wens voor is. De helpende hand kan ook worden toegevoegd aan de pagina's waar nodig.
 
-### Style Guide:
+### Style Guide & Best Practices:
 
-Ik heb de styling gedaan met Tailwindcss. Deze is makkelijk te gebruiken en heeft een goede documentatie. Ik merkte dat de combinatie tussen Tailwindcss en Ionic componenten niet altijd goed werkte. Dit is omdat Tailwindcss de styles op een andere manier toepast dan Ionic componenten. Ik heb hier tijdens het maken van de applicatie veel tijd in gestoken om de combinatie goed te krijgen.
-Ik ben nog niet volledig tevreden met de styling, dit kan ik later nog verfijnen. Op dit moment voldoet de applicatie aan de gebruiksvriendelijkheidseisen en aan de casus.
+De componenten worden opgebouwd met de composition API. Hierdoor zijn de componenten herbruikbaar en wordt de logica gescheiden van de presentatie. (https://vuejs.org/guide/extras/composition-api-faq.html)
+Custom componenten zijn gemaakt voor herbruikbaarheid (zoals DashboardCard en EditReport). Dit verbetert onderhoudbaarheid en schaalbaarheid. In toekomstige versies kunnen er meer componenten gemaakt worden van de bestaande code, om dit nog beter te maken.
+Alle interacties maken gebruik van Ionic mobile-first componenten. (https://ionicframework.com)
+Styling gebeurt via Tailwindcss. Dark-mode wordt afgevangen via Tailwindcss conventie. (https://tailwindcss.com/docs/dark-mode)
+Routing gebeurt via een Vue Router. De routes zijn duidelijk gestructureerd en makkelijk uit te breiden.
+Voor de API calls wordt gebruik gemaakt van Axios. Deze scheidt de service-laag van de componenten. (https://axios-http.com/)
 
-## WCAG 2.1 Analyse:
 
-Ionic componenten ondersteunen het gebruik van toetsenbord en screenreaders. Deze zijn goed te gebruiken voor gebruikers met een beperking. Waar nodig zijn extra labels toegevoegd.
-Alle afbeeldingen zijn voorzien van een alt tekst.
-Er is gekozen voor kleuren met een goede contrast ratio, zowel in dark als in light mode.
+## Accessibility (WCAG 2.1 Analyse):
+
+Ionic levert standaard componenten die goed te gebruiken zijn in combinatie met een toetsenbord en screenreader. Alle interactieve elementen zijn via focusbaar via toetsenbord en bedienbaar zonder muis.
+Alle afbeeldingen, inclusief foto's die door de inspecteur worden geüpload, zijn voorzien van een alt-tekst.
+De kleuren zijn gekozen volgens de contrastvereisten van WCAG 2.1, zonder veel af te wijken van de huisstijl. Dark en light mode zijn getest op goede leesbaarheid.
+Invoervelden zijn voorzien van aria-labels, of van een IonLabel. Hierdoor bied het meer context voor screenreaders.
+Foutmeldingen worden duidelijk weergegeven.
+
+Deze versie voldoet aan de basis eisen van WCAG 2.1.
 
 ## Eind woord:
 
