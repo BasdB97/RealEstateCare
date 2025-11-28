@@ -1,7 +1,7 @@
 <!-- src/views/CompletedReports.vue -->
 <template>
 	<BaseLayout>
-		<BackButton to="/home" />
+		<BackButton to="/" />
 		<h1 class="page-title">Uitgevoerde rapporten</h1>
 
 		<div v-if="error" class="text-center text-red-600 dark:text-red-400 p-4">

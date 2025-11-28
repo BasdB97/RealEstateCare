@@ -1,6 +1,6 @@
 <template>
 	<BaseLayout>
-		<BackButton to="/home" />
+		<BackButton to="/" />
 		<div>
 			<h1 class="page-title">Toegewezen rapporten</h1>
 			<div v-if="error" class="text-center text-red-600 dark:text-red-400 p-4">

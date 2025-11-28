@@ -1,6 +1,6 @@
 <template>
 	<BaseLayout>
-		<BackButton to="/home" />
+		<BackButton to="/" />
 		<div class="p-4 max-w-2xl mx-auto">
 			<h1 class="text-3xl font-bold text-primarybg dark:text-white mb-6">Instellingen</h1>
 			<!-- Account Details Section -->
