@@ -1,9 +1,9 @@
 <template>
 	<IonButton
 		aria-label="Terug naar de vorige pagina"
-		:fill="fill"
-		:size="size"
-		:color="color"
+		fill="outline"
+		size="medium"
+		color="primary"
 		@click="goBack"
 		class="back-button">
 		<IonIcon :icon="arrowBackOutline" slot="start" />
@@ -17,15 +17,17 @@ import { arrowBackOutline } from "ionicons/icons";
 import { useRouter } from "vue-router";
 
 const props = defineProps({
-	fill: { type: String, default: "outline" },
-	size: { type: String, default: "medium" },
-	color: { type: String, default: "primary" },
+	to: { type: String, default: "/" },
 });
 
 const router = useRouter();
 
 const goBack = () => {
-	router.back(); // Ga terug in de browser history
+	if (props.to) {
+		router.push(props.to);
+	} else {
+		router.back();
+	}
 };
 </script>
 
